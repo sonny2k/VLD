@@ -1,0 +1,113 @@
+POST http://localhost:1210/api/user/auth/register
+Content-Type: application/json
+
+{
+    "fname": "Khanh",
+    "lname": "Đinh",
+    "phonenum": "0582199179",
+    "password": "123456",
+    "role": "người dùng"
+}
+
+###
+
+POST http://localhost:1210/api/user/auth/login
+Content-Type: application/json
+
+{
+    "phonenum": "+84582199173",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost:1210/api/user/auth/verifycode
+Content-Type: application/json
+
+{
+    "phonenum": "+84582199172",
+    "code": "585903"
+}
+
+###
+
+POST http://localhost:1210/api/user/auth/sendcode
+Content-Type: application/json
+    
+{
+    "phonenum": "+84582199172"
+}
+
+###
+
+POST http://localhost:1210/api/user/auth/createuser
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWQxM2ZjYmJlZWI5NzJjMTdlNzMyNWIiLCJpYXQiOjE2NDExMDMzMDd9.nDnV_UYQ_xaTHOnwf3RmbYerRFCL1beT2MmUWrpSZLo
+
+{
+    "account": "61d13fcbbeeb972c17e7325b",
+    "bloodtype": "AB",
+    "height": "1m75",
+    "weight": "68kg",
+    "pastmedicalhistory": "trượt ván",
+    "drughistory": "",
+    "familyhistory": ""
+}
+
+### 
+GET http://localhost:1210/api/user/61cffe8dc8d94622b5936c48
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWNmZmE4MjE5NzM1ODNlYmYyZmMzNDYiLCJpYXQiOjE2NDExNDExNzl9.Y0T5md-_fUvdPgqcvbxRi1uvKIlgqvah0SEbym_9aVQ
+
+### 
+PUT http://localhost:1210/api/user/61cffe8dc8d94622b5936c48
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWNmZmE4MjE5NzM1ODNlYmYyZmMzNDYiLCJpYXQiOjE2NDExNDExNzl9.Y0T5md-_fUvdPgqcvbxRi1uvKIlgqvah0SEbym_9aVQ
+Content-Type: application/json
+
+{
+    "bloodtype": "O",
+    "height": "1m50",
+    "weight": "90kg",
+    "pastmedicalhistory": "đói qá",
+    "drughistory": "",
+    "familyhistory": ""
+}
+
+###
+POST http://localhost:1210/api/user/changepassword
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWNmZmE4MjE5NzM1ODNlYmYyZmMzNDYiLCJpYXQiOjE2NDExNDExNzl9.Y0T5md-_fUvdPgqcvbxRi1uvKIlgqvah0SEbym_9aVQ
+Content-Type: application/json
+
+{
+    "password": "121000",
+    "newpass": "254200"
+}
+
+###
+POST http://localhost:1210/api/user/auth/resetpassword
+Content-Type: application/json
+
+{
+    "phonenum": "+84582199174",
+    "newpassword": "121000"
+}
+
+### 
+GET http://localhost:1210/api/user/account/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWNmZmE4MjE5NzM1ODNlYmYyZmMzNDYiLCJpYXQiOjE2NDExODUxNDJ9.TeJMA_-adSiorJbqM-s7-0zDagGso28NMOsEg-FbRZk
+
+### 
+PUT http://localhost:1210/api/user/account/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWQwMTI0YTdkZDEwNjdiYmRkODRjNGIiLCJpYXQiOjE2NDExOTI3MjF9.AlunSeOLPzNcf8Rk3Vok1ZAnsH9GL2jj9tSk7q5vsuc
+Content-Type: application/json
+
+{
+    "profilepic": "https://facebook",
+    "fname": "Hà",
+    "lname": "Lưu",
+    "birthday": "12-10-2000",
+    "gender": 1,
+    "city": "Hồ Chí Minh",
+    "district": "7",
+    "ward": "Tân Hưng",
+    "street": "TXS"
+}
