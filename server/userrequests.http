@@ -111,3 +111,7 @@ Content-Type: application/json
     "ward": "Tân Hưng",
     "street": "TXS"
 }
+
+###
+GET http://localhost:1210/api/user/
+Content-Type: application/json
