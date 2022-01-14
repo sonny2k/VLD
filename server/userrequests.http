@@ -113,5 +113,17 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:1210/api/user/
+GET http://localhost:1210/api/home/doctor
+Content-Type: application/json
+
+###
+GET http://localhost:1210/api/home/department
+Content-Type: application/json
+
+###
+GET http://localhost:1210/api/home/article
+Content-Type: application/json
+
+###
+GET http://localhost:1210/api/home/articlecategory
 Content-Type: application/json

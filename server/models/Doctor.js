@@ -10,10 +10,6 @@ const DoctorShema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "departments",
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "users",
-  },
   degree: {
     type: String,
   },
@@ -32,35 +28,45 @@ const DoctorShema = new Schema({
   level: {
     type: String,
   },
-  rating: {
-    type: Array,
-  },
   workcertificate: {
     type: String,
   },
   workhistory: {
     type: String,
   },
-  availables: {
-    type: Array,
-  },
-  content: {
-    type: String,
-  },
-  createdat: {
-    type: Date,
-  },
-  date: {
-    type: Date,
-  },
-  hour: {
-    type: String,
-  },
+  rating: [
+    {
+      type: new mongoose.Schema({
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: "users",
+        },
+        content: {
+          type: String,
+        },
+        start: {
+          type: String,
+        },
+        createdat: {
+          type: String,
+        },
+      }),
+    },
+  ],
+  availables: [
+    {
+      type: new mongoose.Schema({
+        date: {
+          type: Date,
+        },
+        hour: {
+          type: String,
+        },
+      }),
+    },
+  ],
   signature: {
     type: String,
-  },
-  star: {
-    type: Number,
   },
 });
 

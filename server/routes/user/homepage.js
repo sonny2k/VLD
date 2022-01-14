@@ -1,12 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const Doctors = require("../../models/Doctors");
-const Articles = require("../../models/Articles");
+const Doctors = require("../../models/Doctor");
+const Departments = require("../../models/Department");
+const Articles = require("../../models/Article");
+const ArticleCategories = require("../../models/ArticleCategory");
 
-router.get("/", async (req, res) => {
+router.get("/doctor", async (req, res) => {
   const alldoctors = await Doctors.find();
-  const allarticles = await Articles.find();
-  res.send(alldoctors + allarticles);
+  res.send(alldoctors);
 });
 
+router.get("/department", async (req, res) => {
+  const alldepartments = await Departments.find();
+  res.send(alldepartments);
+});
 module.exports = router;
