@@ -14,40 +14,40 @@ import { MotionInView, varFade } from '../../components/animate';
 
 const TESTIMONIALS = [
   {
-    name: 'Jenny Wilson',
+    name: 'Lưu Trung Thành',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `Excellent Work! Thanks a lot!`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Quá tốt, tôi sẽ sử dụng lâu dài`,
   },
   {
-    name: 'Cody Fisher',
+    name: 'Đinh Tấn Khanh',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `It's a very good dashboard and we are really liking the product . We've done some things, like migrate to TS and implementing a react useContext api, to fit our job methodology but the product is one of the best in terms of design and application architecture. The team did a really good job.`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Vì tình hình dịch bệnh tôi phải về quê và gặp khó khăn trong việc khám chữa bệnh tại bệnh viện mà tôi đã đăng kí BHXH, nhờ có Van Lang Doctor mà tôi đã được hỗ trợ thăm khám sức khỏe miễn phí qua máy tính`,
   },
   {
-    name: 'Marvin McKinney',
+    name: 'Nguyễn Hoàng Long',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `Customer support is realy fast and helpful the desgin of this theme is looks amazing also the code is very clean and readble realy good job !`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Tủ thuốc gia đình của tớ  có đầy đủ thuốc nhờ sử dụng dịch vụ Van Lang Doctor, tớ yêu Van Lang Doctor!`,
   },
   {
-    name: 'Darrell Steward',
+    name: 'Võ Minh Vương',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `Amazing, really good code quality and gives you a lot of examples for implementations.`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Web rất mượt và nhanh, nhờ tính năng gọi video mà cả gia đình tôi đều nghe được lời tư vấn nhờ đó lưu ý sức khỏe cho các thành viên trong gia đình`,
   },
   {
-    name: 'Jacob Jones',
+    name: 'Khánh Duy',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `Got a few questions after purchasing the product. The owner responded very fast and very helpfull. Overall the code is excellent and works very good. 5/5 stars!`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Mua 2 hộp vitamin cá ngừ còn được tặng áo mưa, thật là vui quá đi`,
   },
   {
-    name: 'Bessie Cooper',
+    name: 'Thuần Vương',
     rating: 5,
-    dateCreate: 'April 19, 2021',
-    content: `CEO of Codealy.io here. We’ve built a developer assessment platform that makes sense - tasks are based on git repositories and run in virtual machines. We automate the pain points - storing candidates code, running it and sharing test results with the whole team, remotely. Bought this template as we need to provide an awesome dashboard for our early customers. I am super happy with purchase. The code is just as good as the design. Thanks!`,
+    dateCreate: '01 tháng 11 năm 2021',
+    content: `Đội ngũ support thật sự rất tận tình, tôi đã gặp 1 số vấn đề trong việc đặt hàng và đã được đội ngũ hỗ trợ rất nhiệt tình và lịch thiệp. Hàng giao cũng nhanh nữa. Tôi khuyến khích bạn sử dụng dịch vụ của Van Lang Doctor`,
   },
 ];
 
@@ -58,7 +58,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   backgroundImage: `linear-gradient(to right, ${alpha(theme.palette.grey[900], 0.8)} , ${alpha(
     theme.palette.grey[900],
     0.8
-  )}), url(https://minimal-assets-api.vercel.app/assets/images/about/testimonials.jpg)`,
+  )}), url(https://i.imgur.com/Pq6W0QU.jpg)`,
   [theme.breakpoints.up('md')]: {
     textAlign: 'left',
     padding: 0,
@@ -99,8 +99,8 @@ export default function AboutTestimonials() {
 
               <MotionInView variants={varFade().inUp}>
                 <Typography sx={{ color: 'common.white' }}>
-                  Van Lang Doctor luôn luôn lắng nghe ý kiến từ người dùng và tích cực đổi mới, 
-                  nhằm tạo sự thoải mái tiện lợi khi sử dụng dịch vụ
+                  Van Lang Doctor luôn luôn lắng nghe ý kiến từ người dùng và tích cực đổi mới, nhằm tạo sự thoải mái
+                  tiện lợi khi sử dụng dịch vụ
                 </Typography>
               </MotionInView>
 
