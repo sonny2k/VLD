@@ -16,15 +16,15 @@ const User = require("../../models/User");
 // @desc Register user
 // @access Public
 router.post("/register", async (req, res) => {
-  const { fname, lname, phonenum, password, role } = req.body;
+  const { phone, password, fname, lname, role } = req.body;
 
   //simple validation
-  if (!phonenum || !password || !fname || !lname || !role)
+  if (!phone || !password || !fname || !lname || !role)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
   try {
     //check for existing account
-    const account = await Account.findOne({ phonenum });
+    const account = await Account.findOne({ phone });
 
     if (account)
       return res.status(400).json({
@@ -34,11 +34,10 @@ router.post("/register", async (req, res) => {
 
     //OK!
     const hashedPassword = await argon2.hash(password);
-    let role = "người dùng";
     const newAccount = new Account({
       fname,
       lname,
-      phonenum,
+      phone,
       password: hashedPassword,
       role,
     });
@@ -62,14 +61,9 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/sendcode", async (req, res) => {
-  const { phonenum } = req.body;
-
-  //simple validation
-  if (!phonenum)
-    return res.status(400).json({ success: false, message: "Thiếu thông tin" });
-
+  const { phone } = req.body;
   //check for existing account
-  const account = await Account.findOne({ phonenum });
+  const account = await Account.findOne({ phone });
 
   if (account)
     return res.status(400).json({
@@ -80,22 +74,25 @@ router.post("/sendcode", async (req, res) => {
   //send code to phone number
   client.verify
     .services("VA85da000b869107ba0c8f11f348519989")
-    .verifications.create({ to: phonenum, channel: "sms" })
-    .then((verification) => console.log(verification.status));
+    .verifications.create({ to: phone, channel: "sms" })
+    .then((verification) => res.json({message:verification.status}));
 });
 
 router.post("/verifycode", async (req, res) => {
-  const { phonenum, code } = req.body;
+  const { phone, code } = req.body;
+  //check for existing account
+  const account = await Account.findOne({ phone });
 
-  //simple validation
-  if (!phonenum || !code)
-    return res.status(400).json({ success: false, message: "Thiếu thông tin" });
-
+  if (account)
+    return res.status(400).json({
+      success: false,
+      message: "Số điện thoại đã được đăng ký ở tài khoản khác",
+    });
   //check verify code
   await client.verify
     .services("VA85da000b869107ba0c8f11f348519989")
-    .verificationChecks.create({ to: phonenum, code: code })
-    .then((verification_check) => console.log(verification_check.status));
+    .verificationChecks.create({ to: phone, code: code })
+    .then((verification_check) => res.json({message:verification_check.status}));
 });
 
 router.post("/createuser", verifyToken, async (req, res) => {
@@ -145,21 +142,21 @@ router.post("/createuser", verifyToken, async (req, res) => {
 // @desc Login user
 // @access Public
 router.post("/login", async (req, res) => {
-  const { phonenum, password } = req.body;
+  const { phone, password } = req.body;
 
   //simple validation
-  if (!phonenum || !password)
+  if (!phone || !password)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
   try {
     // Check for existing account
-    const account = await Account.findOne({ phonenum });
+    const account = await Account.findOne({ phone });
     if (!account)
       return res
         .status(400)
         .json({ success: false, message: "Sai số điện thoại" });
 
-    // phonenum found
+    // phone found
     const passwordValid = await argon2.verify(account.password, password);
     if (!passwordValid)
       return res.status(400).json({ success: false, message: "Sai mật khẩu" });
@@ -186,21 +183,21 @@ router.post("/login", async (req, res) => {
 // @desc Reset password of user
 // @access Public
 router.post("/resetpassword", async (req, res) => {
-  const { phonenum, newpassword } = req.body;
+  const { phone, newpassword } = req.body;
 
   //simple validation
-  if (!phonenum || !newpassword)
+  if (!phone || !newpassword)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
   try {
     // Check for existing account
-    const account = await Account.findOne({ phonenum });
+    const account = await Account.findOne({ phone });
     if (!account)
       return res
         .status(400)
         .json({ success: false, message: "Sai số điện thoại" });
 
-    // phonenum found and pass verification
+    // phone found and pass verification
     const passwordvalid = await argon2.verify(account.password, newpassword);
     if (passwordvalid)
       return res.status(400).json({

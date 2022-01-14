@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "fname": "Khanh",
     "lname": "Đinh",
-    "phonenum": "0582199179",
+    "phone": "0582199179",
     "password": "123456",
     "role": "người dùng"
 }
@@ -15,17 +15,17 @@ POST http://localhost:1210/api/user/auth/login
 Content-Type: application/json
 
 {
-    "phonenum": "+84582199173",
+    "phone": "+84582199173",
     "password": "123456"
 }
 
 ###
 
-POST http://localhost:1210/api/user/auth/verifycode
+POST http://localhost:2542/api/user/auth/verifycode
 Content-Type: application/json
 
 {
-    "phonenum": "+84582199172",
+    "phone": "+84582199172",
     "code": "585903"
 }
 
@@ -35,7 +35,7 @@ POST http://localhost:1210/api/user/auth/sendcode
 Content-Type: application/json
     
 {
-    "phonenum": "+84582199172"
+    "phone": "+84582199172"
 }
 
 ###
