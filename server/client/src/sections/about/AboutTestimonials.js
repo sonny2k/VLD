@@ -86,22 +86,21 @@ export default function AboutTestimonials() {
             <Box sx={{ maxWidth: { md: 360 } }}>
               <MotionInView variants={varFade().inUp}>
                 <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-                  Testimonials
+                  Ý kiến khách hàng
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ mb: 3, color: 'common.white' }}>
-                  Who love <br />
-                  my work
+                  Khách hàng <br />
+                  nói gì?
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography sx={{ color: 'common.white' }}>
-                  Our goal is to create a product and service that you’re satisfied with and use it every day. This is
-                  why we’re constantly working on our services to make it better every day and really listen to what our
-                  users has to say.
+                  Van Lang Doctor luôn luôn lắng nghe ý kiến từ người dùng và tích cực đổi mới, 
+                  nhằm tạo sự thoải mái tiện lợi khi sử dụng dịch vụ
                 </Typography>
               </MotionInView>
 
@@ -162,7 +161,7 @@ export default function AboutTestimonials() {
 function TestimonialLink() {
   return (
     <Link href="#" variant="subtitle2" sx={{ display: 'flex', alignItems: 'center' }}>
-      Read more testimonials
+      Trải nghiệm dịch vụ và đánh giá ngay
       <Iconify icon={'ic:round-arrow-right-alt'} sx={{ ml: 1, width: 20, height: 20 }} />
     </Link>
   );

@@ -9,18 +9,18 @@ import { MotionInView, varFade } from '../../components/animate';
 
 const CARDS = [
   {
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_design.svg',
+    icon: 'https://i.ibb.co/H73wHpr/feelings.png',
     title: 'Tim mạch',
     description:
       'Hỗ trợ các vấn đề tim mạch như thở gấp, tim đập nhanh,...',
   },
   {
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_code.svg',
+    icon: 'https://i.ibb.co/176M5fX/medical-shield.png',
     title: 'Tổng quát',
     description: 'Cung cấp chuẩn đoán khách quan về sức khỏe tổng quát',
   },
   {
-    icon: '/logo/logo_single.svg',
+    icon: 'https://i.ibb.co/By4bdgH/brain.png',
     title: 'Thần kinh',
     description: 'Tư vấn các vấn đề liên quan đến thần kinh như suy nhược thần kinh, thiếu máu não,...',
   }
@@ -122,8 +122,8 @@ export default function HomeMinimal() {
                   sx={{
                     mb: 10,
                     mx: 'auto',
-                    width: 40,
-                    height: 40,
+                    width: 80,
+                    height: 80,
                     filter: (theme) => shadowIcon(theme.palette.primary.main),
                     ...(index === 0 && {
                       filter: (theme) => shadowIcon(theme.palette.info.main),

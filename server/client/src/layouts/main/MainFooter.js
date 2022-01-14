@@ -14,23 +14,23 @@ const LINKS = [
   {
     headline: 'Minimal',
     children: [
-      { name: 'About us', href: PATH_PAGE.about },
-      { name: 'Contact us', href: PATH_PAGE.contact },
+      { name: 'Về chúng tôi', href: PATH_PAGE.about },
+      { name: 'Liên hệ', href: PATH_PAGE.contact },
       { name: 'FAQs', href: PATH_PAGE.faqs },
     ],
   },
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
+      { name: 'Điều khoản và thỏa thuận', href: '#' },
+      { name: 'Chính sách bảo mật', href: '#' },
     ],
   },
   {
     headline: 'Contact',
     children: [
-      { name: 'support@minimals.cc', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' },
+      { name: 'support@vanlangdoctor.tech', href: '#' },
+      { name: '45 Nguyễn Khắc Nhu, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh 700000', href: '#' },
     ],
   },
 ];
@@ -57,8 +57,8 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Minimal UI Kit, built on the newest
-              version of Material-UI ©, ready to be customized to your style.
+              Van Lang Doctor là đồ án tốt nghiệp của team 16 thuộc khóa K24 
+              khoa Kỹ Thuật Phần Mềm trường đại học Văn Lang.
             </Typography>
 
             <Stack
@@ -70,7 +70,7 @@ export default function MainFooter() {
             </Stack>
           </Grid>
 
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={8}>
             <Stack
               spacing={5}
               direction={{ xs: 'column', md: 'row' }}

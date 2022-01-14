@@ -53,13 +53,13 @@ export default function AboutTeam() {
     <Container sx={{ pb: 10, textAlign: 'center' }}>
       <MotionInView variants={varFade().inDown}>
         <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-          Dream team
+          Văn Lang Doctor
         </Typography>
       </MotionInView>
 
       <MotionInView variants={varFade().inUp}>
         <Typography variant="h2" sx={{ mb: 3 }}>
-          Great team is the key
+          Đội ngũ bác sĩ giàu kinh nghiệm
         </Typography>
       </MotionInView>
 
@@ -71,8 +71,7 @@ export default function AboutTeam() {
             color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white'),
           }}
         >
-          Minimal will provide you support if you have any problems, our support team will reply within a day and we
-          also have detailed documentation.
+          Với thâm niên lâu năm trong nghề cùng với sự tận tâm, chúng tôi cam kết giúp bạn có được sự tư vấn về sức khỏe một cách chuẩn xác nhất
         </Typography>
       </MotionInView>
 
@@ -94,7 +93,7 @@ export default function AboutTeam() {
         endIcon={<Iconify icon={'ic:round-arrow-right-alt'} width={24} height={24} />}
         sx={{ mx: 'auto' }}
       >
-        View all team members
+        Xem tất cả
       </Button>
     </Container>
   );

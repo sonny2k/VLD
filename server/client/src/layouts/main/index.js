@@ -22,9 +22,9 @@ export default function MainLayout() {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      {!isHome ? (
-        <MainFooter />
-      ) : (
+      {/* {!isHome ? ( */}
+      <MainFooter />
+      {/* ) : (
         <Box
           sx={{
             py: 5,
@@ -43,7 +43,7 @@ export default function MainLayout() {
             </Typography>
           </Container>
         </Box>
-      )}
+      )} */}
     </Stack>
   );
 }
