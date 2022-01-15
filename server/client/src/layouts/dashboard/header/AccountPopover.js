@@ -62,7 +62,7 @@ export default function AccountPopover() {
       }
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+      enqueueSnackbar('Không thể đăng xuất!', { variant: 'error' });
     }
   };
 
@@ -104,10 +104,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            {user?.fname}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?.email}
+            {user?.phone}
           </Typography>
         </Box>
 
@@ -124,7 +124,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          Logout
+          Đăng xuất
         </MenuItem>
       </MenuPopover>
     </>

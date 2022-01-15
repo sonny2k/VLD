@@ -44,7 +44,7 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     try {
-      await login(data.email, data.password);
+      await login(data.phone, data.password);
     } catch (error) {
       console.error(error);
       reset();

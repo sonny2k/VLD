@@ -1,11 +1,11 @@
 // ----------------------------------------------------------------------
 
 export const fullName = [
-  'Jayvion Simon',
-  'Lucian Obrien',
-  'Deja Brady',
-  'Harrison Stein',
-  'Reece Chung',
+  'Trần Văn Phúc',
+  'Đỗ Mạnh Cường',
+  'Nguyễn Huy Dũng',
+  'Phan Thị Ngọc Bích',
+  'Lưu Văn Được',
   'Lainey Davidson',
   'Cristopher Cardenas',
   'Melanie Noble',

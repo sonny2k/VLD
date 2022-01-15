@@ -19,7 +19,7 @@ const AccountSchema = new Schema({
     gender: {
         type: Number
     },
-    phonenum: {
+    phone: {
         type: String,
         required: true,
         unique: true

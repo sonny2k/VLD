@@ -143,14 +143,14 @@ router.post("/createuser", verifyToken, async (req, res) => {
 // @access Public
 router.post("/login", async (req, res) => {
   const { phone, password } = req.body;
-
+  const phonenum = `+84${phone.slice(1)}`
   //simple validation
   if (!phone || !password)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
   try {
     // Check for existing account
-    const account = await Account.findOne({ phone });
+    const account = await Account.findOne({ phonenum });
     if (!account)
       return res
         .status(400)

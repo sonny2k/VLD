@@ -12,7 +12,7 @@ import SocialsButton from '../../components/SocialsButton';
 
 const LINKS = [
   {
-    headline: 'Minimal',
+    headline: 'Văn Lang Doctor',
     children: [
       { name: 'Về chúng tôi', href: PATH_PAGE.about },
       { name: 'Liên hệ', href: PATH_PAGE.contact },
@@ -20,14 +20,14 @@ const LINKS = [
     ],
   },
   {
-    headline: 'Legal',
+    headline: 'Pháp lý',
     children: [
       { name: 'Điều khoản và thỏa thuận', href: '#' },
       { name: 'Chính sách bảo mật', href: '#' },
     ],
   },
   {
-    headline: 'Contact',
+    headline: 'Liên hệ',
     children: [
       { name: 'support@vanlangdoctor.tech', href: '#' },
       { name: '45 Nguyễn Khắc Nhu, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh 700000', href: '#' },
@@ -57,7 +57,7 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              Van Lang Doctor là đồ án tốt nghiệp của team 16 thuộc khóa K24 
+              Van Lang Doctor là đồ án Capstone của Team 16 thuộc khóa K24 
               khoa Kỹ Thuật Phần Mềm trường đại học Văn Lang.
             </Typography>
 

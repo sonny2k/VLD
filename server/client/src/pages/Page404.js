@@ -26,15 +26,14 @@ export default function Page404() {
     <Page title="404 Page Not Found" sx={{ height: 1 }}>
       <RootStyle>
         <Container component={MotionContainer}>
-          <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
+          <Box sx={{ maxWidth: 768, margin: 'auto', textAlign: 'center' }}>
             <m.div variants={varBounce().in}>
               <Typography variant="h3" paragraph>
-                Sorry, page not found!
+                Rất tiếc, trang này không tồn tại!
               </Typography>
             </m.div>
             <Typography sx={{ color: 'text.secondary' }}>
-              Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check
-              your spelling.
+              Xin lỗi, chúng tôi không thể tìm thấy trang này. Vui lòng kiểm tra lại đường dẫn
             </Typography>
 
             <m.div variants={varBounce().in}>
@@ -42,7 +41,7 @@ export default function Page404() {
             </m.div>
 
             <Button to="/" size="large" variant="contained" component={RouterLink}>
-              Go to Home
+              Trở lại trang chủ
             </Button>
           </Box>
         </Container>

@@ -26,7 +26,7 @@ import {
 export default function UserAccount() {
   const { themeStretch } = useSettings();
 
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState('Tài khoản');
 
   const ACCOUNT_TABS = [
     {
@@ -67,9 +67,9 @@ export default function UserAccount() {
         <HeaderBreadcrumbs
           heading="Account"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'Account Settings' },
+            { name: 'Bảng điều khiển', href: PATH_DASHBOARD.root },
+            { name: 'Người dùng', href: PATH_DASHBOARD.user.root },
+            { name: 'Cài đặt tài khoản' },
           ]}
         />
 

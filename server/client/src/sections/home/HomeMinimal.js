@@ -98,7 +98,7 @@ export default function HomeMinimal() {
         >
           <MotionInView variants={varFade().inUp}>
             <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-              Các chuyên khoa nổi bật.
+              Một số chuyên khoa phổ biến.
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>

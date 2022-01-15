@@ -21,8 +21,8 @@ export default function RoleBasedGuard({ accessibleRoles, children }) {
     return (
       <Container>
         <Alert severity="error">
-          <AlertTitle>Permission Denied</AlertTitle>
-          You do not have permission to access this page
+          <AlertTitle>Truy cập bị từ chối</AlertTitle>
+          Bạn không có quyền thao tác trên trang này.
         </Alert>
       </Container>
     );
