@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Stack, Dialog, Button, Divider, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // _mock
-import { countries } from '../../../../_mock';
+import { genders } from '../../../../_mock';
 import { FormProvider, RHFCheckbox, RHFSelect, RHFTextField, RHFRadioGroup } from '../../../../components/hook-form';
 
 // ----------------------------------------------------------------------
@@ -35,7 +35,7 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
     address: '',
     city: '',
     state: '',
-    country: countries[0].label,
+    country: genders[0].label,
     zipcode: '',
     isDefault: true,
   };
@@ -102,7 +102,7 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
             </Box>
 
             <RHFSelect name="country" label="Country">
-              {countries.map((option) => (
+              {genders.map((option) => (
                 <option key={option.code} value={option.label}>
                   {option.label}
                 </option>

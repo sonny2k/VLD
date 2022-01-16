@@ -31,8 +31,14 @@ export default function LoginForm() {
     password: Yup.string().required('Vui lòng nhập mật khẩu'),
   });
 
+  const defaultValues = {
+    phone: '',
+    password: '',
+  };
+
   const methods = useForm({
     resolver: yupResolver(LoginSchema),
+    defaultValues,
   });
 
   const {

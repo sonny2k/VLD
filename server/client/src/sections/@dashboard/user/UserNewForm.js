@@ -14,7 +14,7 @@ import { fData } from '../../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock
-import { countries } from '../../../_mock';
+import { genders } from '../../../_mock';
 // components
 import Label from '../../../components/Label';
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
@@ -219,7 +219,7 @@ export default function UserNewForm({ isEdit, currentUser }) {
 
               <RHFSelect name="country" label="Country" placeholder="Country">
                 <option value="" />
-                {countries.map((option) => (
+                {genders.map((option) => (
                   <option key={option.code} value={option.label}>
                     {option.label}
                   </option>

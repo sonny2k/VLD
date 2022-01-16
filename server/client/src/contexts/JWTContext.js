@@ -14,35 +14,35 @@ const initialState = {
 
 const handlers = {
   INITIALIZE: (state, action) => {
-    const { isAuthenticated, user } = action.payload;
+    const { isAuthenticated, account } = action.payload;
     return {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user,
+      account,
     };
   },
   LOGIN: (state, action) => {
-    const { user } = action.payload;
+    const { account } = action.payload;
 
     return {
       ...state,
       isAuthenticated: true,
-      user,
+      account,
     };
   },
   LOGOUT: (state) => ({
     ...state,
     isAuthenticated: false,
-    user: null,
+    account: null,
   }),
   REGISTER: (state, action) => {
-    const { user } = action.payload;
+    const { account } = action.payload;
 
     return {
       ...state,
       isAuthenticated: true,
-      user,
+      account,
     };
   },
 };
@@ -77,14 +77,14 @@ function AuthProvider({ children }) {
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
 
-          const response = await axios.get('/api/account/my-account');
-          const { user } = response.data;
+          const response = await axios.get('/api/user/account/info');
+          const { account } = response.data;
 
           dispatch({
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: true,
-              user,
+              account,
             },
           });
         } else {
@@ -92,7 +92,7 @@ function AuthProvider({ children }) {
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: false,
-              user: null,
+              account: null,
             },
           });
         }
@@ -102,7 +102,7 @@ function AuthProvider({ children }) {
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
-            user: null,
+            account: null,
           },
         });
       }
@@ -111,18 +111,18 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (phone, password) => {
+  const login = async (phonenum, password) => {
+    const phone = `+84${phonenum.slice(1)}`
     const response = await axios.post('/api/user/auth/login', {
       phone,
       password,
     });
-    const { accessToken, user } = response.data;
-
+    const { accessToken, account } = response.data;
     setSession(accessToken);
     dispatch({
       type: 'LOGIN',
       payload: {
-        user,
+        account,
       },
     });
   };
@@ -135,13 +135,13 @@ function AuthProvider({ children }) {
       lname,
       role,
     });
-    const { accessToken, user } = response.data;
+    const { accessToken, account } = response.data;
 
     window.localStorage.setItem('accessToken', accessToken);
     dispatch({
       type: 'REGISTER',
       payload: {
-        user,
+        account,
       },
     });
   };

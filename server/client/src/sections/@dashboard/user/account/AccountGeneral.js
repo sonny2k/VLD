@@ -12,7 +12,7 @@ import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fData } from '../../../../utils/formatNumber';
 // _mock
-import { countries } from '../../../../_mock';
+import { genders } from '../../../../_mock';
 // components
 import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
 
@@ -21,24 +21,36 @@ import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } fro
 export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useAuth();
+  const { account } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required('Name is required'),
   });
 
+  const gender = account.gender;
+  let genderview = "";
+  if (gender === 1) {
+    genderview = "Nam"
+  } 
+  if (gender === 2) {
+    genderview = "Nữ"
+  } 
+  if (gender === 3) {
+    genderview = "Không xác định"
+  } 
+
   const defaultValues = {
-    displayName: user?.displayName || '',
-    phoneNumber: user?.phoneNumber || '',
-    photoURL: user?.photoURL || '',
-    email: user?.email || '',
-    country: user?.country || '',
-    address: user?.address || '',
-    state: user?.state || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    about: user?.about || '',
-    isPublic: user?.isPublic || '',
+    displayName: account?.lname +  account?.fname || '',
+    phoneNumber: account?.phone || '',
+    photoURL: account?.profilepic || '',
+    email: account?.email || '',
+    gender: genderview || '',
+    address: account?.address.street || '',
+    state: account?.address.district || '',
+    city: account?.address.city || '',
+    zipCode: account?.address.ward || '',
+    about: account?.about || '',
+    isPublic: account?.isPublic || '',
   };
 
   const methods = useForm({
@@ -124,9 +136,9 @@ export default function AccountGeneral() {
               <RHFTextField name="phoneNumber" label="Số điện thoại" />
               <RHFTextField name="address" label="Tên đường" />
 
-              <RHFSelect name="country" label="Country" placeholder="Nhóm máu">
+              <RHFSelect name="gender" label="Giới tính">
                 <option value="" />
-                {countries.map((option) => (
+                {genders.map((option) => (
                   <option key={option.code} value={option.label}>
                     {option.label}
                   </option>

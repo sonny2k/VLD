@@ -143,14 +143,13 @@ router.post("/createuser", verifyToken, async (req, res) => {
 // @access Public
 router.post("/login", async (req, res) => {
   const { phone, password } = req.body;
-  const phonenum = `+84${phone.slice(1)}`
   //simple validation
   if (!phone || !password)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
   try {
     // Check for existing account
-    const account = await Account.findOne({ phonenum });
+    const account = await Account.findOne({ phone });
     if (!account)
       return res
         .status(400)
@@ -170,7 +169,8 @@ router.post("/login", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Đăng nhập thành công",
+      account: account,
+      user: await User.findOne({ accountId: account._id }),
       accessToken,
     });
   } catch (error) {

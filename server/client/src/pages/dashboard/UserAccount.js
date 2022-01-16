@@ -17,6 +17,7 @@ import {
   AccountGeneral,
   AccountBilling,
   AccountSocialLinks,
+  AccountUser,
   AccountNotifications,
   AccountChangePassword,
 } from '../../sections/@dashboard/user/account';
@@ -37,7 +38,7 @@ export default function UserAccount() {
     {
       value: 'Hồ sơ bệnh án',
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
-      component: <AccountGeneral />,
+      component: <AccountUser />,
     },
     // {
     //   value: 'Hồ sơ bệnh án',

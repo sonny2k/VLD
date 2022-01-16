@@ -38,7 +38,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use("/api/user/auth", authUserRouter);
 app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
-app.use("/api/home", homepageRouter);
+app.use("/api/user/homepage", homepageRouter);
 
 app.get("/", (req, res) => res.send("Hello world"));
 

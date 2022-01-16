@@ -12,7 +12,7 @@ import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fData } from '../../../../utils/formatNumber';
 // _mock
-import { bloodtypes } from '../../../../_mock';
+import { genders } from '../../../../_mock';
 // components
 import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
 
@@ -21,24 +21,24 @@ import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } fro
 export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useAuth();
+  const { account } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    displayName: Yup.string().required('Họ tên là bắt buộc'),
   });
 
   const defaultValues = {
-    displayName: user?.displayName || '',
-    phoneNumber: user?.phoneNumber || '',
-    photoURL: user?.photoURL || '',
-    email: user?.email || '',
-    country: user?.country || '',
-    address: user?.address || '',
-    state: user?.state || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    about: user?.about || '',
-    isPublic: user?.isPublic || '',
+    displayName: account?.lname + account?.fname || '',
+    phoneNumber: account?.phone || '',
+    photoURL: account?.profilepic || '',
+    email: account?.email || '',
+    country: account?.country || '',
+    address: account?.address || '',
+    state: account?.state || '',
+    city: account?.address.city || '',
+    zipCode: account?.zipCode || '',
+    about: account?.about || '',
+    isPublic: account?.isPublic || '',
   };
 
   const methods = useForm({
@@ -134,7 +134,7 @@ export default function AccountGeneral() {
               </RHFSelect> */}
                  <RHFSelect name="country" label="Country" placeholder="Nhóm máu">
                 <option value="" />
-                {bloodtypes.map((option) => (
+                {genders.map((option) => (
                   <option key={option.code} value={option.label}>
                     {option.label}
                   </option>
