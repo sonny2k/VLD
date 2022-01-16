@@ -111,8 +111,7 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (phonenum, password) => {
-    const phone = `+84${phonenum.slice(1)}`
+  const login = async (phone, password) => {
     const response = await axios.post('/api/user/auth/login', {
       phone,
       password,

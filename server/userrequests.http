@@ -94,11 +94,13 @@ Content-Type: application/json
 ### 
 GET http://localhost:1210/api/user/account/info
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWUzNzVkOTk0ZDUxMTBhY2FlNDMwNmMiLCJpYXQiOjE2NDIyOTg2NjZ9.2tROAi6b0FxyX_yT0loEo7X_U5v6p09kQBX02Acu8xM
+Content-Type: application/json
 
 ### 
 PUT http://localhost:1210/api/user/account/info
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWUzNzVkOTk0ZDUxMTBhY2FlNDMwNmMiLCJpYXQiOjE2NDIyOTg2NjZ9.2tROAi6b0FxyX_yT0loEo7X_U5v6p09kQBX02Acu8xM
 Content-Type: application/json
+
 
 {
     "profilepic": "https://google.com",
