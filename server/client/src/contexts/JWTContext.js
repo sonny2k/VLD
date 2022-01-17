@@ -2,7 +2,7 @@ import { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 // utils
 import axios from '../utils/axios';
-import { isValidToken, setSession } from '../utils/jwt';
+import { setSession } from '../utils/jwt';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +45,14 @@ const handlers = {
       account,
     };
   },
+  VERIFYCODE: (state, action) => {
+    const { message } = action.payload;
+
+    return {
+      ...state,
+      message,
+    };
+  },
 };
 
 const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
@@ -74,7 +82,7 @@ function AuthProvider({ children }) {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
 
-        if (accessToken && isValidToken(accessToken)) {
+        if (accessToken) {
           setSession(accessToken);
 
           const response = await axios.get('/api/user/account/info');
@@ -126,10 +134,18 @@ function AuthProvider({ children }) {
     });
   };
 
-  const register = async (phone, password, fname, lname, role) => {
+  const register = async (profilepic, birthday, gender, email, phone, password, fname, lname, city, district, ward, street, role) => {
     const response = await axios.post('/api/user/auth/register', {
+      profilepic, 
+      birthday, 
+      gender, 
+      email,
       phone,
       password,
+      city, 
+      district, 
+      ward, 
+      street,
       fname,
       lname,
       role,
@@ -145,8 +161,14 @@ function AuthProvider({ children }) {
     });
   };
 
+  const createuser = async (account) => {
+    await axios.post('/api/user/auth/createuser', {
+      account,
+    });
+  };
+
   const sendcode = async (phone) => {
-    const response = await axios.post('api/user/auth/sendcode', {
+    await axios.post('api/user/auth/sendcode', {
       phone,
     });
   }
@@ -155,6 +177,13 @@ function AuthProvider({ children }) {
     const response = await axios.post('api/user/auth/verifycode', {
       phone,
       code,
+    });
+    const { message } = response.data;
+    dispatch({
+      type: 'VERIFYCODE',
+      payload: {
+        message,
+      },
     });
   };
 
@@ -173,6 +202,7 @@ function AuthProvider({ children }) {
         register,
         sendcode,
         verifycode,
+        createuser,
       }}
     >
       {children}

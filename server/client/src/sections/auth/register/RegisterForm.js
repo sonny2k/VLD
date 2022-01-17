@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import 'yup-phone';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -20,7 +21,11 @@ import { FormProvider, RHFTextField } from '../../../components/hook-form';
 export default function RegisterForm() {
   const navigate = useNavigate();
 
-  const { register, sendcode, verifycode } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { message } = useAuth();
+
+  const { register, sendcode, verifycode, createuser } = useAuth();
 
   const isMountedRef = useIsMountedRef();
 
@@ -43,12 +48,19 @@ export default function RegisterForm() {
   });
 
   const defaultValues = {
+    profilepic: '',
     firstName: '',
     lastName: '',
+    birthdate: '',
+    gender: '',
     phone: '',
     password: '',
     passwordConfirmation: '',
     code: '', 
+    city: '',
+    district: '',
+    ward: '',
+    street: '',
     role: 'user'
   };
 
@@ -67,18 +79,22 @@ export default function RegisterForm() {
 
   const onSubmit = async (data) => {
     try {
-      const phonenum = `+84${data.phone.slice(1)}`
-      const check = await verifycode(phonenum, data.code);
-      if (check === "approved")
-        return await register(phonenum, data.password, data.firstName, data.lastName, data.role);
-      if (check === "pending")
-        return console.log("sai mã xm")
+      const phone = `+84${data.phone.slice(1)}`
+      await verifycode(phone, data.code);
+      if (message === "approved") {
+        await register(data.profilepic, data.birthday, data.gender, data.email, phone, data.password, data.firstName, data.lastName, data.city, data.district, data.ward, data.street, data.role);
+        enqueueSnackbar('Tạo tài khoản thành công');
+      }
+      if (message === "pending") {
+        const verifyfailed = "Sai mã xác minh"
+        setError('afterSubmit', verifyfailed);
+      }
     } catch (error) {
       console.error(error);
       reset();
       if (isMountedRef.current) {
         setError('afterSubmit', error);
-      }
+      } 
     }
   };
 
@@ -86,6 +102,7 @@ export default function RegisterForm() {
     try {
       const phonenum = `+84${data.phone.slice(1)}` 
       await sendcode(phonenum)
+      enqueueSnackbar('Mã đã được gửi vào số điện thoại của bạn!');
     } catch (error) {
       console.error(error);
       reset();

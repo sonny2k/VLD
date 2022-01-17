@@ -5,18 +5,18 @@ import axios from './axios';
 
 // ----------------------------------------------------------------------
 
-const isValidToken = (accessToken) => {
-  if (!accessToken) {
-    return false;
-  }
+// const isValidToken = (accessToken) => {
+//   if (!accessToken) {
+//     return false;
+//   }
 
-  // ----------------------------------------------------------------------
+//   // ----------------------------------------------------------------------
 
-  const decoded = jwtDecode(accessToken);
-  const currentTime = Date.now() / 1000;
+//   const decoded = jwtDecode(accessToken);
+//   const currentTime = Date.now() / 1000;
 
-  return decoded.exp > currentTime;
-};
+//   return decoded.exp > currentTime;
+// };
 
 //  const handleTokenExpired = (exp) => {
 //   let expiredTimer;
@@ -46,4 +46,4 @@ const setSession = (accessToken) => {
   }
 };
 
-export { isValidToken, setSession, verify, sign };
+export { setSession, verify, sign };

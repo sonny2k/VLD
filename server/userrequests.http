@@ -2,10 +2,18 @@ POST http://localhost:1210/api/user/auth/register
 Content-Type: application/json
 
 {
+    "profilepic": "",
+    "birthday": "",
+    "gender": "",
+    "email": "",
     "fname": "Thành",
     "lname": "Lưu",
-    "phone": "+84582199172",
+    "phone": "+84582199173",
     "password": "test1234",
+    "city": "", 
+    "district": "" , 
+    "ward": "", 
+    "street": "",
     "role": "user"
 }
 
@@ -98,15 +106,14 @@ Content-Type: application/json
 
 ### 
 PUT http://localhost:1210/api/user/account/info
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWUzNzVkOTk0ZDUxMTBhY2FlNDMwNmMiLCJpYXQiOjE2NDIyOTg2NjZ9.2tROAi6b0FxyX_yT0loEo7X_U5v6p09kQBX02Acu8xM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU0ZDIzYjliNGZkNDk2ZTYxZTg0NWQiLCJpYXQiOjE2NDIzODU5Nzl9.gxpmMXFV8j-dGLX3x54xwIPhIZ1ztMtZ7Wmu3qz9I1c
 Content-Type: application/json
-
 
 {
     "profilepic": "https://google.com",
-    "fname": "Ngoc",
-    "lname": "Tieu",
-    "birthday": "12-10-2000",
+    "fname": "Thanh",
+    "lname": "Luu",
+    "birthday": "25-04-2000",
     "gender": 2,
     "city": "Hồ Chí Minh",
     "district": "7",

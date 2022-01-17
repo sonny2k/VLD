@@ -13,7 +13,7 @@ const AccountSchema = new Schema({
         type: String,
         required: true
     },
-    birthday: {
+    birthday: { 
         type: Date
     },
     gender: {

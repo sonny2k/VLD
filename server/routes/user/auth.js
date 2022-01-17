@@ -16,7 +16,7 @@ const User = require("../../models/User");
 // @desc Register user
 // @access Public
 router.post("/register", async (req, res) => {
-  const { phone, password, fname, lname, role } = req.body;
+  const { profilepic, birthday, gender, email, phone, password, fname, lname, city, district, ward, street, role } = req.body;
 
   //simple validation
   if (!phone || !password || !fname || !lname || !role)
@@ -35,10 +35,15 @@ router.post("/register", async (req, res) => {
     //OK!
     const hashedPassword = await argon2.hash(password);
     const newAccount = new Account({
+      profilepic, 
+      birthday, 
+      gender, 
+      email,
       fname,
       lname,
       phone,
       password: hashedPassword,
+      address: { city, district, ward, street },
       role,
     });
     await newAccount.save();
@@ -98,17 +103,10 @@ router.post("/verifycode", async (req, res) => {
 router.post("/createuser", verifyToken, async (req, res) => {
   const {
     account,
-    bloodtype,
-    height,
-    weight,
-    pastmedicalhistory,
-    drughistory,
-    familyhistory,
   } = req.body;
 
   //check for existing account
   const user = await User.findOne({ account });
-
   if (user)
     return res
       .status(400)
@@ -117,13 +115,7 @@ router.post("/createuser", verifyToken, async (req, res) => {
   //create a new user based on the above account
   try {
     const newUser = new User({
-      account,
-      bloodtype,
-      height,
-      weight,
-      pastmedicalhistory,
-      drughistory,
-      familyhistory,
+      account: req.accountId,
     });
     await newUser.save();
 
