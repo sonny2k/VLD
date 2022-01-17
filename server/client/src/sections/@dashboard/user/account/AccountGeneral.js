@@ -39,16 +39,18 @@ export default function AccountGeneral() {
     genderview = "Không xác định"
   } 
 
+  const name = `${account?.fname} ${account?.lname}`;
+
   const defaultValues = {
-    displayName: account?.lname +  account?.fname || '',
+    displayName: name || '',
     phoneNumber: account?.phone || '',
     photoURL: account?.profilepic || '',
     email: account?.email || '',
     gender: genderview || '',
     address: account?.address.street || '',
-    state: account?.address.district || '',
+    district: account?.address.district || '',
     city: account?.address.city || '',
-    zipCode: account?.address.ward || '',
+    ward: account?.address.ward || '',
     about: account?.about || '',
     isPublic: account?.isPublic || '',
   };
@@ -145,10 +147,10 @@ export default function AccountGeneral() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="Quận/Huyện" />
+              <RHFTextField name="district" label="Quận/Huyện" />
 
               <RHFTextField name="city" label="Thành phố" />
-              <RHFTextField name="zipCode" label="Phường/Xã" />
+              <RHFTextField name="ward" label="Phường/Xã" />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
