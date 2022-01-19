@@ -73,7 +73,7 @@ router.put("/:id", verifyToken, async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    res.status(500).json({ success: false, message: "Lỗi tải dữ liệu" });
   }
 });
 

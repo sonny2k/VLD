@@ -6,6 +6,7 @@ const authUserRouter = require("./routes/user/auth");
 const userRouter = require("./routes/user/user");
 const accountUserRouter = require("./routes/user/account");
 const homepageRouter = require("./routes/user/homepage");
+const consultationRouter = require("./routes/user/consultation");
 
 const connectDB = async () => {
   try {
@@ -34,6 +35,7 @@ app.use("/api/user/auth", authUserRouter);
 app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
+app.use("/api/user/consultation", consultationRouter);
 
 app.get("/", (req, res) => res.send("Hello world"));
 
