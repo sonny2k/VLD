@@ -22,25 +22,24 @@ router.get("/info", verifyToken, async (req, res) => {
 // @access Private
 router.put("/info", verifyToken, async (req, res) => {
   const {
-    profilepic,
     fname,
     lname,
     birthday,
     gender,
+    email,
     city,
     district,
     ward,
     street,
   } = req.body;
 
-  const datebirthday = new Date(birthday);
   try {
     let updatedAccount = {
-      profilepic,
       fname,
       lname,
-      datebirthday,
+      birthday,
       gender,
+      email,
       address: { city, district, ward, street },
     };
 
@@ -61,7 +60,7 @@ router.put("/info", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Cập nhật tài khoản thành công",
-      user: updatedAccount,
+      account: updatedAccount,
     });
   } catch (error) {
     console.log(error);

@@ -91,6 +91,11 @@ router.post("/changepassword", verifyToken, async (req, res) => {
       .status(400)
       .json({ success: false, message: "Sai mật khẩu hiện tại" });
 
+  if (newpass === password)
+    return res
+      .status(400)
+      .json({ success: false, message: "Mật khẩu mới trùng với mật khẩu cũ, xin kiểm tra lại" });
+      
   const hashedNewPassword = await argon2.hash(newpass);
 
   try {
