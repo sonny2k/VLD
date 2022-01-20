@@ -13,8 +13,14 @@ router.get("/doctor/:id", async (req, res) => {
   res.send(adoctor);
 });
 
+router.get("/docdep/:id", async (req, res) => {
+  const doctor = await Doctors.find({ department: req.params.id });
+  res.send(doctor);
+});
+
 router.get("/department", async (req, res) => {
   const alldepartments = await Departments.find();
   res.send(alldepartments);
 });
+
 module.exports = router;
