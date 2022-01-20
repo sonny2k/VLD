@@ -30,7 +30,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   const {
     status,
     symptom,
-    date,
+    dateconsult,
     hour,
     ratingcontent,
     roomname,
@@ -39,13 +39,13 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     ratingstarcontent,
   } = req.body;
 
-  const dateconsult = new Date(date);
+  const date = new Date(dateconsult);
 
   try {
     const newConsult = new Consultations({
       status,
       symptom,
-      dateconsult,
+      date,
       hour,
       ratingcontent,
       roomname,
@@ -57,7 +57,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
     res.json({
       success: true,
-      message: "Đặt lịch thành công",
+      message: "Bạn đã đăng kí lịch thăm khám thành công",
       newConsult,
     });
   } catch (error) {
