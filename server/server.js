@@ -42,7 +42,7 @@ app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
 app.use("/api/user/consultation", consultationRouter);
 
-app.get("/", (req, res) => res.send("Hello world"));
+app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
 const PORT = process.env.PORT || 1210;
 
