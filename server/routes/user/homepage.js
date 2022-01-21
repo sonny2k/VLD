@@ -4,7 +4,11 @@ const Doctors = require("../../models/Doctor");
 const Departments = require("../../models/Department");
 
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Doctors.find();
+  const alldoctors = await Doctors.find().populate("account", [
+    "profilepic",
+    "fname",
+    "lname",
+  ]);
   res.send(alldoctors);
 });
 
@@ -14,8 +18,13 @@ router.get("/doctor/:id", async (req, res) => {
 });
 
 router.get("/docdep/:id", async (req, res) => {
-  const doctor = await Doctors.find({ department: req.params.id });
-  res.send(doctor);
+  const doctordep = await Doctors.find({ department: req.params.id });
+  res.send(doctordep);
+});
+
+router.get("/docacc/:id", async (req, res) => {
+  const doctoracc = await Doctors.find({ account: req.params.id });
+  res.send(doctoracc);
 });
 
 router.get("/department", async (req, res) => {

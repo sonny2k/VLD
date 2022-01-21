@@ -138,6 +138,10 @@ GET http://localhost:1210/api/home/docdep/61e915d19485388e65703633
 Content-Type: application/json
 
 ###
+GET http://localhost:1210/api/home/docacc/61e21e9f1d54cf11cc5e2708
+Content-Type: application/json
+
+###
 GET http://localhost:1210/api/home/department
 Content-Type: application/json
 
