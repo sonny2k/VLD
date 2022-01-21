@@ -6,15 +6,15 @@ Content-Type: application/json
     "birthday": "10-12-2000",
     "gender": "",
     "email": "",
-    "fname": "Thành",
-    "lname": "Lưu",
-    "phone": "+84582199172",
+    "fname": "Khanh",
+    "lname": "Đinh",
+    "phone": "+84582199174",
     "password": "test1234",
     "city": "", 
     "district": "" , 
     "ward": "", 
     "street": "",
-    "role": "user"
+    "role": "Bác sĩ"
 }
 
 ###
