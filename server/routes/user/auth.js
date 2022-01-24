@@ -67,14 +67,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/sendcode", async (req, res) => {
   const { phone } = req.body;
-  //check for existing account
-  const account = await Account.findOne({ phone });
-
-  if (account)
-    return res.status(400).json({
-      success: false,
-      message: "Số điện thoại đã được đăng ký ở tài khoản khác",
-    });
 
   //send code to phone number
   client.verify
@@ -85,14 +77,7 @@ router.post("/sendcode", async (req, res) => {
 
 router.post("/verifycode", async (req, res) => {
   const { phone, code } = req.body;
-  //check for existing account
-  const account = await Account.findOne({ phone });
 
-  if (account)
-    return res.status(400).json({
-      success: false,
-      message: "Số điện thoại đã được đăng ký ở tài khoản khác",
-    });
   //check verify code
   await client.verify
     .services("VA85da000b869107ba0c8f11f348519989")
@@ -212,7 +197,6 @@ router.post("/resetpassword", async (req, res) => {
       res.json({
         success: true,
         message: "Mật khẩu mới đã được cập nhật",
-        account: updatedPassword,
       });
     } catch (error) {
       console.log(error);
