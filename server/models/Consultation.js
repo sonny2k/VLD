@@ -14,9 +14,6 @@ const ConsultationSchema = new Schema({
   hour: {
     type: String,
   },
-  ratingcontent: {
-    type: String,
-  },
   roomname: {
     type: String,
   },
@@ -27,9 +24,6 @@ const ConsultationSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",
-  },
-  ratingstarcontent: {
-    type: Number,
   },
 });
 
