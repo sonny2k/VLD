@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const Doctors = require("../../models/Doctor");
-const Departments = require("../../models/Department");
+const Account = require("../../models/Account");
+const Department = require("../../models/Department");
 
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Doctors.find().populate("account", ['fname', 'lname', 'profilepic']);
+  const alldoctors = await Account.find({ role: "Bác sĩ" });
   res.send(alldoctors);
 });
 
 router.get("/doctor/:id", async (req, res) => {
-  const adoctor = await Doctors.findOne({ _id: req.params.id });
+  const adoctor = await Doctor.findOne({ _id: req.params.id });
   res.send(adoctor);
 });
 
 router.get("/docdep/:id", async (req, res) => {
-  const doctor = await Doctors.find({ department: req.params.id });
+  const doctor = await Doctor.find({ department: req.params.id });
   res.send(doctor);
 });
 
 router.get("/department", async (req, res) => {
-  const alldepartments = await Departments.find();
+  const alldepartments = await Department.find();
   res.send(alldepartments);
 });
 
