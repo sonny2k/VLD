@@ -68,44 +68,4 @@ router.put("/info", verifyToken, async (req, res) => {
   }
 });
 
-// @route PUT api/user/account/address
-// @desc Edit user address
-// @access Private
-router.put("/address", verifyToken, async (req, res) => {
-  const {
-    city,
-    district,
-    ward,
-    street,
-  } = req.body;
-
-  try {
-    let updatedAccount = {
-      address: { city, district, ward, street },
-    };
-
-    const profileupdatecondition = { _id: req.accountId };
-    updatedAccount = await Account.findOneAndUpdate(
-      profileupdatecondition,
-      updatedAccount,
-      { new: true }
-    );
-
-    // User not authorized to update profile
-    if (!updatedAccount)
-      return res.status(400).json({
-        success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
-      });
-
-    res.json({
-      success: true,
-      message: "Cập nhật tài khoản thành công",
-      account: updatedAccount,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
-  }
-});
 module.exports = router;
