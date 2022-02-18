@@ -5,7 +5,7 @@ const Department = require("../../models/Department");
 const Doctor = require("../../models/Doctor");
 
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Doctors.find();
+  const alldoctors = await Doctor.find().populate('account');
   res.send(alldoctors);
 });
 
