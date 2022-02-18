@@ -5,7 +5,7 @@ const Department = require("../../models/Department");
 const Doctor = require("../../models/Doctor");
 
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Account.find({ role: "Bác sĩ" });
+  const alldoctors = await Doctors.find();
   res.send(alldoctors);
 });
 
