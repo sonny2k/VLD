@@ -7,8 +7,7 @@ const DoctorSchema = new Schema({
     ref: "accounts",
   },
   department: {
-    type: Schema.Types.ObjectId,
-    ref: "accounts",
+    type: String,
   },
   description: {
     type: String,
@@ -43,11 +42,14 @@ const DoctorSchema = new Schema({
     star: Number,
     date: Date,
   }),
-  availables: new Schema({
+  available: new Schema({
     date: Date,
     hour: String,
   }),
   excellence: {
+    type: String,
+  },
+  signature: {
     type: String,
   },
 });
