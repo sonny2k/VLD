@@ -10,8 +10,15 @@ router.get("/doctor", async (req, res) => {
 });
 
 router.get("/doctor/:id", async (req, res) => {
-  const adoctor = await Doctor.findOne({ _id: req.params.id }).populate('account');
-  res.send(adoctor);
+  try {
+    const adoctor = await Doctor.findOne({ _id: req.params.id }).populate('account');
+    if (!adoctor)
+      return res.status(400).json({ success: false, message: "Không tìm thấy bác sĩ này" });
+    res.send(adoctor);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+  }
 });
 
 router.get("/docdep/:id", async (req, res) => {
