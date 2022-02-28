@@ -42,7 +42,7 @@ const DoctorSchema = new Schema({
     star: Number,
     date: Date,
   }),
-  available: new Schema({
+  availables: new Schema({
     date: Date,
     hour: String,
   }),
