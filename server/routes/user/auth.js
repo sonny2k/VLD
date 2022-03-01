@@ -69,20 +69,28 @@ router.post("/sendcode", async (req, res) => {
   const { phone } = req.body;
 
   //send code to phone number
-  client.verify
+  try {
+    client.verify
     .services("VA85da000b869107ba0c8f11f348519989")
     .verifications.create({ to: phone, channel: "sms" })
     .then((verification) => res.json({message:verification.status}));
+  } catch (error) {
+    res.json({message:error});
+  }
 });
 
 router.post("/verifycode", async (req, res) => {
   const { phone, code } = req.body;
 
   //check verify code
-  await client.verify
+  try {
+    await client.verify
     .services("VA85da000b869107ba0c8f11f348519989")
     .verificationChecks.create({ to: phone, code: code })
     .then((verification_check) => res.json({message:verification_check.status}));
+  } catch (error) {
+    res.json({message:error});
+  }
 });
 
 router.post("/createuser", verifyToken, async (req, res) => {
