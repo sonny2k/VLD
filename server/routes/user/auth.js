@@ -75,7 +75,7 @@ router.post("/sendcode", async (req, res) => {
     .verifications.create({ to: phone, channel: "sms" })
     .then((verification) => res.json({message:verification.status}));
   } catch (error) {
-    res.json({message:error});
+    res.json({message:"Lỗi máy chủ"});
   }
 });
 
@@ -89,7 +89,7 @@ router.post("/verifycode", async (req, res) => {
     .verificationChecks.create({ to: phone, code: code })
     .then((verification_check) => res.json({message:verification_check.status}));
   } catch (error) {
-    res.json({message:error});
+    res.json({message:"Lỗi máy chủ"});
   }
 });
 
