@@ -56,6 +56,7 @@ router.post("/register", async (req, res) => {
 
     res.json({
       success: true,
+      account: account,
       message: "Tạo tài khoản thành công",
       accessToken,
     });
