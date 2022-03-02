@@ -108,7 +108,7 @@ router.post("/createuser", verifyToken, async (req, res) => {
   //create a new user based on the above account
   try {
     const newUser = new User({
-      account: req.accountId,
+      account: account,
     });
     await newUser.save();
 
