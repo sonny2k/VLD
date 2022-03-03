@@ -50,10 +50,10 @@ Content-Type: application/json
 
 POST http://localhost:1210/api/user/auth/createuser
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWUyMTlhMTI4ZGZlYjU1N2M5YWYyZjAiLCJpYXQiOjE2NDIyMDc3Mjd9.f8I-gLJ7thA7nENWCk6UTLONOcyZinqvfXnl3CEXCX8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwOGRmNTU4YzZhZTRkOWJjOGIyOGYiLCJpYXQiOjE2NDYzMDA2NjF9.R_6Glbv1igTIdREVlvKq7ALiY5cO-lejXDuzWwAuUVA
 
 {
-    "account": "61e219a128dfeb557c9af2f0",
+    "account": "61e51f2da695cff2bd5c011f",
     "bloodtype": "AB",
     "height": "1m75",
     "weight": "68kg",

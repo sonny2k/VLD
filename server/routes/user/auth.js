@@ -98,7 +98,7 @@ router.post("/verifycode", async (req, res) => {
 
 router.post("/createuser", verifyToken, async (req, res) => {
   const {
-    account,
+    id,
   } = req.body;
 
   //check for existing account
@@ -111,7 +111,7 @@ router.post("/createuser", verifyToken, async (req, res) => {
   //create a new user based on the above account
   try {
     const newUser = new User({
-      account: account,
+      account: id,
     });
     await newUser.save();
 
