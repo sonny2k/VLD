@@ -8,13 +8,13 @@ Content-Type: application/json
     "email": "",
     "fname": "Khanh",
     "lname": "Đinh",
-    "phone": "+84582199174",
+    "phone": "+84582199172",
     "password": "test1234",
     "city": "", 
     "district": "" , 
     "ward": "", 
     "street": "",
-    "role": "Bác sĩ"
+    "role": "Người dùng"
 }
 
 ###

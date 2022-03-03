@@ -24,9 +24,9 @@ router.post("/register", async (req, res) => {
 
   try {
     //check for existing account
-    const account = await Account.findOne({ phone });
+    const exists = await Account.findOne({ phone });
 
-    if (account)
+    if (exists)
       return res.status(400).json({
         success: false,
         message: "Số điện thoại đã được đăng ký ở tài khoản khác",
@@ -53,6 +53,8 @@ router.post("/register", async (req, res) => {
       { accountId: newAccount._id },
       process.env.ACCESS_TOKEN_SECRET
     );
+
+    const account = await Account.findOne(newAccount._id);
 
     res.json({
       success: true,
