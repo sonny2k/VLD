@@ -109,9 +109,11 @@ router.post("/createuser", verifyToken, async (req, res) => {
       .json({ success: false, message: "Người dùng này đã được tạo trước đó" });
 
   //create a new user based on the above account
+  const ObjectId = require('mongodb').ObjectID;
+  const newid = ObjectId(id);
   try {
     const newUser = new User({
-      account: id,
+      account: newid,
     });
     await newUser.save();
 

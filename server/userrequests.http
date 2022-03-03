@@ -50,16 +50,16 @@ Content-Type: application/json
 
 POST http://localhost:1210/api/user/auth/createuser
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwOGRmNTU4YzZhZTRkOWJjOGIyOGYiLCJpYXQiOjE2NDYzMDA2NjF9.R_6Glbv1igTIdREVlvKq7ALiY5cO-lejXDuzWwAuUVA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwOGZkYWFmY2FhZmJhYWM2MzRhMGUiLCJpYXQiOjE2NDYzMDExNDd9.P_I1wW64ypXYHqY4QgAfwhWPva37SmwnTgZqitUo430
 
 {
     "account": "61e51f2da695cff2bd5c011f",
-    "bloodtype": "AB",
-    "height": "1m75",
-    "weight": "68kg",
-    "pastmedicalhistory": "hehe",
-    "drughistory": "",
-    "familyhistory": ""
+    //"bloodtype": "AB",
+    //"height": "1m75",
+    //"weight": "68kg",
+    //"pastmedicalhistory": "hehe",
+    //"drughistory": "",
+    //"familyhistory": ""
 }
 
 ### 
