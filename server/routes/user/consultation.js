@@ -32,11 +32,8 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     symptom,
     dateconsult,
     hour,
-    ratingcontent,
-    roomname,
     doctor,
     user,
-    ratingstarcontent,
   } = req.body;
 
   const date = new Date(dateconsult);
@@ -47,11 +44,8 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       symptom,
       date,
       hour,
-      ratingcontent,
-      roomname,
       doctor,
       user,
-      ratingstarcontent,
     });
     await newConsult.save();
 
