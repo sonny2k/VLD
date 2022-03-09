@@ -77,12 +77,12 @@ router.put("/info", verifyToken, async (req, res) => {
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
 
-  if (!req.files) {
+  if (!req) {
     return res.status(400).send('Không có file nào được tải lên');
   }
 
-  let sampleFile = req.files.sampleFile
-	let uploadPath = __dirname + '/uploads/' + sampleFile.name
+  let sampleFile = req
+	let uploadPath = __dirname + '/uploads/'
 
 	sampleFile.mv(uploadPath, function (err) {
 		if (err) {
