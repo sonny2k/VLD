@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const imgur = require('imgur');
-const fs = require('fs');
-const fileUpload = require('express-fileupload');
-router.use(fileUpload());
 
 const Account = require("../../models/Account");
 
