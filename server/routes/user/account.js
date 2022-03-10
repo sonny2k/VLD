@@ -74,8 +74,8 @@ router.put("/info", verifyToken, async (req, res) => {
 // @desc Edit user profile pic
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
-  imgur.uploadFile(uploadPath).then((urlObject) => {
-    fs.unlinkSync(uploadPath)
+  imgur.uploadFile(req.path).then((urlObject) => {
+    fs.unlinkSync(req.path)
     const profilepic = urlObject.link;
 
     try {
