@@ -75,17 +75,17 @@ router.put("/info", verifyToken, async (req, res) => {
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
 
-  let sampleFile = req.files.sampleFile
-	let uploadPath = __dirname + '/uploads/' + sampleFile.name
+  // let sampleFile = req.files.sampleFile
+	// let uploadPath = __dirname + '/uploads/' + sampleFile.name
 
-	sampleFile.mv(uploadPath, function (err) {
-		if (err) {
-			return res.status(500).send(err)
-		}
+	// sampleFile.mv(uploadPath, function (err) {
+	// 	if (err) {
+	// 		return res.status(500).send(err)
+	// 	}
 
-		imgur.uploadFile(uploadPath).then((urlObject) => {
-			fs.unlinkSync(uploadPath)
-			const profilepic = urlObject.link;
+	// 	imgur.uploadFile(uploadPath).then((urlObject) => {
+	// 		fs.unlinkSync(uploadPath)
+	// 		const profilepic = urlObject.link;
 
       try {
         let updatedAccount = {
@@ -115,8 +115,8 @@ router.put("/profilepic", verifyToken, async (req, res) => {
         console.log(error);
         res.status(500).json({ success: false, message: "Lỗi nội bộ" });
       }
-		})
-	})
+	// 	})
+	// })
 });
 
 module.exports = router;
