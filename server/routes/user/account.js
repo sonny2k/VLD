@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const imgur = require('imgur')
+const fs = require('fs')
 
 const Account = require("../../models/Account");
 
@@ -73,38 +75,48 @@ router.put("/info", verifyToken, async (req, res) => {
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
 
-  const {
-    profilepic
-  } = req.body;
+  let sampleFile = req.files.sampleFile
+	let uploadPath = __dirname + '/uploads/' + sampleFile.name
 
-  try {
-    let updatedAccount = {
-      profilepic
-    };
+	sampleFile.mv(uploadPath, function (err) {
+		if (err) {
+			return res.status(500).send(err)
+		}
 
-    const profileupdatecondition = { _id: req.accountId };
-    updatedAccount = Account.findOneAndUpdate(
-      profileupdatecondition,
-      updatedAccount,
-      { new: true }
-    );
+		imgur.uploadFile(uploadPath).then((urlObject) => {
+			fs.unlinkSync(uploadPath)
+			const profilepic = urlObject.link;
 
-    // User not authorized to update profile
-    if (!updatedAccount)
-      return res.status(400).json({
-        success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
-      });
-
-    res.json({
-      success: true,
-      message: "Cập nhật ảnh đại diện thành công",
-      account: updatedAccount,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
-  }
+      try {
+        let updatedAccount = {
+          profilepic
+        };
+    
+        const profileupdatecondition = { _id: req.accountId };
+        updatedAccount = Account.findOneAndUpdate(
+          profileupdatecondition,
+          updatedAccount,
+          { new: true }
+        );
+    
+        // User not authorized to update profile
+        if (!updatedAccount)
+          return res.status(400).json({
+            success: false,
+            message: "Người dùng không có quyền cập nhật tài khoản này",
+          });
+    
+        res.json({
+          success: true,
+          message: "Cập nhật ảnh đại diện thành công",
+          account: updatedAccount,
+        });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+      }
+		})
+	})
 });
 
 module.exports = router;

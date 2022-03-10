@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyparser = require("body-parser");
+const fileUpload = require('express-fileupload')
 
 const authUserRouter = require("./routes/user/auth");
 const userRouter = require("./routes/user/user");
@@ -34,6 +35,7 @@ app.use(cors());
 app.use(express());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 //User routes
 app.use("/api/user/auth", authUserRouter);
