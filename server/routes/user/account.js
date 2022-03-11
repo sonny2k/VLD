@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const imgur = require('imgur')
-const fs = require('fs')
+const axios = require('axios');
+const FormData = require('form-data')
+const data = new FormData();
 
 const Account = require("../../models/Account");
 
@@ -74,13 +75,25 @@ router.put("/info", verifyToken, async (req, res) => {
 // @desc Edit user profile pic
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
-  imgur.uploadFile(req.profilepic.preview).then((urlObject) => {
-    fs.unlinkSync(req.profilepic.preview)
-    const profilepic = urlObject.link;
 
+  data.append('image', req.preview);
+
+  var config = {
+    method: 'post',
+    url: 'https://api.imgur.com/3/image',
+    headers: { 
+      'Authorization': 'Client-ID {{c6525daefceefc9}}, Bearer {{403fd465b6c81575784f495a23f2345ee371c5b0}}', 
+      ...data.getHeaders()
+    },
+    data : data
+  };
+
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data.link));
     try {
       let updatedAccount = {
-        profilepic
+        profilepic: response.data.link
       };
   
       const profileupdatecondition = { _id: req.accountId };
@@ -107,6 +120,9 @@ router.put("/profilepic", verifyToken, async (req, res) => {
       res.status(500).json({ success: false, message: "Lỗi nội bộ" });
     }
   })
+  .catch(function (error) {
+    console.log(error);
+  });
 });
 
 module.exports = router;
