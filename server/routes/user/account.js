@@ -76,7 +76,7 @@ router.put("/info", verifyToken, async (req, res) => {
 // @access Private
 router.put("/profilepic", verifyToken, async (req, res) => {
 
-  data.append('image', req.preview);
+  data.append('image', req);
 
   var config = {
     method: 'post',
