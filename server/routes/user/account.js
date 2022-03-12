@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const axios = require('axios');
-const FormData = require('form-data')
-const data = new FormData();
+const { cloudinary } = require('../../utils/cloudinary');
 
 const Account = require("../../models/Account");
 
@@ -74,30 +72,19 @@ router.put("/info", verifyToken, async (req, res) => {
 // @route PUT api/user/account/profilepic
 // @desc Edit user profile pic
 // @access Private
-router.put("/profilepic", verifyToken, async (req, res) => {
+router.post("/profilepic", verifyToken, async (req, res) => {
 
-  data.append('image', req);
-
-  var config = {
-    method: 'post',
-    url: 'https://api.imgur.com/3/image',
-    headers: { 
-      'Authorization': 'Client-ID {{c6525daefceefc9}}, Bearer {{403fd465b6c81575784f495a23f2345ee371c5b0}}', 
-      ...data.getHeaders()
-    },
-    data : data
-  };
-
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data.link));
+  try {
+    const fileStr = req.body.data;
+    const uploadResponse = await cloudinary.uploader.upload(fileStr);
+    console.log(uploadResponse.secure_url);
     try {
       let updatedAccount = {
-        profilepic: response.data.link
+        profilepic: uploadResponse.secure_url
       };
   
       const profileupdatecondition = { _id: req.accountId };
-      updatedAccount = Account.findOneAndUpdate(
+      updatedAccount = await Account.findOneAndUpdate(
         profileupdatecondition,
         updatedAccount,
         { new: true }
@@ -119,10 +106,10 @@ router.put("/profilepic", verifyToken, async (req, res) => {
       console.log(error);
       res.status(500).json({ success: false, message: "Lỗi nội bộ" });
     }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: 'Có lỗi xảy ra, vui lòng thử lại' });
+  }
 });
 
 module.exports = router;
