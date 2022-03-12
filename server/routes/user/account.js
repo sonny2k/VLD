@@ -75,7 +75,7 @@ router.put("/info", verifyToken, async (req, res) => {
 router.post("/profilepic", verifyToken, async (req, res) => {
 
   try {
-    const fileStr = req.body.data;
+    const fileStr = req.body;
     const uploadResponse = await cloudinary.uploader.upload(fileStr);
     console.log(uploadResponse.secure_url);
     try {
