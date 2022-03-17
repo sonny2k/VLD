@@ -1,49 +1,37 @@
 const express = require("express");
 const router = express.Router();
-const Doctors = require("../../models/Doctor");
-const Departments = require("../../models/Department");
+const Account = require("../../models/Account");
+const Department = require("../../models/Department");
+const Doctor = require("../../models/Doctor");
 
-// @route GET api/doctor
-// @desc get doctor list
-// @access public
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Doctors.find().populate("account", [
-    "profilepic",
-    "fname",
-    "lname",
-  ]);
+  const alldoctors = await Doctor.find().populate("account");
   res.send(alldoctors);
 });
 
-// @route GET api/doctorid
-// @desc get doctor list by id
-// @access public
 router.get("/doctor/:id", async (req, res) => {
-  const adoctor = await Doctors.findOne({ _id: req.params.id });
-  res.send(adoctor);
+  try {
+    const adoctor = await Doctor.findOne({ _id: req.params.id }).populate(
+      "account"
+    );
+    if (!adoctor)
+      return res
+        .status(400)
+        .json({ success: false, message: "Không tìm thấy bác sĩ này" });
+    res.send(adoctor);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+  }
 });
 
-// @route GET api/doctorid
-// @desc get doctor list by department id
-// @access public
 router.get("/docdep/:id", async (req, res) => {
-  const doctordep = await Doctors.find({ department: req.params.id });
-  res.send(doctordep);
+  const doctor = await Doctor.find({ department: req.params.id });
+  res.send(doctor);
 });
 
-// @route GET api/doctorid
-// @desc get doctor list by account id
-// @access public
-router.get("/docacc/:id", async (req, res) => {
-  const doctoracc = await Doctors.find({ account: req.params.id });
-  res.send(doctoracc);
-});
-
-// @route GET api/doctorid
-// @desc get department list
-// @access public
 router.get("/department", async (req, res) => {
-  const alldepartments = await Departments.find();
+  const alldepartments = await Department.find();
   res.send(alldepartments);
 });
 

@@ -169,3 +169,7 @@ Content-Type: application/json
     "doctor": "61e836d0d0abc69f73c98b00",
     "user": "61d140313f972b7b9c20434c"
 }
+###
+GET http://localhost:1210/api/user/prescription/viewListPrescription
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1MDgzOTJ9.ZIKyX54ZT6LZGQohSzrlSvF5nlOTjkDoI7cRrBCAgKs
+Content-Type: application/json

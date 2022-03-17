@@ -9,6 +9,7 @@ const userRouter = require("./routes/user/user");
 const accountUserRouter = require("./routes/user/account");
 const homepageRouter = require("./routes/user/homepage");
 const consultationRouter = require("./routes/user/consultation");
+const prescriptionRouter = require("./routes/user/prescription");
 
 const connectDB = async () => {
   try {
@@ -32,8 +33,10 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express());
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb", extended: true }));
+app.use(
+  express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
+);
 
 //User routes
 app.use("/api/user/auth", authUserRouter);
@@ -41,8 +44,9 @@ app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
 app.use("/api/user/consultation", consultationRouter);
+app.use("/api/user/prescription", prescriptionRouter);
 
-app.get("/", (req, res) => res.send("Hello world"));
+app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
 const PORT = process.env.PORT || 1210;
 

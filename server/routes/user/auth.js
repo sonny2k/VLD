@@ -16,7 +16,21 @@ const User = require("../../models/User");
 // @desc Register user
 // @access Public
 router.post("/register", async (req, res) => {
-  const { profilepic, birthday, gender, email, phone, password, fname, lname, city, district, ward, street, role } = req.body;
+  const {
+    profilepic,
+    birthday,
+    gender,
+    email,
+    phone,
+    password,
+    fname,
+    lname,
+    city,
+    district,
+    ward,
+    street,
+    role,
+  } = req.body;
 
   //simple validation
   if (!phone || !password || !fname || !lname || !role)
@@ -24,9 +38,9 @@ router.post("/register", async (req, res) => {
 
   try {
     //check for existing account
-    const account = await Account.findOne({ phone });
+    const exists = await Account.findOne({ phone });
 
-    if (account)
+    if (exists)
       return res.status(400).json({
         success: false,
         message: "Số điện thoại đã được đăng ký ở tài khoản khác",
@@ -35,9 +49,9 @@ router.post("/register", async (req, res) => {
     //OK!
     const hashedPassword = await argon2.hash(password);
     const newAccount = new Account({
-      profilepic, 
-      birthday, 
-      gender, 
+      profilepic,
+      birthday,
+      gender,
       email,
       fname,
       lname,
@@ -54,8 +68,11 @@ router.post("/register", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
+    const account = await Account.findOne(newAccount._id);
+
     res.json({
       success: true,
+      account: account,
       message: "Tạo tài khoản thành công",
       accessToken,
     });
@@ -67,43 +84,36 @@ router.post("/register", async (req, res) => {
 
 router.post("/sendcode", async (req, res) => {
   const { phone } = req.body;
-  //check for existing account
-  const account = await Account.findOne({ phone });
-
-  if (account)
-    return res.status(400).json({
-      success: false,
-      message: "Số điện thoại đã được đăng ký ở tài khoản khác",
-    });
 
   //send code to phone number
-  client.verify
-    .services("VA85da000b869107ba0c8f11f348519989")
-    .verifications.create({ to: phone, channel: "sms" })
-    .then((verification) => res.json({message:verification.status}));
+  try {
+    client.verify
+      .services("VA85da000b869107ba0c8f11f348519989")
+      .verifications.create({ to: phone, channel: "sms" })
+      .then((verification) => res.json({ message: verification.status }));
+  } catch (error) {
+    res.json({ message: "Lỗi máy chủ" });
+  }
 });
 
 router.post("/verifycode", async (req, res) => {
   const { phone, code } = req.body;
-  //check for existing account
-  const account = await Account.findOne({ phone });
 
-  if (account)
-    return res.status(400).json({
-      success: false,
-      message: "Số điện thoại đã được đăng ký ở tài khoản khác",
-    });
   //check verify code
-  await client.verify
-    .services("VA85da000b869107ba0c8f11f348519989")
-    .verificationChecks.create({ to: phone, code: code })
-    .then((verification_check) => res.json({message:verification_check.status}));
+  try {
+    await client.verify
+      .services("VA85da000b869107ba0c8f11f348519989")
+      .verificationChecks.create({ to: phone, code: code })
+      .then((verification_check) =>
+        res.json({ message: verification_check.status })
+      );
+  } catch (error) {
+    res.json({ message: "Lỗi máy chủ" });
+  }
 });
 
 router.post("/createuser", verifyToken, async (req, res) => {
-  const {
-    account,
-  } = req.body;
+  const { id } = req.body;
 
   //check for existing account
   const user = await User.findOne({ account });
@@ -113,9 +123,11 @@ router.post("/createuser", verifyToken, async (req, res) => {
       .json({ success: false, message: "Người dùng này đã được tạo trước đó" });
 
   //create a new user based on the above account
+  const mongoose = require("mongoose");
+  const newid = mongoose.Types.ObjectId(id);
   try {
     const newUser = new User({
-      account: req.accountId,
+      account: newid,
     });
     await newUser.save();
 
@@ -212,7 +224,6 @@ router.post("/resetpassword", async (req, res) => {
       res.json({
         success: true,
         message: "Mật khẩu mới đã được cập nhật",
-        account: updatedPassword,
       });
     } catch (error) {
       console.log(error);
