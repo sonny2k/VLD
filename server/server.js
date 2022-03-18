@@ -9,6 +9,7 @@ const userRouter = require("./routes/user/user");
 const accountUserRouter = require("./routes/user/account");
 const homepageRouter = require("./routes/user/homepage");
 const consultationRouter = require("./routes/user/consultation");
+const productRouter = require("./routes/user/product");
 
 const connectDB = async () => {
   try {
@@ -42,6 +43,7 @@ app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
 app.use("/api/user/consultation", consultationRouter);
+app.use("/api/products", productRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 

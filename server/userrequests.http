@@ -23,7 +23,7 @@ POST http://localhost:1210/api/user/auth/login
 Content-Type: application/json
 
 {
-    "phone": "+84582199172",
+    "phone": "+84582199174",
     "password": "test1234"
 }
 
