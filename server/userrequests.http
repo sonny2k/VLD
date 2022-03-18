@@ -192,8 +192,8 @@ Content-Type: application/json
     "specdes": "Quy cách sản phẩm"
 }
 ###
-PUT http://localhost:1210/api/user/prescription/updatePrescription/623343e694e597fa95a0bc43
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
+PUT http://localhost:1210/api/user/prescription/updatePrescription/623483d8db4386b577237a5d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDg4MzZ9.WgjcPA-dS6vcaGimsK36IPQL4MVOQdZlD9KSFMPp76Q
 Content-Type: application/json
 
 {
@@ -209,9 +209,39 @@ Content-Type: application/json
     "specdes": "Quy cách sản phẩm"
 }
 ###
-DELETE http://localhost:1210/api/user/prescription/deletePrescription/623343e694e597fa95a0bc43
+DELETE http://localhost:1210/api/user/prescription/deletePrescription/623483d8db4386b577237a5d
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
 
 ###
 GET http://localhost:1210/api/user/prescription/searchPrescription/Viêm họng
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
+
+###
+GET http://localhost:1210/api/admin/department/viewListDepartment
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+
+###
+POST http://localhost:1210/api/admin/department/createDepartment
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+Content-Type: application/json
+
+{
+    "name": "Khoa Chẩn đoán hình ảnh",
+    "description": "Khoa Chẩn đoán hình ảnh có trách nhiệm giúp Giám đốc Bệnh viện tổ chức thực hiện các kỹ thuật chẩn đoán hình ảnh để chẩn đoán và theo dõi kết quả điều trị cho bệnh nhân nội trú, ngoại trú phục vụ yêu cầu khám bệnh, chữa bệnh theo quy định của Nhà nước. Ngoài ra còn thực hiện các kỹ thuật can thiệp DSA để giúp điều trị, hổ trợ điều trị cho các bệnh lý: Dị dạng mạch máu, tắc nghẽn mạch máu, chảy máu, các khối U,…"
+}
+###
+PUT http://localhost:1210/api/admin/department/updateDepartment/6234846adb4386b577237a6f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+Content-Type: application/json
+
+{
+    "name": "Khoa Chẩn đoán hình ảnh",
+    "description": "Khoa Chẩn đoán hình ảnh có trách nhiệm giúp Giám đốc Bệnh viện tổ chức thực hiện các kỹ thuật chẩn đoán hình ảnh để chẩn đoán và theo dõi kết quả điều trị cho bệnh nhân nội trú, ngoại trú phục vụ yêu cầu khám bệnh, chữa bệnh theo quy định của Nhà nước. Ngoài ra còn thực hiện các kỹ thuật can thiệp DSA để giúp điều trị, hổ trợ điều trị cho các bệnh lý: Dị dạng mạch máu, tắc nghẽn mạch máu, chảy máu, các khối U,…"
+}
+###
+DELETE http://localhost:1210/api/admin/department/deleteDepartment/6234846adb4386b577237a6f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+###
+GET http://localhost:1210/api/admin/department/searchDepartment/Khoa ung bướu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+Content-Type: application/json

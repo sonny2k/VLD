@@ -6,7 +6,7 @@ const Prescription = require("../../models/Prescription");
 
 router.get("/viewListPrescription", verifyToken, async (req, res) => {
   try {
-    const preList = await Prescription.find();
+    const preList = await Prescription.find().populate("consultation");
     res.json({
       success: true,
       preList,
