@@ -173,3 +173,45 @@ Content-Type: application/json
 GET http://localhost:1210/api/user/prescription/viewListPrescription
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1MDgzOTJ9.ZIKyX54ZT6LZGQohSzrlSvF5nlOTjkDoI7cRrBCAgKs
 Content-Type: application/json
+
+###
+POST http://localhost:1210/api/user/prescription/createPrescription
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1MjE1NDB9.Gh3iAK1lAgct39qK41W5l-RHIntnSMxh9MadCY8thNM
+Content-Type: application/json
+
+{
+    "consultation": "61ece22958149b526e1ec79a",
+    "pname": "Toa thuốc",
+    "diagnosis": "Đau nhức xương khớp",
+    "note": "Hạn chế vận động",
+    "product": "6232e81a4ec426dd1fc4d3e2",
+    "quantity": 4,
+    "morningrate": "1 viên",
+    "noonrate": "1 viên",
+    "everate": "1 viên",
+    "specdes": "Quy cách sản phẩm"
+}
+###
+PUT http://localhost:1210/api/user/prescription/updatePrescription/623343e694e597fa95a0bc43
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
+Content-Type: application/json
+
+{
+    "consultation": "61ece22958149b526e1ec79a",
+    "pname": "Toa thuốc",
+    "diagnosis": "Đau",
+    "note": "Hạn chế vận động",
+    "product": "6232e81a4ec426dd1fc4d3e2",
+    "quantity": 4,
+    "morningrate": "1 viên",
+    "noonrate": "1 viên",
+    "everate": "1 viên",
+    "specdes": "Quy cách sản phẩm"
+}
+###
+DELETE http://localhost:1210/api/user/prescription/deletePrescription/623343e694e597fa95a0bc43
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
+
+###
+GET http://localhost:1210/api/user/prescription/searchPrescription/Viêm họng
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
