@@ -142,4 +142,26 @@ router.get("/searchPrescription/:diagnosis", verifyToken, async (req, res) => {
   }
 });
 
+router.get(
+  "/viewListPrescription/detail/:id",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const preListdetail = await Prescription.findOne({
+        _id: req.params.id,
+      }).populate("consultation");
+      res.json({
+        success: true,
+        preListdetail,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: "Lỗi tải dữ liệu",
+      });
+    }
+  }
+);
+
 module.exports = router;

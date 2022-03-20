@@ -144,7 +144,7 @@ Content-Type: application/json
 ###
 GET http://localhost:1210/api/home/department
 Content-Type: application/json
-
+====================================================================================================================================
 ###
 GET http://localhost:1210/api/user/consultation/viewlistconsult
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDI5MTU4NTd9.h26WnIQiGHMmshJrQCX7Qc_iKzhvIHgWrCBp5JDP2Tc
@@ -157,18 +157,20 @@ Content-Type: application/json
 
 ###
 POST http://localhost:1210/api/user/consultation/createconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI2NDIyMjB9.yefwjXLot1B__RJXvqTwpVlMAEXQAuVzpTd7y13F37s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAwNjl9.Q7bdHFp48lXlU70pT_5JeMgSKI_acWBYl_yJLrDS7Nk
 Content-Type: application/json
 
 {
-    "status": 4,
-    "symptom": "Lao phổi",
-    "dateconsult": "2022-05-05",
-    "hour": "30 phút",
-    "roomname": "98998",
-    "doctor": "61e836d0d0abc69f73c98b00",
+    "status": 1,
+    "symptom": "Viêm họng",
+    "dateconsult": "2022-02-01",
+    "hour": "20 phút",
+    "ratingcontent": "quá tuyệt vời",
+    "roomname": "2000000",
+    "doctor": "61e0cece97629c08e6644865",
     "user": "61d140313f972b7b9c20434c"
 }
+===================================================================================================================================
 ###
 GET http://localhost:1210/api/user/prescription/viewListPrescription
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1MDgzOTJ9.ZIKyX54ZT6LZGQohSzrlSvF5nlOTjkDoI7cRrBCAgKs
@@ -217,6 +219,11 @@ GET http://localhost:1210/api/user/prescription/searchPrescription/Viêm họng
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
 
 ###
+GET http://localhost:1210/api/user/prescription/viewListPrescription/detail/6232ff839c802c499d105bd9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+
+====================================================================================================================================
+###
 GET http://localhost:1210/api/admin/department/viewListDepartment
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
 
@@ -241,7 +248,66 @@ Content-Type: application/json
 ###
 DELETE http://localhost:1210/api/admin/department/deleteDepartment/6234846adb4386b577237a6f
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
+
 ###
 GET http://localhost:1210/api/admin/department/searchDepartment/Khoa ung bướu
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc2MDQ0MDZ9.cWpzZSoEGPkrRIJhPdMdL4Y9L5iNdQzxwdJXiQ2nleE
 Content-Type: application/json
+
+
+===================================================================================================================================
+
+###
+GET  http://localhost:1210/api/moderator/article/viewListArticle
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+Content-Type: application/json
+
+###
+POST http://localhost:1210/api/moderator/article/createArticle
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+Content-Type: application/json
+
+{
+    "articlecategory": "623677efa8e2456e66a49258",
+    "author": "Victoria Healthcare",
+    "briefdescription": "Thuốc được phân làm 2 loại: loại bán theo đơn của bác sĩ  và loại bán không cần đơn. Loại thuốc thứ 2 người bệnh có thể tự ý mua dùng để chữa các bệnh thông thường như: cảm sốt, ho, đau nhức nhẹ, tiêu chảy, táo bón, khó tiêu... Cả 2 loại thuốc đều là sản phẩm đặc biệt, đòi hỏi phải sử dụng đúng để đạt hiệu quả và an toàn. Ta chỉ sử dụng thuốc đúng khi có những hiểu biết nhất định, những thông tin cần thiết về thuốc đó.",
+    "content": "Đối với thuốc bán theo đơn, ta có thể thu nhận thông tin qua đơn thuốc bác sĩ sau khi khám đã chỉ định và có những lời dặn dò cần thiết.Đối với thuốc bán không cần đơn, ta nên hỏi dược sĩ tại nhà thuốc những điều cần biết về thuốc. Nhưng nếu có và tốt nhất cho cả 2 trường hợp nêu trên là ta nên đọc kỹ tờ “Hướng dẫn sử dụng” kèm theo thuốc. Tờ hướng dẫn của các thuốc mới đưa ra thị trường thường ghi đầy đủ các đề mục, dài và nhiều chữ. Một số ghi đơn giản và vắn tắt hơn. Ta nên đọc kỹ các phần sau:\n- Thành phần: Ghi tên hoạt chất hay còn gọi là dược chất và các tá dược. Thí dụ thuốc có biệt dược là zentel hoặc albendazol, trong thành phần ghi dược chất chính là albendazol là thuốc trị giun sán và thêm khá nhiều tá dược để tạo thành thuốc viên nén. Cần biết tên dược chất, vì đây chính là tên thuốc dùng cho việc điều trị. Đã có nhiều trường hợp bà mẹ cho con uống nhiều thuốc tưởng là khác nhau nhưng chỉ chứa một dược chất hạ sốt là paracetamol, đưa đến trẻ bị ngộ độc thuốc rất đáng tiếc.\n- Chỉ định: Là phần ghi những trường hợp dùng thuốc. Có thể ghi trường hợp bệnh điều trị cơn cao huyết áp) hoặc ghi trị tác nhân bệnh (trị giun đũa, giun kim, giun móc) hoặc dùng để dự phòng (dự phòng cơn đau thắt ngực). Cần đọc phần này để xem thuốc sẽ dùng có phù hợp với bệnh đang được điều trị hay không? \n- Cách dùng - liều dùng: Ghi cách dùng thuốc như thế nào như: ngậm dưới lưỡi, uống hoặc tiêm bắp, tĩnh mạch… Còn liều được ghi: liều dùng cho một lần, liều trong 24 giờ (tức trong một ngày), liều cho một đợt điều trị. Ví dụ thuốc được ghi: 500mg x 3 lần/ngày, trong 10 ngày, có nghĩa là mỗi lần dùng 500mg thuốc (thường là uống 1 viên chứa 500mg hoạt chất), dùng 3 lần trong ngày, dùng trong 10 ngày liên tiếp.\n- Chống chỉ định: Là phần ghi những trường hợp không được dùng thuốc. Thường ghi một số đối tượng như: phụ nữ có thai, phụ nữ cho con bú, trẻ em dưới 15 tuổi, người bị suy gan, suy thận, người bị mẫn cảm dị ứng với bất cứ chất nào trong thành phần của thuốc… hoặc trường hợp nhược cơ, hôn mê gan, loét dạ dày tiến triển…Nếu trong phần này chỉ ghi chống chỉ định phải hiểu là chống chỉ định tuyệt đối, tức là không vì lý do nào đó, trường hợp chống chỉ định lại linh động được dùng thuốc. Ví dụ: thuốc được ghi chống chỉ định đối với trẻ dưới 15 tuổi, ta phải tuyệt đối theo đúng điều này, đừng vì thấy trẻ 13-14 tuổi lớn con có vẻ già dặn ta lại cho dùng.\n- Lưu ý thận trọng: Là thành phần ghi những điều cần lưu ý, thí dụ có thuốc ghi trong thời gian dùng thuốc phải theo dõi chức năng gan, hoặc thuốc không được tiêm bắp mà phải tiêm tĩnh mạch chậm…Phần “lưu ý - thận trọng” có thể được xem là “chống chỉ định tương đối”. Có nghĩa là vì thận trọng có những trường hợp không được dùng thuốc nhưng không cấm hoàn toàn.  Ví dụ thuốc được ghi: “người lái xe hay vận hành máy móc cần thận trọng khi sử dụng thuốc, do thuốc có thể gây buồn ngủ, ngầy ngật” ta nên hiểu người lái xe hay vận hành máy móc nên tránh dùng thuốc, còn không làm việc vẫn có thể dùng hoặc thuốc được ghi: “thận trọng khi chỉ định cho trẻ dưới 2 tuổi” có nghĩa là tốt nhất nên tránh dùng cho trẻ dưới 2 tuổi, vì sự cần thiết bác sĩ vẫn có thể chỉ định thuốc cho trẻ và theo dõi kỹ. \n- Tác dụng phụ (hoặc tác dụng ngoại ý): Là phần ghi những tác dụng không phải dùng trong điều trị, xảy ra ngoài ý muốn. Ví dụ, một số thuốc dùng trong bệnh lý tim mạch uống vào là gây ho khan, hoặc có thuốc làm cho phân có màu đen, làm nước tiểu có màu vàng, màu xanh, đỏ…Một số tác dụng phụ của thuốc thường hay gặp: đau bụng vùng thượng vị, buồn nôn, nôn, tiêu chảy, nhức đầu, chóng mặt… thường các tác dụng phụ này sẽ mất đi khi ngưng dùng thuốc. \n- Tương tác thuốc: Là phần ghi thuốc nếu dùng cùng lúc với một số thuốc khác sẽ bị các phản ứng bất lợi. Ví dụ, thuốc aspirin nếu dùng chung bởi các thuốc giảm đau, chống viêm giống như nó (được gọi là các thuốc chống viêm không steroid), sẽ đưa đến tương tác thuốc làm tổn hại niêm mạc dạ dày (hại bao tử) hơn, hay aspirin nếu dùng chung với thuốc chống đông như coumarin sẽ gây xuất huyết.\n- Hạn dùng: Trong tờ hướng dẫn không ghi, tuy nhiên người sử dụng thuốc cần xem kỹ hạn dùng được ghi trên bao bì (nhãn thuốc, vỉ thuốc hoặc hộp giấy đựng lọ thuốc). Hạn dùng được định nghĩa là “khoảng thời gian sử dụng được ấn định cho một lô thuốc (thuốc được sản xuất theo lô) mà sau thời hạn này thuốc đó không còn giá trị sử dụng”. Như vậy, nếu đọc trên nhãn thuốc hoặc bao bì: HD (hoặc Exp.Date): 30/6/2009, có nghĩa là trong suốt thời gian từ lúc thuốc xuất xưởng đến hết ngày 30/6/ 2009 thuốc có giá trị sử dụng, đến ngày 1/7/2009 thuốc quá hạn sử dụng. Nếu thuốc quá hạn dùng, phải bỏ đi, không được sử dụng.Câu “Biết thuốc, biết ta, trăm trận trăm thắng” được dùng ở đây thật ra để chỉ kiến thức, kỹ năng chuyên môn cần có của bác sĩ, dược sĩ trong sử dụng thuốc chữa bệnh là chính. Còn sự hiểu biết về thuốc của người dùng thuốc cần phải có chỉ ở mức độ tối thiểu cơ bản, giúp người đó không dùng thuốc sai. Vì vậy, xin đặc biệt lưu ý, người dùng thuốc không nên có ảo tưởng “đọc xong bản hướng dẫn là hiểu biết hết về thuốc” và rồi tự ý chẩn đoán bệnh, tự chữa bệnh bằng thuốc. Tự chẩn đoán để tự chữa bệnh bằng thuốc là cách dễ chuốc họa vào thân.",
+    "banner":"Ảnh bài viết",
+    "title": "Cách đọc tờ hướng dẫn sử dụng thuốc",
+    "status": 2,
+    "datecreate": "2022-03-20",
+    "relevantarticles": "61e153f01a2d5f53158ce16d",
+    "publish": "2022-03-21",
+    "hourofpublish": "12:00"
+}
+
+###
+PUT http://localhost:1210/api/moderator/article/updateArticle/6236d7d51e6149dc855760ea
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+Content-Type: application/json
+
+{
+    "articlecategory": "623677efa8e2456e66a49258",
+    "author": "Victoria Healthcare",
+    "briefdescription": "Thuốc được phân làm 2 loại: loại bán theo đơn của bác sĩ  và loại bán không cần đơn. Loại thuốc thứ 2 người bệnh có thể tự ý mua dùng để chữa các bệnh thông thường như: cảm sốt, ho, đau nhức nhẹ, tiêu chảy, táo bón, khó tiêu... Cả 2 loại thuốc đều là sản phẩm đặc biệt, đòi hỏi phải sử dụng đúng để đạt hiệu quả và an toàn. Ta chỉ sử dụng thuốc đúng khi có những hiểu biết nhất định, những thông tin cần thiết về thuốc đó.",
+    "content": "Đối với thuốc bán theo đơn, ta có thể thu nhận thông tin qua đơn thuốc bác sĩ sau khi khám đã chỉ định và có những lời dặn dò cần thiết.Đối với thuốc bán không cần đơn, ta nên hỏi dược sĩ tại nhà thuốc những điều cần biết về thuốc. Nhưng nếu có và tốt nhất cho cả 2 trường hợp nêu trên là ta nên đọc kỹ tờ “Hướng dẫn sử dụng” kèm theo thuốc. Tờ hướng dẫn của các thuốc mới đưa ra thị trường thường ghi đầy đủ các đề mục, dài và nhiều chữ. Một số ghi đơn giản và vắn tắt hơn. Ta nên đọc kỹ các phần sau:\n- Thành phần: Ghi tên hoạt chất hay còn gọi là dược chất và các tá dược. Thí dụ thuốc có biệt dược là zentel hoặc albendazol, trong thành phần ghi dược chất chính là albendazol là thuốc trị giun sán và thêm khá nhiều tá dược để tạo thành thuốc viên nén. Cần biết tên dược chất, vì đây chính là tên thuốc dùng cho việc điều trị. Đã có nhiều trường hợp bà mẹ cho con uống nhiều thuốc tưởng là khác nhau nhưng chỉ chứa một dược chất hạ sốt là paracetamol, đưa đến trẻ bị ngộ độc thuốc rất đáng tiếc.\n- Chỉ định: Là phần ghi những trường hợp dùng thuốc. Có thể ghi trường hợp bệnh điều trị cơn cao huyết áp) hoặc ghi trị tác nhân bệnh (trị giun đũa, giun kim, giun móc) hoặc dùng để dự phòng (dự phòng cơn đau thắt ngực). Cần đọc phần này để xem thuốc sẽ dùng có phù hợp với bệnh đang được điều trị hay không? \n- Cách dùng - liều dùng: Ghi cách dùng thuốc như thế nào như: ngậm dưới lưỡi, uống hoặc tiêm bắp, tĩnh mạch… Còn liều được ghi: liều dùng cho một lần, liều trong 24 giờ (tức trong một ngày), liều cho một đợt điều trị. Ví dụ thuốc được ghi: 500mg x 3 lần/ngày, trong 10 ngày, có nghĩa là mỗi lần dùng 500mg thuốc (thường là uống 1 viên chứa 500mg hoạt chất), dùng 3 lần trong ngày, dùng trong 10 ngày liên tiếp.\n- Chống chỉ định: Là phần ghi những trường hợp không được dùng thuốc. Thường ghi một số đối tượng như: phụ nữ có thai, phụ nữ cho con bú, trẻ em dưới 15 tuổi, người bị suy gan, suy thận, người bị mẫn cảm dị ứng với bất cứ chất nào trong thành phần của thuốc… hoặc trường hợp nhược cơ, hôn mê gan, loét dạ dày tiến triển…Nếu trong phần này chỉ ghi chống chỉ định phải hiểu là chống chỉ định tuyệt đối, tức là không vì lý do nào đó, trường hợp chống chỉ định lại linh động được dùng thuốc. Ví dụ: thuốc được ghi chống chỉ định đối với trẻ dưới 15 tuổi, ta phải tuyệt đối theo đúng điều này, đừng vì thấy trẻ 13-14 tuổi lớn con có vẻ già dặn ta lại cho dùng.\n- Lưu ý thận trọng: Là thành phần ghi những điều cần lưu ý, thí dụ có thuốc ghi trong thời gian dùng thuốc phải theo dõi chức năng gan, hoặc thuốc không được tiêm bắp mà phải tiêm tĩnh mạch chậm…Phần “lưu ý - thận trọng” có thể được xem là “chống chỉ định tương đối”. Có nghĩa là vì thận trọng có những trường hợp không được dùng thuốc nhưng không cấm hoàn toàn.  Ví dụ thuốc được ghi: “người lái xe hay vận hành máy móc cần thận trọng khi sử dụng thuốc, do thuốc có thể gây buồn ngủ, ngầy ngật” ta nên hiểu người lái xe hay vận hành máy móc nên tránh dùng thuốc, còn không làm việc vẫn có thể dùng hoặc thuốc được ghi: “thận trọng khi chỉ định cho trẻ dưới 2 tuổi” có nghĩa là tốt nhất nên tránh dùng cho trẻ dưới 2 tuổi, vì sự cần thiết bác sĩ vẫn có thể chỉ định thuốc cho trẻ và theo dõi kỹ. \n- Tác dụng phụ (hoặc tác dụng ngoại ý): Là phần ghi những tác dụng không phải dùng trong điều trị, xảy ra ngoài ý muốn. Ví dụ, một số thuốc dùng trong bệnh lý tim mạch uống vào là gây ho khan, hoặc có thuốc làm cho phân có màu đen, làm nước tiểu có màu vàng, màu xanh, đỏ…Một số tác dụng phụ của thuốc thường hay gặp: đau bụng vùng thượng vị, buồn nôn, nôn, tiêu chảy, nhức đầu, chóng mặt… thường các tác dụng phụ này sẽ mất đi khi ngưng dùng thuốc. \n- Tương tác thuốc: Là phần ghi thuốc nếu dùng cùng lúc với một số thuốc khác sẽ bị các phản ứng bất lợi. Ví dụ, thuốc aspirin nếu dùng chung bởi các thuốc giảm đau, chống viêm giống như nó (được gọi là các thuốc chống viêm không steroid), sẽ đưa đến tương tác thuốc làm tổn hại niêm mạc dạ dày (hại bao tử) hơn, hay aspirin nếu dùng chung với thuốc chống đông như coumarin sẽ gây xuất huyết.\n- Hạn dùng: Trong tờ hướng dẫn không ghi, tuy nhiên người sử dụng thuốc cần xem kỹ hạn dùng được ghi trên bao bì (nhãn thuốc, vỉ thuốc hoặc hộp giấy đựng lọ thuốc). Hạn dùng được định nghĩa là “khoảng thời gian sử dụng được ấn định cho một lô thuốc (thuốc được sản xuất theo lô) mà sau thời hạn này thuốc đó không còn giá trị sử dụng”. Như vậy, nếu đọc trên nhãn thuốc hoặc bao bì: HD (hoặc Exp.Date): 30/6/2009, có nghĩa là trong suốt thời gian từ lúc thuốc xuất xưởng đến hết ngày 30/6/ 2009 thuốc có giá trị sử dụng, đến ngày 1/7/2009 thuốc quá hạn sử dụng. Nếu thuốc quá hạn dùng, phải bỏ đi, không được sử dụng.Câu “Biết thuốc, biết ta, trăm trận trăm thắng” được dùng ở đây thật ra để chỉ kiến thức, kỹ năng chuyên môn cần có của bác sĩ, dược sĩ trong sử dụng thuốc chữa bệnh là chính. Còn sự hiểu biết về thuốc của người dùng thuốc cần phải có chỉ ở mức độ tối thiểu cơ bản, giúp người đó không dùng thuốc sai. Vì vậy, xin đặc biệt lưu ý, người dùng thuốc không nên có ảo tưởng “đọc xong bản hướng dẫn là hiểu biết hết về thuốc” và rồi tự ý chẩn đoán bệnh, tự chữa bệnh bằng thuốc. Tự chẩn đoán để tự chữa bệnh bằng thuốc là cách dễ chuốc họa vào thân.",
+    "banner":"Ảnh bài viết",
+    "title": "Cách đọc tờ hướng dẫn sử dụng thuốc",
+    "status": 2,
+    "datecreate": "2022-04-19",
+    "relevantarticles": "61e153f01a2d5f53158ce16d",
+    "publish": "2022-04-23",
+    "hourofpublish": "14:32"
+}
+
+###
+DELETE http://localhost:1210/api/moderator/article/deleteArticle/6236d7d51e6149dc855760ea
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+
+###
+GET http://localhost:1210/api/moderator/article/searchArticle/hiv
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+
+###
+GET http://localhost:1210/api/moderator/article/viewListArticle/detail/6236d7d51e6149dc855760ea
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA

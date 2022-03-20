@@ -62,7 +62,7 @@ router.put("/updateDepartment/:id", verifyToken, async (req, res) => {
       });
     res.json({
       success: true,
-      message: "Bạn đã tạo chuyên khoa thành công",
+      message: "Bạn đã cập nhật chuyên khoa thành công",
       department: upDep,
     });
   } catch (error) {
