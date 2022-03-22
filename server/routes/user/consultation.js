@@ -2,20 +2,19 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 
-const Consultations = require("../../models/Consultation");
-const User = require("../../models/User");
+const Consultation = require("../../models/Consultation");
+const Doctor = require("../../models/Doctor");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
-  const allusers = await User.findOne({ account: req.accountId });
-  //res.json({ success: true, allusers });
   try {
-    const allconsultlist = await Consultations.find();
-    if (allconsultlist.allusers != Consultations.User)
-      return res.status(400).json({
-        success: false,
-        message: "Không có quyền truy cập",
-      });
-
+    var populateQuery = ({path:'doctor', populate: {path:'account'}});
+    const allconsultlist = await Consultation.find(req._id).populate(populateQuery);
+    
+    if (allconsultlist.user != req._id)
+    return res.status(400).json({
+      success: false,
+      message: "Người dùng không có quyền truy cập profile này",
+    });
     res.json({ success: true, allconsultlist });
   } catch (error) {
     console.log(error);
