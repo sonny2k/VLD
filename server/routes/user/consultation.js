@@ -9,7 +9,7 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = ({path:'doctor', populate: {path:'account'}});
     const allconsultlist = await Consultation.find({ user: req.accountId }).populate(populateQuery);
-    res.json({ allconsultlist });
+    res.json(allconsultlist);
   } catch (error) {
     console.log(error);
     res.status(500).json({
