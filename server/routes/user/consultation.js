@@ -8,13 +8,7 @@ const Doctor = require("../../models/Doctor");
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = ({path:'doctor', populate: {path:'account'}});
-    const allconsultlist = await Consultation.find(req._id).populate(populateQuery);
-    
-    if (allconsultlist.user != req._id)
-    return res.status(400).json({
-      success: false,
-      message: "Người dùng không có quyền truy cập profile này",
-    });
+    const allconsultlist = await Consultation.find({ user: req.accountId }).populate(populateQuery);
     res.json({ success: true, allconsultlist });
   } catch (error) {
     console.log(error);
