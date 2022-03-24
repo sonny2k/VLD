@@ -3,6 +3,7 @@ const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 
 const Article = require("../../models/Article");
+const { cloudinary } = require("../../utils/cloudinary");
 
 router.get("/viewListArticle", verifyToken, async (req, res) => {
   try {
@@ -72,7 +73,6 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
     author,
     briefdescription,
     content,
-    banner,
     title,
     status,
     datecreate,
@@ -89,7 +89,6 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
       author,
       briefdescription,
       content,
-      banner,
       title,
       status,
       createdat,
@@ -169,6 +168,43 @@ router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
       success: false,
       message: "Lỗi tải dữ liệu",
     });
+  }
+});
+
+router.post("/banner/:id", verifyToken, async (req, res) => {
+  try {
+    const fileBanner = req.body.banner;
+    const uploadRes = await cloudinary.uploader.upload(fileBanner);
+    console.log(uploadRes.secure_url);
+    try {
+      let updatedArticle = {
+        banner: uploadRes.secure_url,
+      };
+
+      const bannerupdatecondition = { _id: req.params.id };
+
+      upAr = await Article.findOneAndUpdate(
+        bannerupdatecondition,
+        updatedArticle,
+        { new: true }
+      );
+      if (!upAr)
+        return res.status(400).json({
+          success: false,
+          message: "Người dùng không có quyền cập nhật tài khoản này",
+        });
+      res.json({
+        success: true,
+        message: "Cập nhật ảnh đại diện thành công",
+        article: upAr,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
   }
 });
 

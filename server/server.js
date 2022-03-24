@@ -11,7 +11,8 @@ const homepageRouter = require("./routes/user/homepage");
 const consultationRouter = require("./routes/user/consultation");
 const prescriptionRouter = require("./routes/user/prescription");
 const departmentRouter = require("./routes/admin/department");
-const articleRouter = require("./routes/moderator/article");
+const articleRouter = require("./routes/admin/article");
+const doctorRouter = require("./routes/admin/doctor");
 
 const connectDB = async () => {
   try {
@@ -48,7 +49,8 @@ app.use("/api/home", homepageRouter);
 app.use("/api/user/consultation", consultationRouter);
 app.use("/api/user/prescription", prescriptionRouter);
 app.use("/api/admin/department", departmentRouter);
-app.use("/api/moderator/article", articleRouter);
+app.use("/api/admin/article", articleRouter);
+app.use("/api/admin/doctor", doctorRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 

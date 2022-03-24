@@ -15,9 +15,6 @@ const DoctorSchema = new Schema({
   educationplace: {
     type: String,
   },
-  language: {
-    type: String,
-  },
   degree: {
     type: String,
   },
@@ -40,15 +37,12 @@ const DoctorSchema = new Schema({
     user: Schema.Types.ObjectId,
     content: String,
     star: Number,
-    date: Date,
+    createdat: Date,
   }),
   availables: new Schema({
     date: Date,
     hour: String,
   }),
-  excellence: {
-    type: String,
-  },
   signature: {
     type: String,
   },
