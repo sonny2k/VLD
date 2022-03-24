@@ -19,6 +19,20 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/viewconsult/:id", verifyToken, async (req, res) => {
+  try {
+    var populateQuery = ({path:'doctor', populate: {path:'account'}});
+    const consultation = await Consultation.find({ _id: req.params.id }).populate(populateQuery);
+    res.json(consultation);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.post("/createconsult", verifyToken, async (req, res) => {
   const {
     status,
