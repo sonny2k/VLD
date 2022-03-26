@@ -77,7 +77,6 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     const consultationupdatecondition = { user: req.accountId, _id: _id};
     deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition,
-      deleteConsultation,
     );
 
     // User not authorized to update consultation
