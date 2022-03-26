@@ -35,24 +35,22 @@ router.get("/viewconsult/:id", verifyToken, async (req, res) => {
 
 router.post("/createconsult", verifyToken, async (req, res) => {
   const {
-    status,
     symptom,
     dateconsult,
     hour,
     doctor,
-    user,
   } = req.body;
 
   const date = new Date(dateconsult);
 
   try {
-    const newConsult = new Consultations({
-      status,
+    const newConsult = new Consultation({
+      status: 'chờ xác nhận',
       symptom,
       date,
       hour,
       doctor,
-      user,
+      user: req.accountId,
     });
     await newConsult.save();
 
@@ -67,6 +65,74 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       success: false,
       message: "Lỗi tải dữ liệu",
     });
+  }
+});
+
+router.post("/cancelconsult", verifyToken, async (req, res) => {
+  const {
+    _id
+  } = req.body;
+
+  try {    
+    const consultationupdatecondition = { user: req.accountId, _id: _id};
+    deleteConsultation = await Consultation.findOneAndDelete(
+      consultationupdatecondition,
+      deleteConsultation,
+    );
+
+    // User not authorized to update consultation
+    if (!deleteConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+      message: "Hủy lịch thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.put("/consultsymptom", verifyToken, async (req, res) => {
+  const {
+    _id,
+    symptom,
+  } = req.body;
+
+  try {
+    let updatedConsultation = {
+      symptom
+    };
+
+    const consultationupdatecondition = { user: req.accountId, _id: _id};
+    updatedConsultation = await Account.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+      message: "Thay đổi triệu chứng thành công",
+      account: updatedConsultation,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
   }
 });
 

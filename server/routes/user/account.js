@@ -69,7 +69,7 @@ router.put("/info", verifyToken, async (req, res) => {
   }
 });
 
-// @route PUT api/user/account/profilepic
+// @route POST api/user/account/profilepic
 // @desc Edit user profile pic
 // @access Private
 router.post("/profilepic", verifyToken, async (req, res) => {
