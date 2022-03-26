@@ -112,7 +112,7 @@ router.put("/consultsymptom", verifyToken, async (req, res) => {
     };
 
     const consultationupdatecondition = { user: req.accountId, _id: _id};
-    updatedConsultation = await Account.findOneAndUpdate(
+    updatedConsultation = await Consultation.findOneAndUpdate(
       consultationupdatecondition,
       updatedConsultation,
       { new: true }
