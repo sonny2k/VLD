@@ -161,7 +161,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 Content-Type: application/json
 
 {
-    "status": 1,
+    "status": "'chờ xác nhận",
     "symptom": "Viêm họng",
     "dateconsult": "2022-02-01",
     "hour": "20 phút",
@@ -354,7 +354,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:1210/api/admin/doctor/updateDoctor/623c1c982968934f487547be
+PUT http://localhost:1210/api/admin/doctor/updateDoctor/623c81db2135527d81d084da
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDgxMDQzMjF9.n9YYewVqvFtvsEde25yYCQrSkIKghKC5Uo4uGhFRkB8
 Content-Type: application/json
 
@@ -379,9 +379,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:1210/api/admin/doctor/deleteDoc/623c1c982968934f487547be
+DELETE http://localhost:1210/api/admin/doctor/deleteDoc/623c81db2135527d81d084da
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDgxMDQzMjF9.n9YYewVqvFtvsEde25yYCQrSkIKghKC5Uo4uGhFRkB8
 
 ###
 GET http://localhost:1210/api/admin/doctor/viewDoc/621c5176098f3f437d976ca6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDgxMDQzMjF9.n9YYewVqvFtvsEde25yYCQrSkIKghKC5Uo4uGhFRkB8
+============================================================
