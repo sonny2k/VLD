@@ -150,7 +150,7 @@ router.put("/info", verifyToken, async (req, res) => {
 // @route PUT api/user/account/profilepic
 // @desc Edit user profile pic
 // @access Private
-router.post("/profilepic", verifyToken, async (req, res) => {
+router.post("/profilepic/:id", verifyToken, async (req, res) => {
   try {
     const fileStr = req.body.profilepic;
     const uploadResponse = await cloudinary.uploader.upload(fileStr);
