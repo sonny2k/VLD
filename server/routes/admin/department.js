@@ -8,7 +8,6 @@ router.get("/viewListDepartment", verifyToken, async (req, res) => {
   try {
     const depList = await Department.find();
     res.json({
-      success: true,
       depList,
     });
   } catch (error) {
