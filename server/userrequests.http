@@ -167,6 +167,8 @@ Content-Type: application/json
 
 {
     "status": "chờ xác nhận",
+    "name": "Thành",
+    "phone": "0582199172",
     "symptom": "",
     "dateconsult": "2022-04-28",
     "hour": "09:00",
