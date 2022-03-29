@@ -5,7 +5,7 @@ const verifyToken = require("../../middleware/auth");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 
-router.get("/viewlistconsult", verifyToken, async (req, res) => {
+router.get("/viewlistconsult", async (req, res) => {
   try {
     var populateQuery = ({path:'doctor', populate: {path:'account'}});
     const allconsultlist = await Consultation.find({ user: req.accountId }).populate(populateQuery);
