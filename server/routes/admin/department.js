@@ -8,13 +8,11 @@ router.get("/viewListDepartment", verifyToken, async (req, res) => {
   try {
     const depList = await Department.find();
     res.json({
-      success: true,
       depList,
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      success: false,
       message: "Lỗi tải dữ liệu",
     });
   }
