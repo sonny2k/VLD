@@ -2,21 +2,28 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 
-const Consultations = require("../../models/Consultation");
-const User = require("../../models/User");
+const Consultation = require("../../models/Consultation");
+const Doctor = require("../../models/Doctor");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
-  const allusers = await User.findOne({ account: req.accountId });
-  //res.json({ success: true, allusers });
   try {
-    const allconsultlist = await Consultations.find();
-    if (allconsultlist.allusers != Consultations.User)
-      return res.status(400).json({
-        success: false,
-        message: "Không có quyền truy cập",
-      });
+    var populateQuery = ({path:'doctor', populate: {path:'account'}});
+    const allconsultlist = await Consultation.find({ user: req.accountId }).populate(populateQuery);
+    res.json(allconsultlist);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
 
-    res.json({ success: true, allconsultlist });
+router.get("/viewconsult/:id", verifyToken, async (req, res) => {
+  try {
+    var populateQuery = ({path:'doctor', populate: {path:'account'}});
+    const consultation = await Consultation.find({ _id: req.params.id }).populate(populateQuery);
+    res.json(consultation);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -28,24 +35,22 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
 
 router.post("/createconsult", verifyToken, async (req, res) => {
   const {
-    status,
     symptom,
     dateconsult,
     hour,
     doctor,
-    user,
   } = req.body;
 
   const date = new Date(dateconsult);
 
   try {
-    const newConsult = new Consultations({
-      status,
+    const newConsult = new Consultation({
+      status: 'chờ xác nhận',
       symptom,
       date,
       hour,
       doctor,
-      user,
+      user: req.accountId,
     });
     await newConsult.save();
 
@@ -60,6 +65,73 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       success: false,
       message: "Lỗi tải dữ liệu",
     });
+  }
+});
+
+router.post("/cancelconsult", verifyToken, async (req, res) => {
+  const {
+    _id
+  } = req.body;
+
+  try {    
+    const consultationupdatecondition = { user: req.accountId, _id: _id};
+    deleteConsultation = await Consultation.findOneAndDelete(
+      consultationupdatecondition,
+    );
+
+    // User not authorized to update consultation
+    if (!deleteConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+      message: "Hủy lịch thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.put("/consultsymptom", verifyToken, async (req, res) => {
+  const {
+    _id,
+    symptom,
+  } = req.body;
+
+  try {
+    let updatedConsultation = {
+      symptom
+    };
+
+    const consultationupdatecondition = { user: req.accountId, _id: _id};
+    updatedConsultation = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+      message: "Thay đổi triệu chứng thành công",
+      account: updatedConsultation,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
   }
 });
 

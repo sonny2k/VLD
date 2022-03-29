@@ -151,7 +151,12 @@ GET http://localhost:1210/api/home/department
 Content-Type: application/json
 
 ###
-GET http://localhost:1210/api/user/consultation/viewlistconsult
+GET http://localhost:1210/api/user/consultation/viewconsult/61e27bba31df9510aaeb6eeb
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
+Content-Type: application/json
+
+###
+GET http://localhost:1210/api/user/consultation/viewconsult/
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
 
@@ -161,15 +166,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 Content-Type: application/json
 
 {
-    "status": 1,
-    "symptom": "Viêm họng",
-    "dateconsult": "2022-02-01",
-    "hour": "20 phút",
-    "ratingcontent": "quá tuyệt vời",
-    "roomname": "2000000",
+    "status": "chờ xác nhận",
+    "symptom": "",
+    "dateconsult": "2022-04-28",
+    "hour": "09:00",
     "doctor": "61e0cece97629c08e6644865",
-    "user": "61d140313f972b7b9c20434c",
-    "ratingstarcontent": 1
+    "user": "61e51f2da695cff2bd5c011f"
 }
 
 ###

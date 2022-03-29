@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ConsultationSchema = new Schema({
   status: {
-    type: Number,
+    type: String,
   },
   symptom: {
     type: String,
