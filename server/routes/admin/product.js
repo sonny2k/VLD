@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../../models/Product");
 const verifyToken = require("../../middleware/auth");
+const { cloudinary } = require("../../utils/cloudinary");
 
 //CREATE
 router.post("/createProduct", verifyToken, async (req, res) => {
@@ -70,6 +71,43 @@ router.get("/viewProduct", async (req, res) => {
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.post("/image/:id", verifyToken, async (req, res) => {
+  try {
+    const fileImage = req.body.image;
+    const uploadResp = await cloudinary.uploader.upload(fileImage);
+    console.log(uploadResp.secure_url);
+    try {
+      let updatedProduct = {
+        image: uploadResp.secure_url,
+      };
+
+      const imageupdatecondition = { _id: req.params.id };
+
+      upPr = await Product.findOneAndUpdate(
+        imageupdatecondition,
+        updatedProduct,
+        { new: true }
+      );
+      if (!upPr)
+        return res.status(400).json({
+          success: false,
+          message: "Người dùng không có quyền cập nhật tài khoản này",
+        });
+      res.json({
+        success: true,
+        message: "Cập nhật ảnh đại diện thành công",
+        product: upPr,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
   }
 });
 
