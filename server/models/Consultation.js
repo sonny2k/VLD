@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ConsultationSchema = new Schema({
+  name: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
   status: {
     type: String,
   },
