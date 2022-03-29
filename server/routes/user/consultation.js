@@ -35,6 +35,8 @@ router.get("/viewconsult/:id", verifyToken, async (req, res) => {
 
 router.post("/createconsult", verifyToken, async (req, res) => {
   const {
+    name,
+    phone,
     symptom,
     dateconsult,
     hour,
@@ -46,6 +48,8 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   try {
     const newConsult = new Consultation({
       status: 'chờ xác nhận',
+      name,
+      phone,
       symptom,
       date,
       hour,
