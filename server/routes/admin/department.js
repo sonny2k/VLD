@@ -7,9 +7,7 @@ const Department = require("../../models/Department");
 router.get("/viewListDepartment", verifyToken, async (req, res) => {
   try {
     const depList = await Department.find();
-    res.json({
-      depList,
-    });
+    res.json(depList);
   } catch (error) {
     console.log(error);
     res.status(500).json({

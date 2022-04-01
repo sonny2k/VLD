@@ -14,6 +14,7 @@ const departmentRouter = require("./routes/admin/department");
 const articleRouter = require("./routes/admin/article");
 const doctorRouter = require("./routes/admin/doctor");
 const productRouter = require("./routes/admin/product");
+const notificationRouter = require("./routes/admin/notification");
 
 const connectDB = async () => {
   try {
@@ -53,6 +54,7 @@ app.use("/api/admin/department", departmentRouter);
 app.use("/api/admin/article", articleRouter);
 app.use("/api/admin/doctor", doctorRouter);
 app.use("/api/admin/product", productRouter);
+app.use("/api/admin/notification", notificationRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 

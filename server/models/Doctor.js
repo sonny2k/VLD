@@ -41,7 +41,10 @@ const DoctorSchema = new Schema({
   }),
   availables: new Schema({
     date: Date,
-    hour: String,
+    hour: new Schema({
+      time: String,
+      status: Boolean,
+    }),
   }),
   signature: {
     type: String,
