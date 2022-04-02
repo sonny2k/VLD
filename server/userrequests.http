@@ -169,9 +169,9 @@ Content-Type: application/json
     "status": "chờ xác nhận",
     "name": "Thành",
     "phone": "0582199172",
-    "symptom": "",
-    "dateconsult": "2022-04-28",
-    "hour": "09:00",
+    "symptom": "hello",
+    "dateconsult": "2022-02-02",
+    "hour": "12:00",
     "doctor": "61e0cece97629c08e6644865",
     "user": "61e51f2da695cff2bd5c011f"
 }

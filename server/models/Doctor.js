@@ -44,7 +44,10 @@ const DoctorSchema = new Schema({
   }),
   availables: new Schema({
     date: Date,
-    hour: String,
+    hours: new Schema ({
+      time: String,
+      status: Boolean,
+    })
   }),
   excellence: {
     type: String,

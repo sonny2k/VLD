@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const { db } = require("../../models/Consultation");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
+
+var mongoose = require('mongoose');
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
@@ -57,6 +60,33 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       user: req.accountId,
     });
     await newConsult.save();
+
+    // let updatedavailability = {
+    //   available: [{hour: [{status: true}]}]
+    // };
+
+    // const statusavail = { date: date, time: hour, _id: doctor };
+    // updatedAccount = await Doctor.findOneAndUpdate(
+    //   statusavail,
+    //   updatedavailability,
+    //   { new: true }
+    // );
+
+    // // User not authorized to update profile
+    // if (!updatedavailability)
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Không thể đặt lịch, vui lòng thử lại",
+    //   });
+
+    Doctor.updateOne(
+      { _id: mongoose.Types.ObjectId(doctor) , "availables.date": "2022-02-02", "availables.hours.time": "12:00" },
+      { "$set": { "availables.hours.$.status": true } }
+    ).then((result) => {
+      console.log(result)
+    }, (e) => {
+      console.log(e)
+    })
 
     res.json({
       success: true,
