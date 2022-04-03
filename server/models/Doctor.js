@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const HourSchema = new Schema ({
+  time: String,
+  status: Boolean,
+});
+
+const AvailableSchema = new Schema ({
+  date: Date,
+  hours: [HourSchema]
+});
+
 const DoctorSchema = new Schema({
   account: {
     type: Schema.Types.ObjectId,
@@ -42,13 +52,7 @@ const DoctorSchema = new Schema({
     star: Number,
     date: Date,
   }),
-  availables: new Schema({
-    date: Date,
-    hours: new Schema ({
-      time: String,
-      status: Boolean,
-    })
-  }),
+  availables: [AvailableSchema],
   excellence: {
     type: String,
   },

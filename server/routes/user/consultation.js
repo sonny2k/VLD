@@ -6,8 +6,6 @@ const { db } = require("../../models/Consultation");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 
-var mongoose = require('mongoose');
-
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = ({path:'doctor', populate: {path:'account'}});
@@ -80,8 +78,9 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     //   });
 
     Doctor.updateOne(
-      { _id: mongoose.Types.ObjectId(doctor) , "availables.date": "2022-02-02", "availables.hours.time": "12:00" },
-      { "$set": { "availables.hours.$.status": true } }
+      { _id: doctor },
+      { $set: { "availables.$[a].hours.$[b].status": true } },
+      { arrayFilters: [ { "a.date": date } , { "b.time": hour } ] }
     ).then((result) => {
       console.log(result)
     }, (e) => {
