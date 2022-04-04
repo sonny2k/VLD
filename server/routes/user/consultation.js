@@ -44,7 +44,9 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     doctor,
   } = req.body;
 
-  const date = new Date(dateconsult);
+  const date = `${dateconsult}T00:00:00.000+00:00`;
+
+  console.log(date)
 
   try {
     const newConsult = new Consultation({
@@ -106,7 +108,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     _id
   } = req.body;
 
-  try {    
+  try {       
     const consultationupdatecondition = { user: req.accountId, _id: _id};
     deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition,

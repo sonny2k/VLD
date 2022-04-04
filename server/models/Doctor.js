@@ -8,7 +8,10 @@ const HourSchema = new Schema ({
 
 const AvailableSchema = new Schema ({
   date: Date,
-  hours: [HourSchema]
+  hours: ([{
+    time: String,
+    status: Boolean,
+  }])
 });
 
 const DoctorSchema = new Schema({
