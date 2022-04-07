@@ -8,10 +8,11 @@ const authUserRouter = require("./routes/user/auth");
 const userRouter = require("./routes/user/user");
 const accountUserRouter = require("./routes/user/account");
 const homepageRouter = require("./routes/user/homepage");
-const consultationRouter = require("./routes/user/consultation");
+const userConsultationRouter = require("./routes/user/consultation");
 const productRouter = require("./routes/admin/product");
 const departmentRouter = require("./routes/admin/department");
-const doctorRouter = require("./routes/doctor/account");
+const accountDoctorRouter = require("./routes/doctor/account");
+const doctorConsultationRouter = require("./routes/doctor/consultation");
 
 const connectDB = async () => {
   try {
@@ -45,10 +46,11 @@ app.use("/api/user/auth", authUserRouter);
 app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
-app.use("/api/user/consultation", consultationRouter);
+app.use("/api/user/consultation", userConsultationRouter);
 app.use("/api/admin/product", productRouter);
 app.use("/api/admin/department", departmentRouter);
-app.use("/api/doctor/account", doctorRouter);
+app.use("/api/doctor/account", accountDoctorRouter);
+app.use("/api/doctor/consultation", doctorConsultationRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
