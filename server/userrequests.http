@@ -23,7 +23,16 @@ POST http://localhost:1210/api/user/auth/login
 Content-Type: application/json
 
 {
-    "phone": "+84582199174",
+    "phone": "+84582199173",
+    "password": "test1234"
+}
+
+###
+POST http://localhost:1210/api/user/auth/login
+Content-Type: application/json
+
+{
+    "phone": "+84582199170",
     "password": "test1234"
 }
 
@@ -145,15 +154,15 @@ Content-Type: application/json
 GET http://localhost:1210/api/home/department
 Content-Type: application/json
 ====================================================================================================================================
-###
-GET http://localhost:1210/api/user/consultation/viewlistconsult
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDg3MTEzMDN9.RI-3-gGSEM1AFBi2hcn52BUP0NldA4WEfQ44_XHu13U
-Content-Type: application/json
+
+Đặt lịch hẹn
 
 ###
-GET http://localhost:1210/api/user/consultation/viewlistconsult/1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDI5MTU4NTd9.h26WnIQiGHMmshJrQCX7Qc_iKzhvIHgWrCBp5JDP2Tc
-Content-Type: application/json
+GET http://localhost:1210/api/user/consultation/viewlistconsult
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDkzMTA2Mjl9.kgbuA1jwrSuCEvcRU2jEuudsemRe3xHnjh_l6I0kCSA
+###
+GET http://localhost:1210/api/user/consultation/viewconsult/621c584af114f09715f08787
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDg4MDg3OTl9.9nbiHJUou4wfPepQFam7I20I0rHtfRQiITCv3EsBKZo
 
 ###
 POST http://localhost:1210/api/user/consultation/createconsult
@@ -170,6 +179,24 @@ Content-Type: application/json
     "doctor": "61e0cece97629c08e6644865",
     "user": "61e51f2da695cff2bd5c011f"
 }
+
+###
+GET http://localhost:1210/api/user/consultation/historyConsult
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDkzMTE1MTZ9.D0Psz_EXOn8K6Y36cmUVl7jtdxyzxWezlyDHebqq9HM
+
+###
+PUT http://localhost:1210/api/doctor/consultation/updateConsultDoc/61ece22958149b526e1ec79a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDkzMjM4NDR9.znG5HsT4esKX74Aj2U2gc7nMZzT2EEcVv_oLdjI_aq4
+Content-Type: application/json
+
+{
+    "status": "bị từ chối"
+}
+
+###
+GET http://localhost:1210/api/doctor/consultation/viewDocconsult
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDkzMjI0OTV9.MZ9WnnYgmLP7BHHtVNnNMuad63WZP_bBmYBMjkQU_Dk
+
 ===================================================================================================================================
 ###
 GET http://localhost:1210/api/user/prescription/viewListPrescription
@@ -221,6 +248,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 ###
 GET http://localhost:1210/api/user/prescription/viewListPrescription/detail/6232ff839c802c499d105bd9
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAxODJ9.tpuE2pctYIRFwR0xNiE6bBjGTdt50_ualVjCKoqXpoA
+
+###
+GET http://localhost:1210/api/doctor/prescription/viewListPreDoc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDkzMjUyMzZ9.FVkXhJPzDzwz2Uh5L9ls9fcrgalHAAbmKmHGlAFpu04
 
 ====================================================================================================================================
 ###

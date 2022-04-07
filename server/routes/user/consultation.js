@@ -1,9 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const { db } = require("../../models/Consultation");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
+
+router.get("/historyConsult", verifyToken, async (req, res) => {
+  try {
+    var populateQuery = { path: "doctor", populate: { path: "account" } };
+    const historyConsult = await Consultation.find({
+      status: "đã hoàn thành",
+    }).populate(populateQuery);
+    res.json(historyConsult);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tải dữ liệu" });
+  }
+});
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
@@ -40,7 +54,9 @@ router.get("/viewconsult/:id", verifyToken, async (req, res) => {
 router.post("/createconsult", verifyToken, async (req, res) => {
   const { name, phone, symptom, dateconsult, hour, doctor } = req.body;
 
-  const date = new Date(dateconsult);
+  const date = `${dateconsult}T00:00:00.000+00:00`;
+
+  console.log(date);
 
   try {
     const newConsult = new Consultation({
@@ -54,6 +70,37 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       user: req.accountId,
     });
     await newConsult.save();
+
+    // let updatedavailability = {
+    //   available: [{hour: [{status: true}]}]
+    // };
+
+    // const statusavail = { date: date, time: hour, _id: doctor };
+    // updatedAccount = await Doctor.findOneAndUpdate(
+    //   statusavail,
+    //   updatedavailability,
+    //   { new: true }
+    // );
+
+    // // User not authorized to update profile
+    // if (!updatedavailability)
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Không thể đặt lịch, vui lòng thử lại",
+    //   });
+
+    Doctor.updateOne(
+      { _id: doctor },
+      { $set: { "availables.$[a].hours.$[b].status": true } },
+      { arrayFilters: [{ "a.date": date }, { "b.time": hour }] }
+    ).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
 
     res.json({
       success: true,
@@ -70,7 +117,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 });
 
 router.post("/cancelconsult", verifyToken, async (req, res) => {
-  const { _id } = req.body;
+  const { _id, doctor, date, hour } = req.body;
 
   try {
     const consultationupdatecondition = { user: req.accountId, _id: _id };
@@ -84,6 +131,19 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
         success: false,
         message: "Người dùng không có quyền cập nhật tài khoản này",
       });
+
+    Doctor.updateOne(
+      { _id: doctor },
+      { $set: { "availables.$[a].hours.$[b].status": false } },
+      { arrayFilters: [{ "a.date": date }, { "b.time": hour }] }
+    ).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
 
     res.json({
       success: true,

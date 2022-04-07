@@ -2,14 +2,12 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 const Notification = require("../../models/Notification");
-const notifier = require("node-notifier");
-const Doctor = require("../../models/Doctor");
 
 //Tạo danh sách thông báo
 router.get("/notice", verifyToken, async (req, res) => {
   try {
     const noticeList = await Notification.find();
-    res.json({ success: true, noticeList });
+    res.json({ noticeList });
   } catch (error) {
     console.log(error);
     res.status(500).json({
