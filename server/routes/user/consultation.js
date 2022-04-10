@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const Account = require("../../models/Account");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
@@ -115,8 +116,11 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     hour,
   } = req.body;
 
+  const user = User.findOne({ account: req.accountId });
+  const userId = user._id;
+
   try {       
-    const consultationupdatecondition = { user: req.accountId, _id: _id};
+    const consultationupdatecondition = { user: userId, _id: _id};
     deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition,
     );
