@@ -7,7 +7,7 @@ const Doctor = require("../../models/Doctor");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
-    var populateQuery = ({path:'user'});
+    var populateQuery = ({path:'user', populate: {path:'account'}});
     const doctor = await Doctor.findOne({ account: req.accountId });
     const doctorId = doctor._id;
     const allconsultlist = await Consultation.find({ doctor: doctorId }).populate(populateQuery);

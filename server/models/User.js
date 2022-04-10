@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
     account: {
         type: Schema.Types.ObjectId,
-        ref: 'accounts'
+        ref: "accounts",
     },
     bloodtype: {
         type: String

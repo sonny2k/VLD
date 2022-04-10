@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const { db } = require("../../models/Consultation");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
+const User = require("../../models/User");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = ({path:'doctor', populate: {path:'account'}});
-    const allconsultlist = await Consultation.find({ user: req.accountId }).populate(populateQuery);
+    const user = await User.findOne({ account: req.accountId });
+    const userId = user._id;
+    const allconsultlist = await Consultation.find({ user: userId }).populate(populateQuery);
     res.json(allconsultlist);
   } catch (error) {
     console.log(error);
@@ -46,7 +48,9 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
   const date = `${dateconsult}T00:00:00.000+00:00`;
 
-  console.log(date)
+  const userne = await User.findOne({ account: req.accountId });
+
+  const userId = userne._id;
 
   try {
     const newConsult = new Consultation({
@@ -57,7 +61,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       date,
       hour,
       doctor,
-      user: req.accountId,
+      user: userId,
     });
     await newConsult.save();
 

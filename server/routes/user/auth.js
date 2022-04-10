@@ -97,30 +97,25 @@ router.post("/verifycode", async (req, res) => {
 });
 
 router.post("/createuser", verifyToken, async (req, res) => {
-  const {
-    id,
-  } = req.body;
 
   //check for existing account
-  const user = await User.findOne({ account });
+  const user = await User.findOne({ account: req.accountId });
   if (user)
     return res
       .status(400)
       .json({ success: false, message: "Người dùng này đã được tạo trước đó" });
 
   //create a new user based on the above account
-  const mongoose = require('mongoose');
-  const newid = mongoose.Types.ObjectId(id);
+
   try {
     const newUser = new User({
-      account: newid,
+      account: req.accountId,
     });
     await newUser.save();
 
     res.json({
       success: true,
-      message: "Tạo người dùng thành công",
-      accessToken,
+      message: "Tạo người dùng thành công"
     });
   } catch (error) {
     console.log(error);
