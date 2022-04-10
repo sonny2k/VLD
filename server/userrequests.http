@@ -142,22 +142,22 @@ Content-Type: application/json
 
 ###
 GET http://localhost:1210/api/user/consultation/viewconsult/624065bb717e9bd675f75cb6
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
 
 ###
 GET http://localhost:1210/api/user/consultation/viewlistconsult/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
 
 ###
 GET http://localhost:1210/api/doctor/consultation/viewlistconsult/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
 Content-Type: application/json
 
 ###
 GET http://localhost:1210/api/doctor/consultation/viewconsult/624065bb717e9bd675f75cb6
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
 Content-Type: application/json
 
 ###
@@ -176,14 +176,14 @@ Content-Type: application/json
 
 ###
 POST http://localhost:1210/api/user/consultation/cancelconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI2NDIyMjB9.yefwjXLot1B__RJXvqTwpVlMAEXQAuVzpTd7y13F37s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
 
 {
-    "_id": "624d405ecbd3bd2b114eb77f",
-    "doctor": "61e21e991d54cf11cc5e2707",
-    "date": "2022-04-15T00:00:00.000+00:00",
-    "hour": "15:00"
+    "_id": "624065bb717e9bd675f75cb6",
+    "doctor": "61e0cece97629c08e6644865",
+    "date": "2022-03-28T00:00:00.000+00:00",
+    "hour": "08:00"
 }
 
 ###

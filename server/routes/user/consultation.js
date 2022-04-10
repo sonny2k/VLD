@@ -116,8 +116,11 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     hour,
   } = req.body;
 
-  const user = User.findOne({ account: req.accountId });
+  const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
+
+
+  console.log(userId)
 
   try {       
     const consultationupdatecondition = { user: userId, _id: _id};
