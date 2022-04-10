@@ -141,7 +141,7 @@ GET http://localhost:1210/api/home/department
 Content-Type: application/json
 
 ###
-GET http://localhost:1210/api/user/consultation/viewconsult/61e27bba31df9510aaeb6eeb
+GET http://localhost:1210/api/user/consultation/viewconsult/624065bb717e9bd675f75cb6
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
 
@@ -152,6 +152,11 @@ Content-Type: application/json
 
 ###
 GET http://localhost:1210/api/doctor/consultation/viewlistconsult/
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
+Content-Type: application/json
+
+###
+GET http://localhost:1210/api/doctor/consultation/viewconsult/624065bb717e9bd675f75cb6
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkzMTY4NDh9.FjHlteFEOBxzjoJCrB8s5HtVT4KwgJ0MxY6WiaX4MRM
 Content-Type: application/json
 
