@@ -79,6 +79,9 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 router.post("/cancelconsultation", verifyToken, async (req, res) => {
   const {
     _id,
+    doctor,
+    date,
+    hour,
   } = req.body;
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
@@ -102,6 +105,16 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
         success: false,
         message: "Người dùng không có quyền cập nhật tài khoản này",
       });
+
+    Doctor.updateOne(
+      { _id: doctor },
+      { $set: { "availables.$[a].hours.$[b].status": false } },
+      { arrayFilters: [ { "a.date": date } , { "b.time": hour } ] }
+    ).then((result) => {
+      console.log(result)
+    }, (e) => {
+      console.log(e)
+    })  
 
     res.json({
       success: true,
