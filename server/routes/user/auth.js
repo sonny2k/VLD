@@ -155,7 +155,6 @@ router.post("/login", async (req, res) => {
     res.json({
       success: true,
       account: account,
-      user: await User.findOne({ accountId: account._id }),
       accessToken,
     });
   } catch (error) {
