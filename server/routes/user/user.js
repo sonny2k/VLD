@@ -9,17 +9,10 @@ const Account = require("../../models/Account");
 // @route GET api/user
 // @desc Get user profile
 // @access Private
-router.get("/:id", verifyToken, async (req, res) => {
+router.get("/userinfo", verifyToken, async (req, res) => {
   try {
-    userProfile = await User.findOne({ _id: req.params.id });
-    // User not authorized to update profile
-    if (userProfile.account != req.accountId)
-      return res.status(400).json({
-        success: false,
-        message: "Người dùng không có quyền cập nhật profile này",
-      });
-
-    res.json({ success: true, userProfile });
+    userProfile = await User.findOne({ account: req.accountId });
+    res.json({ userProfile });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi nội bộ" });

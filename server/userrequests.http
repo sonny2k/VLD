@@ -23,7 +23,7 @@ POST http://localhost:1210/api/user/auth/login
 Content-Type: application/json
 
 {
-    "phone": "+84582199172",
+    "phone": "+84582199173",
     "password": "test1234"
 }
 
@@ -62,8 +62,8 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 
 ### 
-GET http://localhost:1210/api/user/61d140313f972b7b9c20434c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWUzNzVkOTk0ZDUxMTBhY2FlNDMwNmMiLCJpYXQiOjE2NDIzMTAyMDF9.7F6OpCdNUTrrBOIe4E26Ne8Syadpor_bK0GQ6t5VDBU
+GET http://localhost:1210/api/user/userinfo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk3Mzc2NTZ9.wOYVobk_1Ide9SR2lfkh8aErTrZpZ7Wk6EEeQdeZF_w
 
 ### 
 PUT http://localhost:1210/api/user/61d140313f972b7b9c20434c
