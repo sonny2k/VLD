@@ -22,7 +22,7 @@ router.get("/userinfo", verifyToken, async (req, res) => {
 // @route PUT api/userId
 // @desc Edit user profile
 // @access Private
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/userinfo", verifyToken, async (req, res) => {
   const {
     bloodtype,
     height,
