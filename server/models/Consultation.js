@@ -32,7 +32,7 @@ const ConsultationSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: "accounts",
+    ref: "users",
   },
   ratingstarcontent: {
     type: Number,

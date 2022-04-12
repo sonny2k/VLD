@@ -9,11 +9,14 @@ router.get("/viewListPreDoc", verifyToken, async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ account: req.accountId });
     const doctorID = doctor._id;
-    const consultation = await Consultation.findOne({ doctorID });
-    const conID = consultation._id;
+    const consult = await Consultation.findOne({ doctorID });
+    const conID = consult._id;
+
+    var popu = { path: "consultation", populate: { path: "doctor" } };
+
     const preListDoc = await Prescription.find({
       consultation: conID,
-    }).populate("consultation");
+    }).populate(popu);
     res.json(preListDoc);
   } catch (error) {
     console.log(error);
@@ -24,20 +27,60 @@ router.get("/viewListPreDoc", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/searchPreDoc/:diagnosis", verifyToken, async (req, res) => {
+router.put("/updatePreDoc/:id", verifyToken, async (req, res) => {
+  const {
+    consultation,
+    pname,
+    diagnosis,
+    note,
+    product,
+    quantity,
+    morningrate,
+    noonrate,
+    everate,
+    specdes,
+  } = req.body;
+
   try {
-    var keywordPre = new RegExp(req.params.diagnosis, "i");
-    console.log(`${keywordPre}`);
-    const findDiagnosis = await Prescription.find({ diagnosis: keywordPre });
-    if (!keywordPre) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Không tìm thấy bác sĩ này" });
-    }
-    res.send(findDiagnosis);
+    const doctor = await Doctor.findOne({ account: req.accountId });
+    const doctorID = doctor._id;
+    const consultations = await Consultation.findOne({ doctorID });
+    const conID = consultations._id;
+    let updatePreDoc = {
+      consultation: date,
+      pname,
+      diagnosis,
+      note,
+      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
+    };
+    const PreupdateDocCondition = {
+      consultation: conID,
+      _id: req.params.id,
+    };
+    upPreDoc = await Prescription.findOneAndUpdate(
+      PreupdateDocCondition,
+      updatePreDoc,
+      {
+        new: true,
+      }
+    );
+
+    if (!upPreDoc)
+      return res.status(400).json({
+        success: false,
+        message: " Bác sĩ không có quyền cập nhật toa thuốc",
+      });
+    res.json({
+      success: true,
+      message: "Cập nhật toa thuốc thành công",
+      consultations: upPreDoc,
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
 

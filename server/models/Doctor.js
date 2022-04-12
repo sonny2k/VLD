@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const HourSchema = new Schema({
-  time: String,
-  status: Boolean,
-});
-
 const AvailableSchema = new Schema({
   date: Date,
   hours: [

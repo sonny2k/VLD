@@ -1,30 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const { db } = require("../../models/Consultation");
+const Account = require("../../models/Account");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
-
-router.get("/historyConsult", verifyToken, async (req, res) => {
-  try {
-    var populateQuery = { path: "doctor", populate: { path: "account" } };
-    const historyConsult = await Consultation.find({
-      status: "đã hoàn thành",
-    }).populate(populateQuery);
-    res.json(historyConsult);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tải dữ liệu" });
-  }
-});
+const User = require("../../models/User");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "doctor", populate: { path: "account" } };
-    const allconsultlist = await Consultation.find({
-      user: req.accountId,
-    }).populate(populateQuery);
+    const user = await User.findOne({ account: req.accountId });
+    const userId = user._id;
+    const allconsultlist = await Consultation.find({ user: userId }).populate(
+      populateQuery
+    );
     res.json(allconsultlist);
   } catch (error) {
     console.log(error);
@@ -56,7 +46,9 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
   const date = `${dateconsult}T00:00:00.000+00:00`;
 
-  console.log(date);
+  const userne = await User.findOne({ account: req.accountId });
+
+  const userId = userne._id;
 
   try {
     const newConsult = new Consultation({
@@ -67,7 +59,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       date,
       hour,
       doctor,
-      user: req.accountId,
+      user: userId,
     });
     await newConsult.save();
 
@@ -119,8 +111,13 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 router.post("/cancelconsult", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour } = req.body;
 
+  const user = await User.findOne({ account: req.accountId });
+  const userId = user._id;
+
+  console.log(userId);
+
   try {
-    const consultationupdatecondition = { user: req.accountId, _id: _id };
+    const consultationupdatecondition = { user: userId, _id: _id };
     deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition
     );
