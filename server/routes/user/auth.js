@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    const account = await Account.findOne(newAccount._id);
+    const account = await Account.findOne({_id: newAccount._id});
 
     res.json({
       success: true,
