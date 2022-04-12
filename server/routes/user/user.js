@@ -11,8 +11,8 @@ const Account = require("../../models/Account");
 // @access Private
 router.get("/userinfo", verifyToken, async (req, res) => {
   try {
-    userProfile = await User.findOne({ account: req.accountId });
-    res.json({ userProfile });
+    user = await User.findOne({ account: req.accountId });
+    res.json(user);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi nội bộ" });
