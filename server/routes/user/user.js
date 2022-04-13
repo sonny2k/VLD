@@ -43,7 +43,6 @@ router.put("/userinfo", verifyToken, async (req, res) => {
     };
 
     const profileupdatecondition = {
-      _id: req.params.id,
       account: req.accountId,
     };
     updatedUser = await User.findOneAndUpdate(
