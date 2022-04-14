@@ -11,6 +11,7 @@ const client = require("twilio")(accountSid, authToken);
 
 const Account = require("../../models/Account");
 const User = require("../../models/User");
+// const Notification = require("../../models/Notification");
 
 // @route POST api/auth/register
 // @desc Register user
@@ -68,7 +69,7 @@ router.post("/register", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    const account = await Account.findOne(newAccount._id);
+    const account = await Account.findOne({ _id: newAccount._id });
 
     res.json({
       success: true,
@@ -98,7 +99,7 @@ router.post("/sendcode", async (req, res) => {
 
 router.post("/verifycode", async (req, res) => {
   const { phone, code } = req.body;
-
+  // const userRegister = await Account.findOne({ account: req.account });
   //check verify code
   try {
     await client.verify
@@ -107,6 +108,16 @@ router.post("/verifycode", async (req, res) => {
       .then((verification_check) =>
         res.json({ message: verification_check.status })
       );
+    // const dateTime = Date.now();
+
+    // const newNotice = new Notification({
+    //   title: "Đăng ký tài khoản",
+    //   message: " Bạn đã ký tài khoản thành công!",
+    //   creator: userRegister,
+    //   recipient: userRegister,
+    //   notidate: dateTime,
+    // });
+    // await newNotice.save();
   } catch (error) {
     res.json({ message: "Lỗi máy chủ" });
   }
@@ -146,6 +157,8 @@ router.post("/login", async (req, res) => {
   if (!phone || !password)
     return res.status(400).json({ success: false, message: "Thiếu thông tin" });
 
+  // const userLogin = await Account.findOne({ account: req.account });
+
   try {
     // Check for existing account
     const account = await Account.findOne({ phone });
@@ -166,15 +179,36 @@ router.post("/login", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
+    // var today = new Date();
+    // var datee =
+    //   today.getDate() +
+    //   "-" +
+    //   (today.getMonth() + 1) +
+    //   "-" +
+    //   today.getFullYear();
+    // var timee =
+    //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    // var dateTime = datee + " " + timee;
+    // const dateTime = Date.now();
+
+    // const newNotice = new Notification({
+    //   title: "Đăng nhập tài khoản",
+    //   message: " Bạn đã đăng nhập thành công!",
+    //   creator: userLogin,
+    //   recipient: userLogin,
+    //   notidate: dateTime,
+    // });
+    // await newNotice.save();
     res.json({
       success: true,
       account: account,
-      user: await User.findOne({ accountId: account._id }),
       accessToken,
+      // newNotice,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    res.status(500).json({ success: false, message: "Lỗi tải dữ liệu" });
   }
 });
 

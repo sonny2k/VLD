@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 const Account = require("../../models/Account");
+const Notification = require("../../models/Notification");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
@@ -47,7 +48,6 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   const date = `${dateconsult}T00:00:00.000+00:00`;
 
   const userne = await User.findOne({ account: req.accountId });
-
   const userId = userne._id;
 
   try {
@@ -63,24 +63,6 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     });
     await newConsult.save();
 
-    // let updatedavailability = {
-    //   available: [{hour: [{status: true}]}]
-    // };
-
-    // const statusavail = { date: date, time: hour, _id: doctor };
-    // updatedAccount = await Doctor.findOneAndUpdate(
-    //   statusavail,
-    //   updatedavailability,
-    //   { new: true }
-    // );
-
-    // // User not authorized to update profile
-    // if (!updatedavailability)
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Không thể đặt lịch, vui lòng thử lại",
-    //   });
-
     Doctor.updateOne(
       { _id: doctor },
       { $set: { "availables.$[a].hours.$[b].status": true } },
@@ -93,11 +75,39 @@ router.post("/createconsult", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
+    if (!newConsult)
+      return res.json({
+        success: false,
+        message: "Đăng ký lịch không thành công",
+      });
+
+    // var today = new Date();
+    // var datee =
+    //   today.getDate() +
+    //   "-" +
+    //   (today.getMonth() + 1) +
+    //   "-" +
+    //   today.getFullYear();
+    // var timee =
+    //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // var dateTime = datee + " " + timee;
+
+    var dateTime = Date.now();
+
+    const newNotice = new Notification({
+      title: "Đặt lịch thăm khám",
+      message: name + " " + "đã gửi một yêu cầu đặt hẹn thăm khám",
+      creator: userId,
+      recipient: doctor,
+      notidate: dateTime,
+    });
+    await newNotice.save();
 
     res.json({
       success: true,
       message: "Bạn đã đăng kí lịch thăm khám thành công",
       newConsult,
+      newNotice,
     });
   } catch (error) {
     console.log(error);
@@ -114,14 +124,18 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
 
-  console.log(userId);
-
+  // const status1 = await Consultation.findOne({ status: "chờ xác nhận" });
+  // const status2 = await Consultation.findOne({ status: "chờ khám" });
   try {
-    const consultationupdatecondition = { user: userId, _id: _id };
-    deleteConsultation = await Consultation.findOneAndDelete(
+    const consultationupdatecondition = {
+      user: userId,
+      _id: _id,
+      status: ["chờ xác nhận", "chờ khám"],
+    };
+    const deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition
     );
-
+    // console.log(deleteConsultation);
     // User not authorized to update consultation
     if (!deleteConsultation)
       return res.status(400).json({
@@ -141,10 +155,21 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "Hủy đặt lịch",
+      message: " người dùng đã hủy lịch hẹn",
+      creator: userId,
+      recipient: doctor,
+      notidate: dateTime,
+    });
+    await newNotice.save();
 
     res.json({
       success: true,
       message: "Hủy lịch thành công",
+      deleteConsultation,
+      newNotice,
     });
   } catch (error) {
     console.log(error);
@@ -154,6 +179,45 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     });
   }
 });
+
+// router.delete("/cancelConsult/:id", verifyToken, async (req, res) => {
+//   const userCancel = await User.findOne({ account: req.accountId });
+//   const userIdd = userCancel._id;
+//   try {
+//     const cancelCon = await Consultation.findOneAndDelete({
+//       user: userIdd,
+//       _id: req.params.id,
+//       status: ["chờ xác nhận","chờ khám"]
+//     });
+//     console.log(cancelCon);
+//     if (!cancelCon)
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Không có quyền hủy lịch" });
+
+//     var dateTime = Date.now();
+//     const newNotice = new Notification({
+//       title: "Hủy đặt lịch",
+//       message: " người dùng đã hủy lịch hẹn",
+//       creator: userIdd,
+//       recipient: "",
+//       notidate: dateTime,
+//     });
+//     await newNotice.save();
+//     res.json({
+//       success: true,
+//       message: "Hủy lịch hẹn thành công",
+//       cancelCon,
+//       newNotice,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Lỗi tải dữ liệu",
+//     });
+//   }
+// });
 
 router.put("/consultsymptom", verifyToken, async (req, res) => {
   const { _id, symptom } = req.body;

@@ -27,111 +27,6 @@ router.get("/viewListPrescription", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/createPrescription", verifyToken, async (req, res) => {
-  const {
-    consultation,
-    pname,
-    diagnosis,
-    note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
-  } = req.body;
-
-  try {
-    const newPre = new Prescription({
-      consultation,
-      pname,
-      diagnosis,
-      note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
-    });
-    await newPre.save();
-
-    res.json({
-      success: true,
-      message: "Bạn đã tạo toa thuốc thành công",
-      newPre,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
-router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
-  const {
-    consultation,
-    pname,
-    diagnosis,
-    note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
-  } = req.body;
-
-  try {
-    let updatePre = {
-      consultation,
-      pname,
-      diagnosis,
-      note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
-    };
-    const PreupdateCondition = {
-      _id: req.params.id,
-    };
-    upPre = await Prescription.findOneAndUpdate(PreupdateCondition, updatePre, {
-      new: true,
-    });
-
-    if (!upPre)
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có quyền cập nhật toa thuốc" });
-    res.json({
-      success: true,
-      message: "Cập nhật toa thuốc thành công",
-      prescription: upPre,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
-router.delete("/deletePrescription/:id", verifyToken, async (req, res) => {
-  try {
-    dePre = await Prescription.findOneAndDelete({ _id: req.params.id });
-    if (!dePre)
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có quyền xóa toa thuốc" });
-    res.json({
-      success: true,
-      message: "Xóa toa thuốc thành công",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
 router.get("/searchPrescription/:diagnosis", verifyToken, async (req, res) => {
   try {
     var keywordPre = new RegExp(req.params.diagnosis, "i");
@@ -153,8 +48,13 @@ router.get(
   "/viewListPrescription/detail/:id",
   verifyToken,
   async (req, res) => {
+    const userr = await User.findOne({ account: req.accountId });
+    const userIDD = userr._id;
+    const consults = await Consultation.findOne({ userIDD });
+    const consultIDD = consults._id;
     try {
       const preListdetail = await Prescription.findOne({
+        consultation: consultIDD,
         _id: req.params.id,
       }).populate("consultation");
       res.json({

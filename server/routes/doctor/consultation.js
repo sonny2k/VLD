@@ -4,6 +4,7 @@ const verifyToken = require("../../middleware/auth");
 
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
+const User = require("../../models/User");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {

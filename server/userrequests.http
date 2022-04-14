@@ -149,26 +149,26 @@ Content-Type: application/json
 Đặt lịch hẹn
 
 ###
-GET http://localhost:1210/api/user/consultation/viewlistconsult
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk0ODU4OTl9.JgBWcjuB3hJhwQ-RHCqDO6pca34o-23rcb4bqNl9gvo
+GET http://localhost:1210/api/doctor/consultation/viewlistconsult
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk3NzAzMDd9.6Cj22xoFwAvu-hOJcO86u4YWIcGtaY_4iHNGQqWHfmU
 ###
 GET http://localhost:1210/api/user/consultation/viewconsult/621c584af114f09715f08787
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDg4MDg3OTl9.9nbiHJUou4wfPepQFam7I20I0rHtfRQiITCv3EsBKZo
 
 ###
 POST http://localhost:1210/api/user/consultation/createconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc3NTAwNjl9.Q7bdHFp48lXlU70pT_5JeMgSKI_acWBYl_yJLrDS7Nk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5MjE3MzF9.nFDCtyBpwHhGYUOJv6VU2Q2qz2-FLEBFUljdowVs8xk
 Content-Type: application/json
 
 {
     "status": "chờ xác nhận",
-    "name": "Thành",
-    "phone": "0582199172",
-    "symptom": "",
-    "dateconsult": "2022-04-28",
+    "name": "Ngọc Tiêu",
+    "phone": "090033874936",
+    "symptom": "Đau họng quá",
+    "dateconsult": "2022-08-04",
     "hour": "09:00",
-    "doctor": "61e0cece97629c08e6644865",
-    "user": "61e51f2da695cff2bd5c011f"
+    "doctor": "621c50fe098f3f437d976ca1",
+    "user": "61e6d602ad43f2bf86a7a66b"
 }
 
 ###
@@ -185,8 +185,21 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:1210/api/doctor/consultation/viewDocconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk0ODMyMjN9.sSrPhSw-ShOdTpJcFWqi8gDogQczuefPLPflgz11AlQ
+POST http://localhost:1210/api/user/consultation/cancelconsult
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5NDI0NzN9.5NoS2BWspZNFkCvC-uQvt1D48-Drs7TdGeuVDaFbMsM
+Content-Type: application/json
+
+{
+    "_id": "62545d39c248a6fc354a9eb8",
+    "doctor": "61e0cece97629c08e6644865",
+    "date": "2022-04-09T00:00:00.000+00:00",
+    "hour": "8:00"
+    //"status": "chờ khám"
+}
+
+###
+DELETE  http://localhost:1210/api/user/consultation/cancelconsult/6254f500fe729f5742ad80fa
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5MTY0NzV9.ysr2APAdwri-pAezmcHO4RQ4rpyWkE45Bbz3RpV5hkE
 
 ===================================================================================================================================
 ###
@@ -194,15 +207,15 @@ GET http://localhost:1210/api/user/prescription/viewListPrescription
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk1OTg5ODF9.G7KKkMZt6XuoN4lEBgbUHkbgnseJYF_q7PiXBkrG-Ek
 
 ###
-POST http://localhost:1210/api/user/prescription/createPrescription
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1MjE1NDB9.Gh3iAK1lAgct39qK41W5l-RHIntnSMxh9MadCY8thNM
+POST http://localhost:1210/api/doctor/prescription/createPrescription
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3NDYxOTR9.zGLAkvppwNmkVvz2RKdupLRBGqHl-ggOB7Kyondd4T0
 Content-Type: application/json
 
 {
-    "consultation": "61ece22958149b526e1ec79a",
+    "consultation": "6253dc5dcb281a3a9c1419c9",
     "pname": "Toa thuốc",
-    "diagnosis": "Đau nhức xương khớp",
-    "note": "Hạn chế vận động",
+    "diagnosis": "đau quá đau",
+    "note": "đừng đau nữa",
     "product": "6232e81a4ec426dd1fc4d3e2",
     "quantity": 4,
     "morningrate": "1 viên",
@@ -211,8 +224,8 @@ Content-Type: application/json
     "specdes": "Quy cách sản phẩm"
 }
 ###
-PUT http://localhost:1210/api/user/prescription/updatePrescription/6232ffb79c802c499d105bda
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk1MDc5NzF9.Js_1Q5-b0r3Ktc3YvT73Jq9zL7fltA5DwqrBVPVal4o
+PUT http://localhost:1210/api/doctor/prescription/updatePrescription/6232ffb79c802c499d105bda
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3NDYxOTR9.zGLAkvppwNmkVvz2RKdupLRBGqHl-ggOB7Kyondd4T0
 Content-Type: application/json
 
 {
@@ -228,8 +241,8 @@ Content-Type: application/json
     "specdes": "Quy cách sản phẩm"
 }
 ###
-DELETE http://localhost:1210/api/user/prescription/deletePrescription/623483d8db4386b577237a5d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDc1ODg3MDJ9.szYfgNFelk6HTaDWoYNyEbZ47m-cmfOuEk_kcByL7FM
+DELETE http://localhost:1210/api/doctor/prescription/deletePrescription/62552124ee24ddfa52f3e9ed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3NDYxOTR9.zGLAkvppwNmkVvz2RKdupLRBGqHl-ggOB7Kyondd4T0
 
 ###
 GET http://localhost:1210/api/user/prescription/searchPrescription/Viêm họng
