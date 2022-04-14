@@ -175,6 +175,15 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:1210/api/user/prescription/viewPrescriptionByConsultation
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5MzA0NzZ9.tq38ZvVeyhfAbj0Gj5wbw7H3bLTQZD_P6iJwwK3v-Y8
+Content-Type: application/json
+
+{
+    "id": "624e6a1d6c4a093b7db859a6"
+}
+
+###
 POST http://localhost:1210/api/user/consultation/cancelconsult
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDI0MzA5OTl9.-Ffs-DuAHycxL5lCKsDSC4N98gRIX0F5npKXgO_qUMI
 Content-Type: application/json
