@@ -6,7 +6,7 @@ const Consultation = require("../../models/Consultation");
 
 router.get("/viewPrescription/:id", verifyToken, async (req, res) => {
   try {
-    var populateQueryP = ({path:'medicines.product'});
+    var populateQueryP = ({path:'medicines.product'}, {path:'consultation'});
     var populateQueryCD = ({path:'doctor', populate: {path:'account'}});
     var populateQueryCU = ({path:'user', populate: {path:'account'}});
     const docinfo = await Consultation.findOne({ _id: req.params.id }).populate(populateQueryCD);
