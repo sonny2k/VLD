@@ -9,8 +9,8 @@ router.get("/viewPrescription/:id", verifyToken, async (req, res) => {
     var populateQueryP = ({path:'medicines.product'});
     var populateQueryCD = ({path:'doctor', populate: {path:'account'}});
     var populateQueryCU = ({path:'user', populate: {path:'account'}});
-    const docinfo = await Consultation.find({ _id: req.params.id }).populate(populateQueryCD);
-    const userinfo = await Consultation.find({ _id: req.params.id }).populate(populateQueryCU);
+    const docinfo = await Consultation.findOne({ _id: req.params.id }).populate(populateQueryCD);
+    const userinfo = await Consultation.findOne({ _id: req.params.id }).populate(populateQueryCU);
     const prescription = await Prescription.findOne({ consultation: req.params.id }).populate(populateQueryP);
     res.json({prescription, docinfo, userinfo});
   } catch (error) {
