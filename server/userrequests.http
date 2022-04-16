@@ -220,3 +220,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 ###
 GET http://localhost:1210/api/doctor/account/info
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkyMzA3ODN9.jN29aFtlg6r57dHAn2WSwYQKE9BANxHxP77p7DWYHeI
+
+###
+POST http://localhost:1210/api/doctor/account/workingtime
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkyMzA3ODN9.jN29aFtlg6r57dHAn2WSwYQKE9BANxHxP77p7DWYHeI
+Content-Type: application/json
+
+{
+    "date1": "2022-04-17T00:00:00.000+00:00",
+    "date2": "2022-04-19T00:00:00.000+00:00",
+    "date3": "2022-04-21T00:00:00.000+00:00",
+    "date4": "2022-04-22T00:00:00.000+00:00",
+    "date5": "2022-04-25T00:00:00.000+00:00",
+    "date6": "2022-04-28T00:00:00.000+00:00",
+    "date7": "2022-04-30T00:00:00.000+00:00",
+    "hour11": "08:00", "hour12": "10:00", "hour13": "13:00",
+    "hour21": "09:00", "hour22": "14:00", "hour23": "15:00",
+    "hour31": "09:00", "hour32": "11:00", "hour33": "17:00",
+    "hour41": "10:00", "hour42": "13:00", "hour43": "15:00",
+    "hour51": "08:00", "hour52": "14:00", "hour53": "16:00",
+    "hour61": "11:00", "hour62": "16:00", "hour63": "17:00",
+    "hour71": "13:00", "hour72": "14:00", "hour73": "15:00"
+}
