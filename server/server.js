@@ -7,13 +7,16 @@ const authUserRouter = require("./routes/user/auth");
 const userRouter = require("./routes/user/user");
 const accountUserRouter = require("./routes/user/account");
 const homepageRouter = require("./routes/user/homepage");
-const userConsultationRouter = require("./routes/user/consultation");
-const productRouter = require("./routes/admin/product");
+const consultationUserRouter = require("./routes/user/consultation");
+const prescriptionRouter = require("./routes/user/prescription");
 const departmentRouter = require("./routes/admin/department");
-const accountDoctorRouter = require("./routes/doctor/account");
-const doctorConsultationRouter = require("./routes/doctor/consultation");
+const articleRouter = require("./routes/admin/article");
+const doctoradminRouter = require("./routes/admin/doctor");
+const productRouter = require("./routes/admin/product");
+const notificationRouter = require("./routes/admin/notification");
+const doctorRouter = require("./routes/doctor/account");
+const consultationDoctorRouter = require("./routes/doctor/consultation");
 const prescriptionDocRouter = require("./routes/doctor/prescription");
-const prescriptionUserRouter = require("./routes/user/prescription");
 
 const connectDB = async () => {
   try {
@@ -47,13 +50,16 @@ app.use("/api/user/auth", authUserRouter);
 app.use("/api/user", userRouter);
 app.use("/api/user/account", accountUserRouter);
 app.use("/api/home", homepageRouter);
-app.use("/api/user/consultation", userConsultationRouter);
-app.use("/api/admin/product", productRouter);
+app.use("/api/user/consultation", consultationUserRouter);
+app.use("/api/user/prescription", prescriptionRouter);
 app.use("/api/admin/department", departmentRouter);
-app.use("/api/doctor/account", accountDoctorRouter);
-app.use("/api/doctor/consultation", doctorConsultationRouter);
+app.use("/api/admin/article", articleRouter);
+app.use("/api/admin/doctor", doctoradminRouter);
+app.use("/api/admin/product", productRouter);
+app.use("/api/admin/notification", notificationRouter);
+app.use("/api/doctor/account", doctorRouter);
+app.use("/api/doctor/consultation", consultationDoctorRouter);
 app.use("/api/doctor/prescription", prescriptionDocRouter);
-app.use("/api/user/prescription", prescriptionUserRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
