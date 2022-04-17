@@ -19,5 +19,11 @@ const NotificationSchema = new Schema({
   notidate: {
     type: Date,
   },
+  seen: {
+    type: Boolean,
+  },
+  path: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("notifications", NotificationSchema);

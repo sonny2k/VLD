@@ -4,6 +4,7 @@ const verifyToken = require("../../middleware/auth");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const Prescription = require("../../models/Prescription");
+const Notification = require("../../models/Notification");
 
 router.get(
   "/viewListPrescription/detail/:id",
@@ -72,7 +73,6 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
 
 router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
   const {
-    consultation,
     pname,
     diagnosis,
     note,
@@ -86,11 +86,11 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
 
   try {
     const doctor = await Doctor.findOne({ account: req.accountId });
-    const doctorID = doctor._id;
-    const consultations = await Consultation.findOne({ doctorID });
-    const conID = consultations._id;
+    const idDoctor = doctor._id;
+    const consult = await Consultation.findOne({ idDoctor });
+    const conID = consult._id;
+
     let updatePreDoc = {
-      consultation: date,
       pname,
       diagnosis,
       note,
@@ -107,6 +107,10 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
         new: true,
       }
     );
+    console.log(req.params.id);
+    console.log(idDoctor);
+    console.log(conID);
+    console.log(upPreDoc);
 
     if (!upPreDoc)
       return res.status(400).json({

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-const Account = require("../../models/Account");
 const Notification = require("../../models/Notification");
 
 const Consultation = require("../../models/Consultation");
@@ -100,6 +99,8 @@ router.post("/createconsult", verifyToken, async (req, res) => {
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
+      seen: false,
+      path: newConsult._id,
     });
     await newNotice.save();
 
@@ -162,6 +163,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
+      seen: false,
     });
     await newNotice.save();
 

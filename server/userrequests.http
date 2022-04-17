@@ -136,7 +136,7 @@ Content-Type: application/json
 ###
 GET http://localhost:1210/api/home/docdep/61e915d19485388e65703633
 Content-Type: application/json
-
+{}
 ###
 GET http://localhost:1210/api/home/docacc/61e21e9f1d54cf11cc5e2708
 Content-Type: application/json
@@ -144,6 +144,29 @@ Content-Type: application/json
 ###
 GET http://localhost:1210/api/home/department
 Content-Type: application/json
+
+###
+###
+POST http://localhost:1210/api/doctor/account/workingtime
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkyMzA3ODN9.jN29aFtlg6r57dHAn2WSwYQKE9BANxHxP77p7DWYHeI
+Content-Type: application/json
+
+{
+    "date1": "2022-04-17T00:00:00.000+00:00",
+    "date2": "2022-04-19T00:00:00.000+00:00",
+    "date3": "2022-04-21T00:00:00.000+00:00",
+    "date4": "2022-04-22T00:00:00.000+00:00",
+    "date5": "2022-04-25T00:00:00.000+00:00",
+    "date6": "2022-04-28T00:00:00.000+00:00",
+    "date7": "2022-04-30T00:00:00.000+00:00",
+    "hour11": "08:00", "hour12": "10:00", "hour13": "13:00",
+    "hour21": "09:00", "hour22": "14:00", "hour23": "15:00",
+    "hour31": "09:00", "hour32": "11:00", "hour33": "17:00",
+    "hour41": "10:00", "hour42": "13:00", "hour43": "15:00",
+    "hour51": "08:00", "hour52": "14:00", "hour53": "16:00",
+    "hour61": "11:00", "hour62": "16:00", "hour63": "17:00",
+    "hour71": "13:00", "hour72": "14:00", "hour73": "15:00"
+}
 ====================================================================================================================================
 
 Đặt lịch hẹn
@@ -157,7 +180,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 
 ###
 POST http://localhost:1210/api/user/consultation/createconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5MjE3MzF9.nFDCtyBpwHhGYUOJv6VU2Q2qz2-FLEBFUljdowVs8xk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAxOTkwMTZ9.KXhVCKjSvOzKLtjfW6fVHox8wj7yRhpasGZKUGRk6fg
 Content-Type: application/json
 
 {
@@ -186,20 +209,39 @@ Content-Type: application/json
 
 ###
 POST http://localhost:1210/api/user/consultation/cancelconsult
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5NDI0NzN9.5NoS2BWspZNFkCvC-uQvt1D48-Drs7TdGeuVDaFbMsM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAxMDQxODh9.FfzQenhH0cjAyXJakNyq-YKZZSD1sLZx8S5TzSYcQ1g
 Content-Type: application/json
 
 {
-    "_id": "62545d39c248a6fc354a9eb8",
+    "_id": "62553d7063681cce2e2450c6",
     "doctor": "61e0cece97629c08e6644865",
-    "date": "2022-04-09T00:00:00.000+00:00",
-    "hour": "8:00"
-    //"status": "chờ khám"
+    "date": "2022-04-17T00:00:00.000+00:00",
+    "hour": "16:00"
+}
+###
+POST http://localhost:1210/api/doctor/consultation/cancelconsultation
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NTAxMDQ0Nzh9.B-KAZVqv9jUhAwt_0nh5UaCoRbUNdHX5SMzkZ3RAPo4
+Content-Type: application/json
+
+{
+    "_id": "61ece22958149b526e1ec79a",
+    "doctor": "61e21e991d54cf11cc5e2707",
+    "date": "2022-03-04T00:00:00.000+00:00",
+    "hour": "15:00"
 }
 
 ###
 DELETE  http://localhost:1210/api/user/consultation/cancelconsult/6254f500fe729f5742ad80fa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NDk5MTY0NzV9.ysr2APAdwri-pAezmcHO4RQ4rpyWkE45Bbz3RpV5hkE
+
+###
+POST http://localhost:1210/api/doctor/consultation/confirmconsultation
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NTAxMDQ0Nzh9.B-KAZVqv9jUhAwt_0nh5UaCoRbUNdHX5SMzkZ3RAPo4
+Content-Type: application/json
+
+{
+    "_id":"61ece22958149b526e1ec79a"
+}
 
 ===================================================================================================================================
 ###
@@ -224,22 +266,23 @@ Content-Type: application/json
     "specdes": "Quy cách sản phẩm"
 }
 ###
-PUT http://localhost:1210/api/doctor/prescription/updatePrescription/6232ffb79c802c499d105bda
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3NDYxOTR9.zGLAkvppwNmkVvz2RKdupLRBGqHl-ggOB7Kyondd4T0
+PUT http://localhost:1210/api/doctor/prescription/updatePrescription/62597326ee8be650a109754d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NTAwMzA2NzN9.hjqT5YRKRxXmptHeHV70aSsiQs5ozb5_cIXgiNgY_So
 Content-Type: application/json
 
 {
-    "consultation": "61ece1e958149b526e1ec798",
-    "pname": "Toa thuốc(mất ngủ)",
-    "diagnosis": "mất ngủ",
-    "note": "Ngủ nhiều hơn",
+    "consultation": "621c57e2f114f09715f08785",
+    "pname": "Toa thuốc(viêm gan)",
+    "diagnosis": "viêm gan",
+    "note": "uống nhiều nước mát để lọc gan",
     "product": "6232e81a4ec426dd1fc4d3e2",
-    "quantity": 5,
+    "quantity": 4,
     "morningrate": "2 viên trước khi ăn ",
     "noonrate": "1 viên rưỡi ",
     "everate": "1/2 viên sau khi ăn",
     "specdes": "Quy cách sản phẩm"
 }
+
 ###
 DELETE http://localhost:1210/api/doctor/prescription/deletePrescription/62552124ee24ddfa52f3e9ed
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3NDYxOTR9.zGLAkvppwNmkVvz2RKdupLRBGqHl-ggOB7Kyondd4T0
@@ -256,20 +299,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 GET http://localhost:1210/api/doctor/prescription/viewListPreDoc
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk3MzY5OTh9.oETH3Jvn9fQdRiFbQ9cDjr8Si4mpqPmyO5hJq9teOfE
 ###
-PUT http://localhost:1210/api/doctor/prescription/updatePreDoc/6232ff399c802c499d105bd8
+PUT http://localhost:1210/api/doctor/prescription/updatePreDoc/62597326ee8be650a109754d
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NDk2MDM4MDl9.l3x3Zq62OJXDD3iQkCd8jnl7pyAcItelRUjZljKWvfM
 Content-Type: application/json
 
 {
-    "consultation": "61ece22958149b526e1ec79a",
-    "pname": "Toa thuốc(đau dạ dày)",
-    "diagnosis": "Đau dạ dày",
-    "note": "hạn chế ăn đồ chua",
+    "consultation": "621c57e2f114f09715f08785",
+    "pname": "Toa thuốc(viêm gan)",
+    "diagnosis": "viêm gan",
+    "note": "uống nhiều nước mát để lọc gan",
     "product": "6232e81a4ec426dd1fc4d3e2",
-    "quantity": 5,
-    "morningrate": "1 viên trước khi ăn ",
-    "noonrate": "1 viên",
-    "everate": "1 viên sau khi ăn",
+    "quantity": 4,
+    "morningrate": "2 viên trước khi ăn ",
+    "noonrate": "1 viên rưỡi ",
+    "everate": "1/2 viên sau khi ăn",
     "specdes": "Quy cách sản phẩm"
 }
 
@@ -451,8 +494,29 @@ Content-Type: application/json
 //THÔNG BÁO
 
 ###
-GET http://localhost:1210/api/admin/notification/notice
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NDg3MTczMDB9.p-eEWzksFd-aaRtygO5DVmqiwurUItIVmqD8D9tClDU
+GET http://localhost:1210/api/admin/notification/notice/user
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAwOTM1NDd9.buvv5ePR-hgTIwygc9ecCp3suosXJXlIHmM2FAAp3xw
+
+###
+POST http://localhost:1210/api/admin/notification/notice/user/seen
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAwOTM1NDd9.buvv5ePR-hgTIwygc9ecCp3suosXJXlIHmM2FAAp3xw
+Content-Type: application/json
+
+{
+    "_id":"625a99638adb78a3f9ee8b75"
+}
+
+POST http://localhost:1210/api/admin/notification/notice/doctor/seen
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAwOTM1NDd9.buvv5ePR-hgTIwygc9ecCp3suosXJXlIHmM2FAAp3xw
+Content-Type: application/json
+
+{
+    "_id":"625a73c02cc40a79ec1b32af"
+}
+
+###
+GET http://localhost:1210/api/admin/notification/notice/doctor
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MjIwYWU4MGZiYzcxNzhhY2M0NDdlMzAiLCJpYXQiOjE2NTAwOTM4ODl9.ngMtd_jcfgYuC_YBizndsI1dNM6O89v6ceDAU_jbrTk
 
 ###
 POST http://localhost:1210/api/admin/notification/createNotice
