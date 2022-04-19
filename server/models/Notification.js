@@ -10,11 +10,9 @@ const NotificationSchema = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "users",
   },
   recipient: {
     type: Schema.Types.ObjectId,
-    ref: "doctors",
   },
   notidate: {
     type: Date,
