@@ -12,7 +12,7 @@ router.get("/notice/user", verifyToken, async (req, res) => {
   const userId = userne._id;
   try {
     const noticeUserList = await Notification.find({ recipient: userId }).populate(populateQuery);
-    res.json({ noticeUserList });
+    res.json(noticeUserList);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -46,7 +46,7 @@ router.get("/notice/doctor", verifyToken, async (req, res) => {
   const doctorId = doctorne._id;
   try {
     const noticeDoctorList = await Notification.find({ recipient: doctorId }).populate(populateQuery);
-    res.json({ noticeDoctorList });
+    res.json(noticeDoctorList);
   } catch (error) {
     console.log(error);
     res.status(500).json({
