@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const med = new Schema({
-  quantity: Number,
+  quantity: String,
   morningrate: String,
   noonrate: String,
   everate: String,
