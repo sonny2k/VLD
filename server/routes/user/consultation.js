@@ -3,6 +3,7 @@ const router = express.Router();
 const verifyToken = require("../../middleware/auth");
 const Account = require("../../models/Account");
 
+const Notification = require("../../models/Notification");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
