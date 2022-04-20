@@ -47,8 +47,8 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
-  const userr = await User.findOne({ account: req.accountId });
-  const userId = userr._id;
+  const userr = await Consultation.findOne({ _id: _id });
+  const userId = userr.user;
 
   try {
     let updatedConsultation = {
@@ -102,8 +102,8 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
 
-  const user = await User.findOne({ account: req.accountId });
-  const userId = user._id;
+  const user = await Consultation.findOne({ _id: _id });
+  const userId = user.user;
 
   try {
     let updatedConsultation = {
