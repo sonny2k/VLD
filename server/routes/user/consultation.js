@@ -168,11 +168,11 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
       message: `Buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
-      creator: doctorId,
-      recipient: userId,
+      creator: userId,
+      recipient: doctor,
       notidate: dateTime,
       seen: false,
-      type:"canceluser",
+      type: "canceluser",
       path: _id,
     });
     await newNotice.save();
