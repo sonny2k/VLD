@@ -150,7 +150,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
-      message: `Buổi hẹn ngày ${fns.format(date, "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      message: `Buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
