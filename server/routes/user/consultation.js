@@ -225,7 +225,7 @@ router.put("/consultsymptom", verifyToken, async (req, res) => {
 });
 
 // Đánh dấu đã xem cho thông báo mà người dùng nhấp vào
-router.post("/isSeen/:id", verifyToken, async (req, res) => {
+router.post("/isSeen", verifyToken, async (req, res) => {
   const { _id } = req.body;
 
   const user = await User.findOne({ account: req.accountId });
