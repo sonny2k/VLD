@@ -7,6 +7,7 @@ const Notification = require("../../models/Notification");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
+const fns = require('date-fns');
 
 // Xem danh sách buổi hẹn của người dùng
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
@@ -99,7 +100,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
     const newNotice = new Notification({
       title: "đặt lịch thăm khám",
-      message: `đã đặt một lịch hẹn vào ngày ${format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour}`,
+      message: `đã đặt một lịch hẹn vào ngày ${fns.format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour}`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -166,7 +167,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
-      message: `Buổi hẹn ngày ${format(date, "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      message: `Buổi hẹn ngày ${fns.format(date, "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
