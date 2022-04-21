@@ -100,7 +100,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
     const newNotice = new Notification({
       title: "đặt lịch thăm khám",
-      message: `đã đặt một lịch hẹn vào ngày ${fns.format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour}`,
+      message: `buổi hẹn vào ngày ${fns.format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour} đã được lên lịch`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -167,7 +167,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
-      message: `Buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      message: `buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
