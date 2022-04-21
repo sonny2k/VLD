@@ -20,8 +20,11 @@ const NotificationSchema = new Schema({
   seen: {
     type: Boolean,
   },
-  path: {
+  type: {
     type: String,
+  },
+  path: {
+    type: Schema.Types.ObjectId,
   },
 });
 module.exports = mongoose.model("notifications", NotificationSchema);

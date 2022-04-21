@@ -8,6 +8,7 @@ const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 
+// Xem danh sách buổi hẹn của người dùng
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "doctor", populate: { path: "account" } };
@@ -26,6 +27,7 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
   }
 });
 
+// Xem chi tiết lịch hẹn của người dùng
 router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "doctor", populate: { path: "account" } };
@@ -42,6 +44,7 @@ router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   }
 });
 
+// Đặt lịch thăm khám của người dùng
 router.post("/createconsult", verifyToken, async (req, res) => {
   const { name, phone, symptom, dateconsult, hour, doctor } = req.body;
 
@@ -95,12 +98,13 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
 
     const newNotice = new Notification({
-      title: "Đặt lịch thăm khám",
-      message: name + " " + "đã gửi một yêu cầu đặt hẹn thăm khám",
+      title: "đặt lịch thăm khám",
+      message: `đã đặt một lịch hẹn vào ngày ${format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour}`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
       seen: false,
+      type: "createconsult",
       path: newConsult._id,
     });
     await newNotice.save();
@@ -120,22 +124,27 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   }
 });
 
+// Từ chối lịch hẹn của người dùng
 router.post("/cancelconsult", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour } = req.body;
 
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
 
-  console.log(userId);
-
   try {
+    let updatedConsultation = {
+      status: "bị từ chối",
+    };
+
     const consultationupdatecondition = { user: userId, _id: _id };
-    deleteConsultation = await Consultation.findOneAndDelete(
-      consultationupdatecondition
+    updatedConsult = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
     );
 
     // User not authorized to update consultation
-    if (!deleteConsultation)
+    if (!updatedConsultation)
       return res.status(400).json({
         success: false,
         message: "Người dùng không có quyền cập nhật tài khoản này",
@@ -154,6 +163,19 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
       }
     );
 
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "từ chối lịch hẹn",
+      message: `Buổi hẹn ngày ${format(date, "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      type:"canceluser",
+      path: _id,
+    });
+    await newNotice.save();
+
     res.json({
       success: true,
       message: "Hủy lịch thành công",
@@ -167,6 +189,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
   }
 });
 
+// Thay đổi triệu chứng trong lịch hẹn của người dùng 
 router.put("/consultsymptom", verifyToken, async (req, res) => {
   const { _id, symptom } = req.body;
 
@@ -199,5 +222,81 @@ router.put("/consultsymptom", verifyToken, async (req, res) => {
     res.status(500).json({ success: false, message: "Lỗi nội bộ" });
   }
 });
+
+// Đánh dấu đã xem cho thông báo mà người dùng nhấp vào
+router.post("/isSeen/:id", verifyToken, async (req, res) => {
+  const { _id } = req.body;
+
+  const user = await User.findOne({ account: req.accountId });
+  const userId = user._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: userId, _id: _id };
+    updatedNotification = await Notification.findOneAndUpdate(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Đánh dấu đã xem cho tất cả thông báo của người dùng
+router.post("/isSeen", verifyToken, async (req, res) => {
+
+  const user = await User.findOne({ account: req.accountId });
+  const userId = user._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: userId };
+    updatedNotification = await Notification.updateMany(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 
 module.exports = router;
