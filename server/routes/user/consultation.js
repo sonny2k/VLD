@@ -263,7 +263,7 @@ router.post("/isSeen", verifyToken, async (req, res) => {
 });
 
 // Đánh dấu đã xem cho tất cả thông báo của người dùng
-router.post("/isSeen", verifyToken, async (req, res) => {
+router.post("/areSeen", verifyToken, async (req, res) => {
 
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
@@ -273,7 +273,7 @@ router.post("/isSeen", verifyToken, async (req, res) => {
       seen: true,
     };
 
-    const notificationupdatecondition = { recipient: userId };
+    const notificationupdatecondition = { recipient: userId, seen: false };
     updatedNotification = await Notification.updateMany(
       notificationupdatecondition,
       updatedNotification,
