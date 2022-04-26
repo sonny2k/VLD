@@ -11,6 +11,7 @@
     "mongoose": "^6.1.4",
     "tslib": "^2.3.1",
     "twilio": "^3.72.0",
+    "twilio-video": "^2.21.1",
     "yarn": "^1.22.17"
   },
   "name": "server",

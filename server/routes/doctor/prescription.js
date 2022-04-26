@@ -39,12 +39,7 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
     pname,
     diagnosis,
     note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
+    medicines,
   } = req.body;
 
   try {
@@ -53,7 +48,7 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
       pname,
       diagnosis,
       note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
+      medicines: [medicines],
     });
     await newPre.save();
 
