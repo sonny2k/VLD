@@ -3,15 +3,14 @@ const Schema = mongoose.Schema;
 
 const med = new Schema({
   quantity: String,
-  morningrate: String,
-  noonrate: String,
-  everate: String,
+  rate: String,
   specdes: String,
   product: {
     type: Schema.Types.ObjectId,
-    ref: "products"
-  }
-})
+    ref: "products",
+  },
+  mednote: String,
+});
 
 const PrescriptionSchema = new Schema({
   consultation: {
