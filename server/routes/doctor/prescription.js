@@ -34,6 +34,10 @@ router.get(
 );
 
 router.post("/createPrescription", verifyToken, async (req, res) => {
+  const doctorraw = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctorraw._id;
+  const userr = await User.findOne({ user: req.accountId });
+  const userId = userr._id;
   const {
     consultation,
     pname,
@@ -57,10 +61,23 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
     });
     await newPre.save();
 
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "Xác nhận đặt lịch",
+      message: "Bạn đang có 1 toa thuốc",
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      path: newPre._id,
+    });
+    await newNotice.save();
+
     res.json({
       success: true,
       message: "Bạn đã tạo toa thuốc thành công",
       newPre,
+      newNotice,
     });
   } catch (error) {
     console.log(error);
@@ -159,7 +176,7 @@ router.get("/searchPrescription/:diagnosis", verifyToken, async (req, res) => {
     if (!keywordPre) {
       return res
         .status(400)
-        .json({ success: false, message: "Không tìm thấy bác sĩ này" });
+        .json({ success: false, message: "Không tìm thấy toa thuốc này" });
     }
     res.send(findDiagnosis);
   } catch (error) {

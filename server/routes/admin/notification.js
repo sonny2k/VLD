@@ -5,13 +5,20 @@ const Notification = require("../../models/Notification");
 const User = require("../../models/User");
 const Doctor = require("../../models/Doctor");
 
-//Xem danh sách thông báo
+//Xem danh sách thông báo người dùng
 router.get("/notice/user", verifyToken, async (req, res) => {
-  const userne = await User.findOne({ user: req.accountId });
+  var populateQuery = {
+    path: "creator",
+    model: Doctor,
+    populate: { path: "account" },
+  };
+  const userne = await User.findOne({ account: req.accountId });
   const userId = userne._id;
   try {
-    const noticeUserList = await Notification.find({ userId });
-    res.json({ noticeUserList });
+    const noticeUserList = await Notification.find({
+      recipient: userId,
+    }).populate(populateQuery);
+    res.json(noticeUserList);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -29,7 +36,7 @@ router.get("/notice/user/detail", verifyToken, async (req, res) => {
       userId,
       _id: req.params.id,
     });
-    res.json({ detailNoticeUserList });
+    res.json(detailNoticeUserList);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -38,12 +45,15 @@ router.get("/notice/user/detail", verifyToken, async (req, res) => {
   }
 });
 
+//Xem danh sách thông báo của bác sĩ
 router.get("/notice/doctor", verifyToken, async (req, res) => {
   const doctors = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctors._id;
   try {
-    const noticeUserList = await Notification.find({ creator: doctorId });
-    res.json({ noticeUserList });
+    const noticeDoctorList = await Notification.find({
+      recipient: doctorId,
+    }).populate(populateQuery);
+    res.json(noticeDoctorList);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -61,7 +71,7 @@ router.get("/notice/doctor/detail", verifyToken, async (req, res) => {
       creator: doctorId,
       _id: req.params.id,
     });
-    res.json({ noticeUserList });
+    res.json(noticeUserList);
   } catch (error) {
     console.log(error);
     res.status(500).json({

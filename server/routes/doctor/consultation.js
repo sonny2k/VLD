@@ -7,6 +7,7 @@ const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 const Notification = require("../../models/Notification");
 const Account = require("../../models/Account");
+const fns = require("date-fns");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
@@ -47,8 +48,8 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
-  const userr = await User.findOne({ user: req.accountId });
-  const userId = userr._id;
+  const userr = await Consultation.findOne({ _id: _id });
+  const userId = userr.user;
 
   try {
     let updatedConsultation = {
@@ -72,7 +73,10 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "Xác nhận đặt lịch",
-      message: "Bác sĩ đã xác nhận hẹn lịch!",
+      message: `buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được xác nhận`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
@@ -102,8 +106,8 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
 
-  const user = await User.findOne({ user: req.accountId });
-  const userId = user._id;
+  const user = await Consultation.findOne({ _id: _id });
+  const userId = user.user;
 
   try {
     let updatedConsultation = {
@@ -140,7 +144,10 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "Hủy đặt lịch",
-      message: " Bác sĩ đã từ chối hẹn",
+      message: `buổi hẹn ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} đã bị từ chối`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
@@ -154,6 +161,80 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
       message: "Từ chối buổi hẹn thành công",
       updatedConsult,
       newNotice,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Đánh dấu đã xem cho thông báo mà người dùng nhấp vào
+router.post("/isSeen", verifyToken, async (req, res) => {
+  const { _id } = req.body;
+
+  const doctor = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctor._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: doctorId, _id: _id };
+    updatedNotification = await Notification.findOneAndUpdate(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Đánh dấu đã xem cho tất cả thông báo của người dùng
+router.post("/areSeen", verifyToken, async (req, res) => {
+  const doctor = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctor._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: doctorId, seen: false };
+    updatedNotification = await Notification.updateMany(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
     });
   } catch (error) {
     console.log(error);

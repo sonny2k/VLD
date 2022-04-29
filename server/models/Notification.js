@@ -10,11 +10,9 @@ const NotificationSchema = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "users",
   },
   recipient: {
     type: Schema.Types.ObjectId,
-    ref: "doctors",
   },
   notidate: {
     type: Date,
@@ -22,8 +20,11 @@ const NotificationSchema = new Schema({
   seen: {
     type: Boolean,
   },
-  path: {
+  type: {
     type: String,
+  },
+  path: {
+    type: Schema.Types.ObjectId,
   },
 });
 module.exports = mongoose.model("notifications", NotificationSchema);

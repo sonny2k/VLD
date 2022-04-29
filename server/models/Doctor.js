@@ -1,15 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const AvailableSchema = new Schema({
-  date: Date,
-  hours: [
-    {
-      time: String,
-      status: Boolean,
-    },
-  ],
-});
+const AvailableSchema = new Schema(
+  {
+    date: Date,
+    hours: [
+      {
+        time: String,
+        status: Boolean,
+      },
+    ],
+  },
+  { _id: false }
+);
 
 const DoctorSchema = new Schema({
   account: {

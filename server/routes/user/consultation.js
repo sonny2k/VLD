@@ -7,6 +7,8 @@ const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 
+const fns = require("date-fns");
+
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "doctor", populate: { path: "account" } };
@@ -74,6 +76,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
+
     if (!newConsult)
       return res.json({
         success: false,
@@ -95,7 +98,10 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
     const newNotice = new Notification({
       title: "Đặt lịch thăm khám",
-      message: name + " " + "đã gửi một yêu cầu đặt hẹn thăm khám",
+      message: `buổi hẹn vào ngày ${fns.format(
+        newConsult.date,
+        "dd/MM/yyyy"
+      )} lúc ${newConsult.hour} đã được lên lịch`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -159,7 +165,10 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "Hủy đặt lịch",
-      message: " người dùng đã hủy lịch hẹn",
+      message: `buổi hẹn ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} đã bị từ chối`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -251,6 +260,106 @@ router.put("/consultsymptom", verifyToken, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+  }
+});
+
+router.get("/filter", verifyToken, async (req, res) => {
+  try {
+    filter = {};
+    // const department = req.query.department;
+    const { status } = req.query;
+
+    // if (department && level) {
+    //   filter = { department };
+    // }
+    if (status) {
+      filter = { status };
+    }
+    let consultList = await Consultation.find(filter);
+    if (!consultList) {
+      res
+        .status(500)
+        .json({ success: false, message: "Không tìm được lịch tư vấn" });
+    }
+    console.log(consultList);
+    res.send(consultList);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi lọc hoặc tìm kiếm" });
+  }
+});
+
+// Đánh dấu đã xem cho thông báo mà người dùng nhấp vào
+router.post("/isSeen", verifyToken, async (req, res) => {
+  const { _id } = req.body;
+
+  const user = await User.findOne({ account: req.accountId });
+  const userId = user._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: userId, _id: _id };
+    updatedNotification = await Notification.findOneAndUpdate(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Đánh dấu đã xem cho tất cả thông báo của người dùng
+router.post("/areSeen", verifyToken, async (req, res) => {
+  const user = await User.findOne({ account: req.accountId });
+  const userId = user._id;
+
+  try {
+    let updatedNotification = {
+      seen: true,
+    };
+
+    const notificationupdatecondition = { recipient: userId, seen: false };
+    updatedNotification = await Notification.updateMany(
+      notificationupdatecondition,
+      updatedNotification,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedNotification)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật tài khoản này",
+      });
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
 

@@ -2,15 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const med = new Schema({
-  quantity: Number,
-  morningrate: String,
-  noonrate: String,
-  everate: String,
+  quantity: String,
+  rate: String,
   specdes: String,
   product: {
     type: Schema.Types.ObjectId,
     ref: "products",
   },
+  mednote: String,
 });
 
 const PrescriptionSchema = new Schema({
