@@ -5,6 +5,7 @@ const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const Prescription = require("../../models/Prescription");
 const Notification = require("../../models/Notification");
+const fns = require("date-fns");
 
 router.get(
   "/viewListPrescription/detail/:id",
@@ -51,7 +52,7 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
       pname,
       diagnosis,
       note,
-      medicines: [medicines],
+      medicines: medicines,
     });
     await newPre.save();
 
