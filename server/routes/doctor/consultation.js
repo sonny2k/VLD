@@ -7,7 +7,7 @@ const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 const Notification = require("../../models/Notification");
 const Account = require("../../models/Account");
-const fns = require('date-fns');
+const fns = require("date-fns");
 
 // Xem danh sách lịch hẹn của bác sĩ
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
@@ -74,13 +74,16 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
     if (!updatedConsultation)
       return res.status(400).json({
         success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
       });
 
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "xác nhận đặt lịch",
-      message: `buổi hẹn ngày ${fns.format(consultdate, "dd/MM/yyyy")} lúc ${consulthour} đã được xác nhận`,
+      message: `buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được xác nhận`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
@@ -105,7 +108,7 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
   }
 });
 
-// Từ chối lịch hẹn của bác sĩ 
+// Từ chối lịch hẹn của bác sĩ
 router.post("/cancelconsultation", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour } = req.body;
 
@@ -131,7 +134,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     if (!updatedConsultation)
       return res.status(400).json({
         success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
       });
 
     Doctor.updateOne(
@@ -150,7 +153,10 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
-      message: `buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      message: `buổi hẹn ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} đã bị từ chối`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
@@ -202,7 +208,7 @@ router.post("/isSeen", verifyToken, async (req, res) => {
       });
 
     res.json({
-      success: true
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -215,7 +221,6 @@ router.post("/isSeen", verifyToken, async (req, res) => {
 
 // Đánh dấu đã xem cho tất cả thông báo của người dùng
 router.post("/areSeen", verifyToken, async (req, res) => {
-
   const doctor = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctor._id;
 
@@ -239,7 +244,7 @@ router.post("/areSeen", verifyToken, async (req, res) => {
       });
 
     res.json({
-      success: true
+      success: true,
     });
   } catch (error) {
     console.log(error);

@@ -34,13 +34,16 @@ router.get(
 );
 
 router.post("/createPrescription", verifyToken, async (req, res) => {
-  const {
-    consultation,
-    pname,
-    diagnosis,
-    note,
-    medicines,
-  } = req.body;
+  const { consultation, pname, diagnosis, note, medicines } = req.body;
+
+  const doctorraw = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctorraw._id;
+
+  const consultationraw = await Consultation.findOne({ _id: consultation });
+  const id = consultationraw._id;
+  const consultdate = consultationraw.date;
+  const consulthour = consultationraw.hour;
+  const userId = consultationraw.user;
 
   try {
     const newPre = new Prescription({
@@ -51,6 +54,40 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
       medicines: [medicines],
     });
     await newPre.save();
+
+    let updatedConsultation = {
+      status: "đã hoàn thành",
+    };
+
+    const consultationupdatecondition = { doctor: doctorId, _id: consultation };
+    updatedConsult = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
+      });
+
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "Toa thuốc cho bạn",
+      message: `toa thuốc của buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được kê`,
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      type: "createprescription",
+      path: id,
+    });
+    await newNotice.save();
 
     res.json({
       success: true,
