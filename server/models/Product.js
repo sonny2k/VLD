@@ -16,8 +16,11 @@ const ProductShema = new Schema(
       type: String,
       require: true,
     },
-    categories: {
+    category: {
       type: Array,
+    },
+    specdes: {
+      type: String,
     },
   },
   { timestamps: true }
