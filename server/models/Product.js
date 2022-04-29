@@ -15,6 +15,9 @@ const ProductShema = new Schema(
     category: {
       type: String,
     },
+    specdes: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
