@@ -164,41 +164,4 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.delete("/deletePrescription/:id", verifyToken, async (req, res) => {
-  try {
-    dePre = await Prescription.findOneAndDelete({ _id: req.params.id });
-    if (!dePre)
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có quyền xóa toa thuốc" });
-    res.json({
-      success: true,
-      message: "Xóa toa thuốc thành công",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
-router.get("/searchPrescription/:diagnosis", verifyToken, async (req, res) => {
-  try {
-    var keywordPre = new RegExp(req.params.diagnosis, "i");
-    console.log(`${keywordPre}`);
-    const findDiagnosis = await Prescription.find({ diagnosis: keywordPre });
-    if (!keywordPre) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Không tìm thấy bác sĩ này" });
-    }
-    res.send(findDiagnosis);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
-  }
-});
-
 module.exports = router;

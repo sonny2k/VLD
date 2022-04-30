@@ -16,7 +16,21 @@ const User = require("../../models/User");
 // @desc Register user
 // @access Public
 router.post("/register", async (req, res) => {
-  const { profilepic, birthday, gender, email, phone, password, fname, lname, city, district, ward, street, role } = req.body;
+  const {
+    profilepic,
+    birthday,
+    gender,
+    email,
+    phone,
+    password,
+    fname,
+    lname,
+    city,
+    district,
+    ward,
+    street,
+    role,
+  } = req.body;
 
   //simple validation
   if (!phone || !password || !fname || !lname || !role)
@@ -35,9 +49,9 @@ router.post("/register", async (req, res) => {
     //OK!
     const hashedPassword = await argon2.hash(password);
     const newAccount = new Account({
-      profilepic, 
-      birthday, 
-      gender, 
+      profilepic,
+      birthday,
+      gender,
       email,
       fname,
       lname,
@@ -54,7 +68,7 @@ router.post("/register", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    const account = await Account.findOne({_id: newAccount._id});
+    const account = await Account.findOne({ _id: newAccount._id });
 
     res.json({
       success: true,
@@ -74,11 +88,11 @@ router.post("/sendcode", async (req, res) => {
   //send code to phone number
   try {
     client.verify
-    .services("VA85da000b869107ba0c8f11f348519989")
-    .verifications.create({ to: phone, channel: "sms" })
-    .then((verification) => res.json({message:verification.status}));
+      .services("VA85da000b869107ba0c8f11f348519989")
+      .verifications.create({ to: phone, channel: "sms" })
+      .then((verification) => res.json({ message: verification.status }));
   } catch (error) {
-    res.json({message:"Lỗi máy chủ"});
+    res.json({ message: "Lỗi máy chủ" });
   }
 });
 
@@ -88,16 +102,17 @@ router.post("/verifycode", async (req, res) => {
   //check verify code
   try {
     await client.verify
-    .services("VA85da000b869107ba0c8f11f348519989")
-    .verificationChecks.create({ to: phone, code: code })
-    .then((verification_check) => res.json({message:verification_check.status}));
+      .services("VA85da000b869107ba0c8f11f348519989")
+      .verificationChecks.create({ to: phone, code: code })
+      .then((verification_check) =>
+        res.json({ message: verification_check.status })
+      );
   } catch (error) {
-    res.json({message:"Lỗi máy chủ"});
+    res.json({ message: "Lỗi máy chủ" });
   }
 });
 
 router.post("/createuser", verifyToken, async (req, res) => {
-
   //check for existing account
   const user = await User.findOne({ account: req.accountId });
   if (user)
@@ -115,7 +130,7 @@ router.post("/createuser", verifyToken, async (req, res) => {
 
     res.json({
       success: true,
-      message: "Tạo người dùng thành công"
+      message: "Tạo người dùng thành công",
     });
   } catch (error) {
     console.log(error);
@@ -156,6 +171,7 @@ router.post("/login", async (req, res) => {
       success: true,
       account: account,
       accessToken,
+      role: account.role,
     });
   } catch (error) {
     console.log(error);
