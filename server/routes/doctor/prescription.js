@@ -76,7 +76,7 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Toa thuốc cho bạn",
+      title: "tạo toa thuốc cho bạn",
       message: `toa thuốc của buổi hẹn ngày ${fns.format(
         consultdate,
         "dd/MM/yyyy"
@@ -144,7 +144,7 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Toa thuốc cho bạn",
+      title: "cập nhật toa thuốc cho bạn",
       message: `toa thuốc của buổi hẹn ngày ${fns.format(
         consultdate,
         "dd/MM/yyyy"
