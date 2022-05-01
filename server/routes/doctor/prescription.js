@@ -105,32 +105,26 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
 });
 
 router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
-  const {
-    pname,
-    diagnosis,
-    note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
-  } = req.body;
+  const { consultation, pname, diagnosis, note, medicines } = req.body;
 
   try {
-    const doctor = await Doctor.findOne({ account: req.accountId });
-    const idDoctor = doctor._id;
-    const consult = await Consultation.findOne({ idDoctor });
-    const conID = consult._id;
+    const doctorraw = await Doctor.findOne({ account: req.accountId });
+    const doctorId = doctorraw._id;
+
+    const consultationraw = await Consultation.findOne({ _id: consultation });
+    const conId = consultationraw._id;
+    const consultdate = consultationraw.date;
+    const consulthour = consultationraw.hour;
+    const userId = consultationraw.user;
 
     let updatePreDoc = {
       pname,
       diagnosis,
       note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
+      medicines: medicines,
     };
     const PreupdateDocCondition = {
-      consultation: conID,
+      consultation: conId,
       _id: req.params.id,
     };
     upPreDoc = await Prescription.findOneAndUpdate(
@@ -140,20 +134,32 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
         new: true,
       }
     );
-    console.log(req.params.id);
-    console.log(idDoctor);
-    console.log(conID);
-    console.log(upPreDoc);
 
     if (!upPreDoc)
       return res.status(400).json({
         success: false,
         message: " Bác sĩ không có quyền cập nhật toa thuốc",
       });
+
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "Toa thuốc cho bạn",
+      message: `toa thuốc của buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được cập nhật`,
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      type: "updateprescription",
+      path: id,
+    });
+    await newNotice.save();
     res.json({
       success: true,
       message: "Cập nhật toa thuốc thành công",
-      consultations: upPreDoc,
+      upPreDoc,
     });
   } catch (error) {
     console.log(error);
