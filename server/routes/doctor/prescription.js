@@ -118,6 +118,7 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
     const userId = consultationraw.user;
 
     let updatePreDoc = {
+      consultation,
       pname,
       diagnosis,
       note,
@@ -153,7 +154,7 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
       notidate: dateTime,
       seen: false,
       type: "updateprescription",
-      path: id,
+      path: conId,
     });
     await newNotice.save();
     res.json({
