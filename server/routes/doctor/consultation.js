@@ -60,10 +60,15 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
   try {
     let updatedConsultation = {
+      roomname: _id,
       status: "chờ khám",
     };
 
-    const consultationupdatecondition = { doctor: doctorId, _id: _id };
+    const consultationupdatecondition = {
+      doctor: doctorId,
+      _id: _id,
+      status: "chờ xác nhận",
+    };
     updatedConsult = await Consultation.findOneAndUpdate(
       consultationupdatecondition,
       updatedConsultation,
