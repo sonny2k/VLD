@@ -45,7 +45,7 @@ const getAccessToken = (roomName, username) => {
   token.addGrant(videoGrant);
   token.identity = username;
   // Mã hóa token và trả về
-  return token.toJwt();
+  return token;
 };
 
 router.post("/join-room", async (req, res) => {
