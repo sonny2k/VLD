@@ -26,6 +26,9 @@ const ConsultationSchema = new Schema({
   roomname: {
     type: String,
   },
+  excuse: {
+    type: String,
+  },
   doctor: {
     type: Schema.Types.ObjectId,
     ref: "doctors",

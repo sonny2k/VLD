@@ -7,7 +7,7 @@ const Notification = require("../../models/Notification");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
-const fns = require('date-fns');
+const fns = require("date-fns");
 
 // Xem danh sách buổi hẹn của người dùng
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
@@ -100,7 +100,10 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
     const newNotice = new Notification({
       title: "đặt lịch thăm khám",
-      message: `buổi hẹn vào ngày ${fns.format(newConsult.date, "dd/MM/yyyy")} lúc ${newConsult.hour} đã được lên lịch`,
+      message: `buổi hẹn vào ngày ${fns.format(
+        newConsult.date,
+        "dd/MM/yyyy"
+      )} lúc ${newConsult.hour} đã được lên lịch`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -127,7 +130,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 
 // Từ chối lịch hẹn của người dùng
 router.post("/cancelconsult", verifyToken, async (req, res) => {
-  const { _id, doctor, date, hour } = req.body;
+  const { _id, doctor, date, hour, excuse } = req.body;
 
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
@@ -135,6 +138,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
   try {
     let updatedConsultation = {
       status: "bị từ chối",
+      excuse: excuse,
     };
 
     const consultationupdatecondition = { user: userId, _id: _id };
@@ -167,7 +171,10 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "từ chối lịch hẹn",
-      message: `buổi hẹn ngày ${fns.format(new Date(date), "dd/MM/yyyy")} lúc ${hour} đã bị từ chối`,
+      message: `buổi hẹn ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} đã bị từ chối`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -190,7 +197,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
   }
 });
 
-// Thay đổi triệu chứng trong lịch hẹn của người dùng 
+// Thay đổi triệu chứng trong lịch hẹn của người dùng
 router.put("/consultsymptom", verifyToken, async (req, res) => {
   const { _id, symptom } = req.body;
 
@@ -251,7 +258,7 @@ router.post("/isSeen", verifyToken, async (req, res) => {
       });
 
     res.json({
-      success: true
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -264,7 +271,6 @@ router.post("/isSeen", verifyToken, async (req, res) => {
 
 // Đánh dấu đã xem cho tất cả thông báo của người dùng
 router.post("/areSeen", verifyToken, async (req, res) => {
-
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
 
@@ -288,7 +294,7 @@ router.post("/areSeen", verifyToken, async (req, res) => {
       });
 
     res.json({
-      success: true
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -298,6 +304,5 @@ router.post("/areSeen", verifyToken, async (req, res) => {
     });
   }
 });
-
 
 module.exports = router;

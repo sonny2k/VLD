@@ -115,7 +115,7 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
 // Từ chối lịch hẹn của bác sĩ
 router.post("/cancelconsultation", verifyToken, async (req, res) => {
-  const { _id, doctor, date, hour } = req.body;
+  const { _id, doctor, date, hour, excuse } = req.body;
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
@@ -126,6 +126,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
   try {
     let updatedConsultation = {
       status: "bị từ chối",
+      excuse: excuse,
     };
 
     const consultationupdatecondition = { doctor: doctorId, _id: _id };
