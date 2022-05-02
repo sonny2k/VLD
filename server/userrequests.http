@@ -299,6 +299,17 @@ Content-Type: application/json
         }
     ]
 }
+
+###
+POST http://localhost:1210/api/doctor/room/join-room
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkyMzA3ODN9.jN29aFtlg6r57dHAn2WSwYQKE9BANxHxP77p7DWYHeI
+Content-Type: application/json
+
+{
+    "roomName": "hello",
+    "username": "Lưu Trung Thành"
+}
+
 ###
 GET http://localhost:1210/api/admin/notification/notice/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTAzNTE0Mjl9.u8Lnz8h5i-fLHtupPqOsRuQBd9fX9TXCvSd3US567Qg
