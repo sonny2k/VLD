@@ -17,8 +17,7 @@ const notificationRouter = require("./routes/admin/notification");
 const doctorRouter = require("./routes/doctor/account");
 const consultationDoctorRouter = require("./routes/doctor/consultation");
 const prescriptionDocRouter = require("./routes/doctor/prescription");
-const roomDocRouter = require("./routes/doctor/room");
-const roomUserRouter = require("./routes/user/room");
+const roomRouter = require("./routes/videochat/room");
 
 const connectDB = async () => {
   try {
@@ -62,8 +61,7 @@ app.use("/api/admin/notification", notificationRouter);
 app.use("/api/doctor/account", doctorRouter);
 app.use("/api/doctor/consultation", consultationDoctorRouter);
 app.use("/api/doctor/prescription", prescriptionDocRouter);
-app.use("/api/doctor/room", roomDocRouter);
-app.use("/api/user/room", roomUserRouter);
+app.use("/api/videochat/room", roomRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
