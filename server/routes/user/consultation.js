@@ -32,7 +32,7 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
 router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "doctor", populate: { path: "account" } };
-    const consultation = await Consultation.find({
+    const consultation = await Consultation.findOne({
       _id: req.params.id,
     }).populate(populateQuery);
     res.json(consultation);
