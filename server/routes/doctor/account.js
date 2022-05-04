@@ -102,4 +102,43 @@ router.put("/detailinfo", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/signature", verifyToken, async (req, res) => {
+  try {
+    const fileStr = req.body.pic;
+    const uploadResponse = await cloudinary.uploader.upload(fileStr);
+    console.log(uploadResponse.secure_url);
+    try {
+      let updatedAccount = {
+        signature: uploadResponse.secure_url,
+      };
+
+      const profileupdatecondition = { account: req.accountId };
+      updatedAccount = await Doctor.findOneAndUpdate(
+        profileupdatecondition,
+        updatedAccount,
+        { new: true }
+      );
+
+      // User not authorized to update profile
+      if (!updatedAccount)
+        return res.status(400).json({
+          success: false,
+          message: "Người dùng không có quyền cập nhật tài khoản này",
+        });
+
+      res.json({
+        success: true,
+        message: "Cập nhật ảnh đại diện thành công",
+        account: updatedAccount,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: "Có lỗi xảy ra, vui lòng thử lại" });
+  }
+});
+
 module.exports = router;
