@@ -37,7 +37,7 @@ const ArticleSchema = new Schema({
     type: Date,
   },
   hourofpublish: {
-    type: Date,
+    type: String,
   },
 });
 
