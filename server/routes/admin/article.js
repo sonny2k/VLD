@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
-
+const ArticleCategories = require("../../models/ArticleCategory");
 const Article = require("../../models/Article");
 const { cloudinary } = require("../../utils/cloudinary");
 
@@ -9,8 +9,7 @@ router.get("/viewListArticle", verifyToken, async (req, res) => {
   try {
     var populateQuery = {
       path: "articlecategory",
-      model: "articlecategories",
-      select: "name",
+      populate: { path: "name" },
     };
     const artList = await Article.find().populate(populateQuery);
     res.json(artList);
