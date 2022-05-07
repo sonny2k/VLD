@@ -7,8 +7,13 @@ const { cloudinary } = require("../../utils/cloudinary");
 
 router.get("/viewListArticle", verifyToken, async (req, res) => {
   try {
-    const artList = await Article.find();
-    res.json({ success: true, artList });
+    var populateQuery = {
+      path: "articlecategory",
+      model: "articlecategories",
+      select: "name",
+    };
+    const artList = await Article.find().populate(populateQuery);
+    res.json(artList);
   } catch (error) {
     console.log(error);
     res.status(500).json({

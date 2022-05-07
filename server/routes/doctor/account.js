@@ -128,7 +128,7 @@ router.post("/signature", verifyToken, async (req, res) => {
 
       res.json({
         success: true,
-        message: "Cập nhật ảnh đại diện thành công",
+        message: "Cập nhật ảnh chữ ký thành công",
         account: updatedAccount,
       });
     } catch (error) {

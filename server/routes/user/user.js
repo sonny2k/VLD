@@ -11,7 +11,7 @@ const Account = require("../../models/Account");
 // @access Private
 router.get("/userinfo", verifyToken, async (req, res) => {
   try {
-    user = await User.findOne({ account: req.accountId });
+    const user = await User.findOne({ account: req.accountId });
     res.json(user);
   } catch (error) {
     console.log(error);
@@ -86,8 +86,11 @@ router.post("/changepassword", verifyToken, async (req, res) => {
   if (newpass === password)
     return res
       .status(400)
-      .json({ success: false, message: "Mật khẩu mới trùng với mật khẩu cũ, xin kiểm tra lại" });
-      
+      .json({
+        success: false,
+        message: "Mật khẩu mới trùng với mật khẩu cũ, xin kiểm tra lại",
+      });
+
   const hashedNewPassword = await argon2.hash(newpass);
 
   try {
