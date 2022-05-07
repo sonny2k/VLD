@@ -21,7 +21,6 @@ router.post("/workingtime", verifyToken, async (req, res) => {
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
-
   try {
     Doctor.updateOne(
       { _id: doctorId },
