@@ -9,6 +9,7 @@ const Notification = require("../../models/Notification");
 const Account = require("../../models/Account");
 const fns = require("date-fns");
 
+// Xem danh sách lịch hẹn của bác sĩ
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "user", populate: { path: "account" } };
@@ -27,10 +28,11 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
   }
 });
 
+// Xem chi tiết lịch hẹn của bác sĩ
 router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   try {
     var populateQuery = { path: "user", populate: { path: "account" } };
-    const consultation = await Consultation.find({
+    const consultation = await Consultation.findOne({
       _id: req.params.id,
     }).populate(populateQuery);
     res.json(consultation);
@@ -43,20 +45,30 @@ router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   }
 });
 
+// Xác nhận lịch hẹn của bác sĩ
 router.post("/confirmconsultation", verifyToken, async (req, res) => {
   const { _id } = req.body;
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
-  const userr = await Consultation.findOne({ _id: _id });
-  const userId = userr.user;
+
+  const consult = await Consultation.findOne({ _id: _id });
+  const userId = consult.user;
+
+  const consultdate = consult.date;
+  const consulthour = consult.hour;
 
   try {
     let updatedConsultation = {
+      roomname: _id,
       status: "chờ khám",
     };
 
-    const consultationupdatecondition = { doctor: doctorId, _id: _id };
+    const consultationupdatecondition = {
+      doctor: doctorId,
+      _id: _id,
+      status: "chờ xác nhận",
+    };
     updatedConsult = await Consultation.findOneAndUpdate(
       consultationupdatecondition,
       updatedConsultation,
@@ -67,12 +79,12 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
     if (!updatedConsultation)
       return res.status(400).json({
         success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
       });
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Xác nhận đặt lịch",
+      title: "xác nhận đặt lịch",
       message: `buổi hẹn ngày ${fns.format(
         consultdate,
         "dd/MM/yyyy"
@@ -81,6 +93,7 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
       recipient: userId,
       notidate: dateTime,
       seen: false,
+      type: "confirm",
       path: _id,
     });
     await newNotice.save();
@@ -100,18 +113,20 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
   }
 });
 
+// Từ chối lịch hẹn của bác sĩ
 router.post("/cancelconsultation", verifyToken, async (req, res) => {
-  const { _id, doctor, date, hour } = req.body;
+  const { _id, doctor, date, hour, excuse } = req.body;
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
 
-  const user = await Consultation.findOne({ _id: _id });
-  const userId = user.user;
+  const consult = await Consultation.findOne({ _id: _id });
+  const userId = consult.user;
 
   try {
     let updatedConsultation = {
       status: "bị từ chối",
+      excuse: excuse,
     };
 
     const consultationupdatecondition = { doctor: doctorId, _id: _id };
@@ -125,7 +140,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     if (!updatedConsultation)
       return res.status(400).json({
         success: false,
-        message: "Người dùng không có quyền cập nhật tài khoản này",
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
       });
 
     Doctor.updateOne(
@@ -143,7 +158,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Hủy đặt lịch",
+      title: "từ chối lịch hẹn",
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
@@ -152,6 +167,7 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
       recipient: userId,
       notidate: dateTime,
       seen: false,
+      type: "canceldoc",
       path: _id,
     });
     await newNotice.save();

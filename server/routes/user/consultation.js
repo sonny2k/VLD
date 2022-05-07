@@ -97,7 +97,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
     var dateTime = Date.now();
 
     const newNotice = new Notification({
-      title: "Đặt lịch thăm khám",
+      title: "đặt lịch thăm khám",
       message: `buổi hẹn vào ngày ${fns.format(
         newConsult.date,
         "dd/MM/yyyy"
@@ -126,7 +126,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
 });
 
 router.post("/cancelconsult", verifyToken, async (req, res) => {
-  const { _id, doctor, date, hour } = req.body;
+  const { _id, doctor, date, hour, excuse } = req.body;
 
   const user = await User.findOne({ account: req.accountId });
   const userId = user._id;
@@ -138,6 +138,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
       user: userId,
       _id: _id,
       status: ["chờ xác nhận", "chờ khám"],
+      excuse: excuse,
     };
     const deleteConsultation = await Consultation.findOneAndDelete(
       consultationupdatecondition
@@ -164,7 +165,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
     );
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Hủy đặt lịch",
+      title: "từ chối lịch hẹn",
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"

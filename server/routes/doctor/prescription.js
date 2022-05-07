@@ -5,6 +5,7 @@ const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const Prescription = require("../../models/Prescription");
 const Notification = require("../../models/Notification");
+const fns = require("date-fns");
 
 router.get(
   "/viewListPrescription/detail/:id",
@@ -34,22 +35,16 @@ router.get(
 );
 
 router.post("/createPrescription", verifyToken, async (req, res) => {
+  const { consultation, pname, diagnosis, note, medicines } = req.body;
+
   const doctorraw = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorraw._id;
-  const userr = await User.findOne({ user: req.accountId });
-  const userId = userr._id;
-  const {
-    consultation,
-    pname,
-    diagnosis,
-    note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
-  } = req.body;
+
+  const consultationraw = await Consultation.findOne({ _id: consultation });
+  const id = consultationraw._id;
+  const consultdate = consultationraw.date;
+  const consulthour = consultationraw.hour;
+  const userId = consultationraw.user;
 
   try {
     const newPre = new Prescription({
@@ -57,19 +52,41 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
       pname,
       diagnosis,
       note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
+      medicines: medicines,
     });
     await newPre.save();
 
+    let updatedConsultation = {
+      status: "đã hoàn thành",
+    };
+
+    const consultationupdatecondition = { doctor: doctorId, _id: consultation };
+    updatedConsult = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
+      });
+
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "Xác nhận đặt lịch",
-      message: "Bạn đang có 1 toa thuốc",
+      title: "tạo toa thuốc cho bạn",
+      message: `toa thuốc của buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được kê`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,
       seen: false,
-      path: newPre._id,
+      type: "createprescription",
+      path: id,
     });
     await newNotice.save();
 
@@ -77,7 +94,6 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
       success: true,
       message: "Bạn đã tạo toa thuốc thành công",
       newPre,
-      newNotice,
     });
   } catch (error) {
     console.log(error);
@@ -89,32 +105,27 @@ router.post("/createPrescription", verifyToken, async (req, res) => {
 });
 
 router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
-  const {
-    pname,
-    diagnosis,
-    note,
-    product,
-    quantity,
-    morningrate,
-    noonrate,
-    everate,
-    specdes,
-  } = req.body;
+  const { consultation, pname, diagnosis, note, medicines } = req.body;
 
   try {
-    const doctor = await Doctor.findOne({ account: req.accountId });
-    const idDoctor = doctor._id;
-    const consult = await Consultation.findOne({ idDoctor });
-    const conID = consult._id;
+    const doctorraw = await Doctor.findOne({ account: req.accountId });
+    const doctorId = doctorraw._id;
+
+    const consultationraw = await Consultation.findOne({ _id: consultation });
+    const conId = consultationraw._id;
+    const consultdate = consultationraw.date;
+    const consulthour = consultationraw.hour;
+    const userId = consultationraw.user;
 
     let updatePreDoc = {
+      consultation,
       pname,
       diagnosis,
       note,
-      medicines: { product, quantity, morningrate, noonrate, everate, specdes },
+      medicines: medicines,
     };
     const PreupdateDocCondition = {
-      consultation: conID,
+      consultation: conId,
       _id: req.params.id,
     };
     upPreDoc = await Prescription.findOneAndUpdate(
@@ -124,20 +135,32 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
         new: true,
       }
     );
-    console.log(req.params.id);
-    console.log(idDoctor);
-    console.log(conID);
-    console.log(upPreDoc);
 
     if (!upPreDoc)
       return res.status(400).json({
         success: false,
         message: " Bác sĩ không có quyền cập nhật toa thuốc",
       });
+
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "cập nhật toa thuốc cho bạn",
+      message: `toa thuốc của buổi hẹn ngày ${fns.format(
+        consultdate,
+        "dd/MM/yyyy"
+      )} lúc ${consulthour} đã được cập nhật`,
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      type: "updateprescription",
+      path: conId,
+    });
+    await newNotice.save();
     res.json({
       success: true,
       message: "Cập nhật toa thuốc thành công",
-      consultations: upPreDoc,
+      upPreDoc,
     });
   } catch (error) {
     console.log(error);
@@ -145,43 +168,6 @@ router.put("/updatePrescription/:id", verifyToken, async (req, res) => {
       success: false,
       message: "Lỗi tải dữ liệu",
     });
-  }
-});
-
-router.delete("/deletePrescription/:id", verifyToken, async (req, res) => {
-  try {
-    dePre = await Prescription.findOneAndDelete({ _id: req.params.id });
-    if (!dePre)
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có quyền xóa toa thuốc" });
-    res.json({
-      success: true,
-      message: "Xóa toa thuốc thành công",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
-router.get("/searchPrescription/:diagnosis", verifyToken, async (req, res) => {
-  try {
-    var keywordPre = new RegExp(req.params.diagnosis, "i");
-    console.log(`${keywordPre}`);
-    const findDiagnosis = await Prescription.find({ diagnosis: keywordPre });
-    if (!keywordPre) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Không tìm thấy toa thuốc này" });
-    }
-    res.send(findDiagnosis);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
   }
 });
 
