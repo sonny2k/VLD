@@ -7,69 +7,196 @@ const { cloudinary } = require("../../utils/cloudinary");
 
 //CREATE
 router.post("/createProduct", verifyToken, async (req, res) => {
-  const newProduct = new Product(req.body);
+  const {
+    title,
+    description,
+    create,
+    update,
+    category,
+    specdes,
+    unit,
+    components,
+    origin,
+  } = req.body;
+  const createdAt = new Date(create);
+  const updatedAt = new Date(update);
+  try {
+    const newProduct = new Product({
+      title,
+      description,
+      createdAt,
+      updatedAt,
+      category,
+      specdes,
+      unit,
+      components,
+      origin,
+    });
+    await newProduct.save();
+    res.json({
+      success: true,
+      message: "Tạo sản phẩm thuốc thành công",
+      newProduct,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+// router.post("/createProduct", verifyToken, async (req, res) => {
+//   const newProduct = new Product(req.body);
 
-  try {
-    const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//   try {
+//     const savedProduct = await newProduct.save();
+//     res.status(200).json(savedProduct);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 //UPDATE
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/updateProduct/:id", verifyToken, async (req, res) => {
+  const {
+    title,
+    description,
+    create,
+    update,
+    category,
+    specdes,
+    unit,
+    components,
+    origin,
+  } = req.body;
+  const createdAt = new Date(create);
+  const updatedAt = new Date(update);
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedProduct);
-  } catch (err) {
-    res.status(500).json(err);
+    let updatePro = {
+      title,
+      description,
+      createdAt,
+      updatedAt,
+      category,
+      specdes,
+      unit,
+      components,
+      origin,
+    };
+    const ProupdateCondition = {
+      _id: req.params.id,
+    };
+    upPro = await Product.findOneAndUpdate(ProupdateCondition, updatePro, {
+      new: true,
+    });
+    if (!upPro)
+      return res.status(400).json({
+        success: false,
+        message: "Không có quyền cập nhật sản phẩm thuốc",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật sản phẩm thuốc thành công",
+      product: upPro,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
+// router.put("/:id", verifyToken, async (req, res) => {
+//   try {
+//     const updatedProduct = await Product.findByIdAndUpdate(
+//       req.params.id,
+//       {
+//         $set: req.body,
+//       },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedProduct);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 //DELETE
-router.delete("/:id", verifyToken, async (req, res) => {
+router.delete("/deleteProduct/:id", verifyToken, async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json("Product has been deleted...");
+    dePro = await Product.findOneAndDelete({ _id: req.params.id });
+    if (!dePro)
+      return res
+        .status(400)
+        .json({ success: false, message: "Không có quyền xóa sản phẩm thuốc" });
+    res.json({
+      success: true,
+      message: "Xóa sản phẩm thuốc thành công",
+    });
   } catch (err) {
-    res.status(500).json(err);
+    onsole.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
-//GET PRODUCT
-router.get("/find/:id", async (req, res) => {
+// router.delete("/:id", verifyToken, async (req, res) => {
+//   try {
+//     await Product.findByIdAndDelete(req.params.id);
+//     res.status(200).json("Product has been deleted...");
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+//SEACRH PRODUCT
+router.get("/searchProduct/:title", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    res.status(200).json(product);
+    const keywordPro = new RegExp(req.params.title, "i");
+    console.log(`${keywordPro}`);
+    const findTitle = await Product.find({ title: keywordPro });
+    if (!keywordPro) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Không tìm thấy thuốc" });
+    }
+    res.send(findTitle);
   } catch (err) {
-    res.status(500).json(err);
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
   }
 });
+// router.get("/find/:id", async (req, res) => {
+//   try {
+//     const product = await Product.findById(req.params.id);
+//     res.status(200).json(product);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 //GET ALL PRODUCTS
 router.get("/viewProduct", async (req, res) => {
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    const proList = await Product.find();
+    res.status(200).json(proList);
   } catch (err) {
-    res.status(500).json(err);
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
-
-// GET ALL PRODUCT CATEGORIES
-router.get("/viewProductCategory", async (req, res) => {
-  try {
-    const productCategories = await ProductCategory.find();
-    res.status(200).json(productCategories);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.get("/viewProduct", async (req, res) => {
+//   try {
+//     const products = await Product.find();
+//     res.status(200).json(products);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 router.post("/image/:id", verifyToken, async (req, res) => {
   try {

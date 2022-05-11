@@ -12,10 +12,25 @@ const ProductShema = new Schema(
     image: {
       type: String,
     },
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date,
+    },
     category: {
       type: String,
     },
     specdes: {
+      type: String,
+    },
+    unit: {
+      type: String,
+    },
+    components: {
+      type: String,
+    },
+    origin: {
       type: String,
     },
   },

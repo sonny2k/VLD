@@ -8,7 +8,6 @@ const med = new Schema({
     type: Schema.Types.ObjectId,
     ref: "products",
   },
-  mednote: String,
 });
 
 const PrescriptionSchema = new Schema({
