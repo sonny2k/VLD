@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const med = new Schema({
-  quantity: String,
+  quantity: Number,
   rate: String,
   product: {
     type: Schema.Types.ObjectId,
