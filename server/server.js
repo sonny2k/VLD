@@ -18,6 +18,7 @@ const doctorRouter = require("./routes/doctor/account");
 const consultationDoctorRouter = require("./routes/doctor/consultation");
 const prescriptionDocRouter = require("./routes/doctor/prescription");
 const roomRouter = require("./routes/videochat/room");
+const supplierRouter = require("./routes/admin/supplier");
 
 const connectDB = async () => {
   try {
@@ -58,6 +59,7 @@ app.use("/api/admin/article", articleRouter);
 app.use("/api/admin/doctor", doctoradminRouter);
 app.use("/api/admin/product", productRouter);
 app.use("/api/admin/notification", notificationRouter);
+app.use("/api/admin/supplier", supplierRouter);
 app.use("/api/doctor/account", doctorRouter);
 app.use("/api/doctor/consultation", consultationDoctorRouter);
 app.use("/api/doctor/prescription", prescriptionDocRouter);
