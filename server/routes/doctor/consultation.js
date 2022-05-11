@@ -261,6 +261,50 @@ router.post("/areSeen", verifyToken, async (req, res) => {
   }
 });
 
+// Xác nhận lịch hẹn của bác sĩ
+router.post("/createRoomName", verifyToken, async (req, res) => {
+  const { _id } = req.body;
+
+  const doctorraw = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctorraw._id;
+
+  try {
+    let updatedRoomName = {
+      _id: _id,
+      roomname: "Team16",
+    };
+
+    const consultationupdatecondition = {
+      doctor: doctorId,
+      _id: _id,
+    };
+    updatedRoomName = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedRoomName,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
+      });
+
+    res.json({
+      success: true,
+      message: "Tạo tên phòng thành công",
+      updatedConsult,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 // router.put("/updateConsultDoc/:id", verifyToken, async (req, res) => {
 //   const { status } = req.body;
 //   try {
