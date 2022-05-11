@@ -285,7 +285,7 @@ router.post("/createRoomName", verifyToken, async (req, res) => {
     );
 
     // User not authorized to update consultation
-    if (!updatedConsultation)
+    if (!updatedRoomName)
       return res.status(400).json({
         success: false,
         message: "Người dùng không có quyền cập nhật lịch hẹn này",
