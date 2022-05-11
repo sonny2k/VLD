@@ -235,4 +235,14 @@ router.post("/image/:id", verifyToken, async (req, res) => {
   }
 });
 
+// GET ALL PRODUCT CATEGORIES
+router.get("/viewProductCategory", async (req, res) => {
+  try {
+    const productCategories = await ProductCategory.find();
+    res.status(200).json(productCategories);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
