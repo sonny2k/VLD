@@ -254,7 +254,7 @@ router.post("/createProductCategory", async (req, res) => {
     await newProCate.save();
     res.json({
       success: true,
-      message: "Bạn đã tạo danh mục sản phẩm thuóc thành công",
+      message: "Bạn đã tạo danh mục sản phẩm thuốc thành công",
       newProCate,
     });
   } catch (error) {
