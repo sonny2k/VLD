@@ -60,7 +60,6 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
   try {
     let updatedConsultation = {
-      roomname: _id,
       status: "chờ khám",
     };
 
