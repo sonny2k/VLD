@@ -294,7 +294,7 @@ router.post("/createRoomName", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Tạo tên phòng thành công",
-      updatedConsult,
+      updatedRoomName,
     });
   } catch (error) {
     console.log(error);
