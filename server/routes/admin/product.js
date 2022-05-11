@@ -245,4 +245,98 @@ router.get("/viewProductCategory", async (req, res) => {
   }
 });
 
+router.post("/createProductCategory", async (req, res) => {
+  const { name } = req.body;
+  try {
+    const newProCate = new ProductCategory({
+      name,
+    });
+    await newProCate.save();
+    res.json({
+      success: true,
+      message: "Bạn đã tạo danh mục sản phẩm thuóc thành công",
+      newProCate,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.put("/updateProductCategory/:id", verifyToken, async (req, res) => {
+  const { name } = req.body;
+  try {
+    let updateProCate = {
+      name,
+    };
+    const ProCateupdateCondition = {
+      _id: req.params.id,
+    };
+    upProCate = await ProductCategory.findOneAndUpdate(
+      ProCateupdateCondition,
+      updateProCate,
+      {
+        new: true,
+      }
+    );
+    if (!upProCate)
+      return res.status(400).json({
+        success: false,
+        message: "Không có quyền cập nhật danh mục sản phẩm thuốc",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật danh mục sản phẩm thuốc thành công",
+      ProductCategory: upProCate,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.delete("/deleteProductCategory/:id", verifyToken, async (req, res) => {
+  try {
+    deDep = await ProductCategory.findOneAndDelete({ _id: req.params.id });
+    if (!deDep)
+      return res.status(400).json({
+        success: false,
+        message: "Không có quyền xóa danh mục sản phẩm thuốc",
+      });
+    res.json({
+      success: true,
+      message: "Xóa danh mục sản phẩm thuốc thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.get("/searchProductCategory/:name", verifyToken, async (req, res) => {
+  try {
+    var keywordProCate = new RegExp(req.params.name, "i");
+    console.log(`${keywordProCate}`);
+    const findName = await ProductCategory.find({ name: keywordProCate });
+    if (!keywordProCate) {
+      return res.status(400).json({
+        success: false,
+        message: "Không tìm thấy danh mục sản phẩm thuốc",
+      });
+    }
+    res.send(findName);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+  }
+});
 module.exports = router;
