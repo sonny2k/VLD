@@ -60,7 +60,6 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 
   try {
     let updatedConsultation = {
-      roomname: _id,
       status: "chờ khám",
     };
 
@@ -251,6 +250,50 @@ router.post("/areSeen", verifyToken, async (req, res) => {
 
     res.json({
       success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Xác nhận lịch hẹn của bác sĩ
+router.post("/createRoomName", verifyToken, async (req, res) => {
+  const { _id } = req.body;
+
+  const doctorraw = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctorraw._id;
+
+  try {
+    let updatedRoomName = {
+      _id: _id,
+      roomname: "Team16",
+    };
+
+    const consultationupdatecondition = {
+      doctor: doctorId,
+      _id: _id,
+    };
+    updatedRoomName = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedRoomName,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedRoomName)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
+      });
+
+    res.json({
+      success: true,
+      message: "Tạo tên phòng thành công",
+      updatedRoomName,
     });
   } catch (error) {
     console.log(error);
