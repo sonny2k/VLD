@@ -474,3 +474,51 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 ###
 GET http://localhost:1210/api/admin/supplier/searchSupplier/việt nam
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVjMTQ0ZWY4NjI3MWE3NzVjY2U0YzIiLCJpYXQiOjE2NDkyMzA3ODN9.jN29aFtlg6r57dHAn2WSwYQKE9BANxHxP77p7DWYHeI
+==================================================================
+DOCTOR
+
+###
+GET http://localhost:1210/api/admin/doctor/viewDoctor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTIzNTczNDV9.3aLY6ZmQh76Cc7--VnIt_F0zckWjL8hO_-NLyUMaGjY
+
+###
+POST http://localhost:1210/api/admin/doctor/createDoctor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTIzNTczNDV9.3aLY6ZmQh76Cc7--VnIt_F0zckWjL8hO_-NLyUMaGjY
+Content-Type: application/json
+
+{
+    "account": "627cffab90befb80d346bd53",
+    "department": "chuyên khoa ngoại",
+    "description": "Mới vào nghề được 20 năm, cụ thể là 2 năm",
+    "educationplace": "Đại học Y Dược TPHCM",
+    "workcertificate": "005421/HCM-CCHN",
+    "excellence": "Khám bệnh, chữa bệnh chuyên khoa Ngoại",
+    "level": "THS.BS",
+    "workhistory": "2018-2022: công tác tại đại học Văn Lang",
+    "education": "2009 - 2017: Đại học Y dược"
+}
+
+###
+PUT http://localhost:1210/api/admin/doctor/updateDoctor/627d04d76422cb36abee73f6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTIzNTczNDV9.3aLY6ZmQh76Cc7--VnIt_F0zckWjL8hO_-NLyUMaGjY
+Content-Type: application/json
+
+{
+    "account": "627cffab90befb80d346bd53",
+    "department": "chuyên khoa ngoại",
+    "description": "Mới vào nghề được 20 năm, cụ thể là 2 năm",
+    "educationplace": "Đại học Y Dược TPHCM",
+    "workcertificate": "005421/HCM-CCHN",
+    "excellence": "Khám bệnh, chữa bệnh chuyên khoa Ngoại",
+    "level": "THS.BS",
+    "workhistory": "2018-2022: công tác tại Đại học Văn Lang",
+    "education": "2009 - 2017: Đại học Y dược"
+}
+
+###
+DELETE http://localhost:1210/api/admin/doctor/deleteDoctor/627d04d76422cb36abee73f6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTIzNTczNDV9.3aLY6ZmQh76Cc7--VnIt_F0zckWjL8hO_-NLyUMaGjY
+
+###
+GET http://localhost:1210/api/admin/doctor/searchDoctor/đinh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTIzNTczNDV9.3aLY6ZmQh76Cc7--VnIt_F0zckWjL8hO_-NLyUMaGjY

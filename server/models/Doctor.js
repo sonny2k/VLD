@@ -28,12 +28,6 @@ const DoctorSchema = new Schema({
   educationplace: {
     type: String,
   },
-  language: {
-    type: String,
-  },
-  degree: {
-    type: String,
-  },
   workcertificate: {
     type: String,
   },
