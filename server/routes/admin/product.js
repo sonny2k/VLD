@@ -19,7 +19,6 @@ router.post("/createProduct", verifyToken, async (req, res) => {
     origin,
   } = req.body;
   const createdAt = new Date(create);
-  const updatedAt = new Date(update);
   try {
     const newProduct = new Product({
       title,
@@ -58,25 +57,12 @@ router.post("/createProduct", verifyToken, async (req, res) => {
 // });
 //UPDATE
 router.put("/updateProduct/:id", verifyToken, async (req, res) => {
-  const {
-    title,
-    description,
-    create,
-    update,
-    category,
-    specdes,
-    unit,
-    components,
-    origin,
-  } = req.body;
-  const createdAt = new Date(create);
-  const updatedAt = new Date(update);
+  const { title, description, category, specdes, unit, components, origin } =
+    req.body;
   try {
     let updatePro = {
       title,
       description,
-      createdAt,
-      updatedAt,
       category,
       specdes,
       unit,
@@ -198,6 +184,7 @@ router.get("/viewProduct", async (req, res) => {
 //   }
 // });
 
+//UPDATE PRODUCT IMAGE
 router.post("/image/:id", verifyToken, async (req, res) => {
   try {
     const fileImage = req.body.image;
@@ -229,6 +216,21 @@ router.post("/image/:id", verifyToken, async (req, res) => {
       console.log(error);
       res.status(500).json({ success: false, message: "Lỗi nội bộ" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
+  }
+});
+
+//UPDATE PRODUCT IMAGE
+router.post("/image", verifyToken, async (req, res) => {
+  try {
+    const fileImage = req.body.image;
+    const uploadResp = await cloudinary.uploader.upload(fileImage);
+    const resp = uploadResp.secure_url;
+    res.json({
+      resp,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
@@ -319,24 +321,6 @@ router.delete("/deleteProductCategory/:id", verifyToken, async (req, res) => {
       success: false,
       message: "Lỗi tải dữ liệu",
     });
-  }
-});
-
-router.get("/searchProductCategory/:name", verifyToken, async (req, res) => {
-  try {
-    var keywordProCate = new RegExp(req.params.name, "i");
-    console.log(`${keywordProCate}`);
-    const findName = await ProductCategory.find({ name: keywordProCate });
-    if (!keywordProCate) {
-      return res.status(400).json({
-        success: false,
-        message: "Không tìm thấy danh mục sản phẩm thuốc",
-      });
-    }
-    res.send(findName);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
   }
 });
 module.exports = router;
