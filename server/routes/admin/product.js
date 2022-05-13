@@ -217,7 +217,7 @@ router.post("/image", verifyToken, async (req, res) => {
     const uploadResp = await cloudinary.uploader.upload(fileImage);
     const resp = uploadResp.secure_url;
     res.json({
-      url: resp,
+      resp,
     });
   } catch (error) {
     console.error(error);
