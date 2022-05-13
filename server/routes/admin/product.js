@@ -7,24 +7,12 @@ const { cloudinary } = require("../../utils/cloudinary");
 
 //CREATE
 router.post("/createProduct", verifyToken, async (req, res) => {
-  const {
-    title,
-    description,
-    create,
-    update,
-    category,
-    specdes,
-    unit,
-    components,
-    origin,
-  } = req.body;
-  const createdAt = new Date(create);
+  const { title, description, category, specdes, unit, components, origin } =
+    req.body;
   try {
     const newProduct = new Product({
       title,
       description,
-      createdAt,
-      updatedAt,
       category,
       specdes,
       unit,
