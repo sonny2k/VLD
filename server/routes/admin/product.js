@@ -187,7 +187,7 @@ router.get("/viewProduct", async (req, res) => {
 //UPDATE PRODUCT IMAGE
 router.post("/image/:id", verifyToken, async (req, res) => {
   try {
-    const fileImage = req.body.image;
+    const fileImage = req.body.pic;
     const uploadResp = await cloudinary.uploader.upload(fileImage);
     console.log(uploadResp.secure_url);
     try {
@@ -225,7 +225,7 @@ router.post("/image/:id", verifyToken, async (req, res) => {
 //UPDATE PRODUCT IMAGE
 router.post("/image", verifyToken, async (req, res) => {
   try {
-    const fileImage = req.body.image;
+    const fileImage = req.body.pic;
     const uploadResp = await cloudinary.uploader.upload(fileImage);
     const resp = uploadResp.secure_url;
     res.json({
