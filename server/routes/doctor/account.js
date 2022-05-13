@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const { cloudinary } = require("../../utils/cloudinary");
 
 const Doctor = require("../../models/Doctor");
 
