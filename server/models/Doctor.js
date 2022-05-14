@@ -37,6 +37,9 @@ const DoctorSchema = new Schema({
   level: {
     type: String,
   },
+  degree: {
+    type: String,
+  },
   workhistory: {
     type: String,
   },
