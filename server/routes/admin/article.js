@@ -5,7 +5,7 @@ const ArticleCategories = require("../../models/ArticleCategory");
 const Article = require("../../models/Article");
 const { cloudinary } = require("../../utils/cloudinary");
 
-router.get("/viewListArticle", verifyToken, async (req, res) => {
+router.get("/viewListArticle", async (req, res) => {
   try {
     var populateQuery = {
       path: "articlecategory",
