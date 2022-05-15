@@ -7,7 +7,8 @@ const ArticleSchema = new Schema({
     ref: "articlecategories",
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "accounts",
   },
   briefdescription: {
     type: String,

@@ -7,11 +7,9 @@ const { cloudinary } = require("../../utils/cloudinary");
 
 router.get("/viewListArticle", async (req, res) => {
   try {
-    var populateQuery = {
-      path: "articlecategory",
-      populate: { path: "name" },
-    };
-    const artList = await Article.find().populate(populateQuery);
+    const artList = await Article.find()
+      .populate("articlecategory")
+      .populate("author");
     res.json(artList);
   } catch (error) {
     console.log(error);
@@ -25,7 +23,6 @@ router.get("/viewListArticle", async (req, res) => {
 router.post("/createArticle", verifyToken, async (req, res) => {
   const {
     articlecategory,
-    author,
     briefdescription,
     content,
     banner,
@@ -44,7 +41,7 @@ router.post("/createArticle", verifyToken, async (req, res) => {
   try {
     const newArticle = new Article({
       articlecategory,
-      author,
+      author: req.accountId,
       briefdescription,
       content,
       banner,
@@ -74,7 +71,6 @@ router.post("/createArticle", verifyToken, async (req, res) => {
 router.put("/updateArticle/:id", verifyToken, async (req, res) => {
   const {
     articlecategory,
-    author,
     briefdescription,
     content,
     title,
@@ -90,7 +86,6 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
   try {
     let updateArt = {
       articlecategory,
-      author,
       briefdescription,
       content,
       title,
