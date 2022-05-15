@@ -140,23 +140,6 @@ router.delete("/deleteArticle/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/searchArticle/:title", verifyToken, async (req, res) => {
-  try {
-    var keywordArt = new RegExp(req.params.title, "i");
-    console.log(`${keywordArt}`);
-    const findTitle = await Article.find({ title: keywordArt });
-    if (!keywordArt) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có tin tức cần tìm" });
-    }
-    res.send(findTitle);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
-  }
-});
-
 router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
   try {
     const artListdetail = await Article.findOne({ _id: req.params.id })
