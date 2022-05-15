@@ -159,7 +159,9 @@ router.get("/searchArticle/:title", verifyToken, async (req, res) => {
 
 router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
   try {
-    const artListdetail = await Article.findOne({ _id: req.params.id });
+    const artListdetail = await Article.findOne({ _id: req.params.id })
+      .populate("articlecategory")
+      .populate("author");
     res.json(artListdetail);
   } catch (error) {
     console.log(error);
