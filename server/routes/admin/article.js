@@ -211,5 +211,99 @@ router.post("/banner/:id", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
   }
 });
+//=====================================================
+// Danh mục tin tức
+
+//View all Article Category
+router.get("/viewArticleCategory", async (req, res) => {
+  try {
+    const articleCategories = await ArticleCategories.find();
+    res.status(200).json(articleCategories);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//Create Article Category
+router.post("/createArticleCategory", async (req, res) => {
+  const { name } = req.body;
+  try {
+    const newArtCate = new ArticleCategories({
+      name,
+    });
+    await newArtCate.save();
+    res.json({
+      success: true,
+      message: "Bạn đã tạo danh mục tin tức thành công",
+      newArtCate,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+//Update Article Category
+router.put("/updateArticleCategory/:id", verifyToken, async (req, res) => {
+  const { name } = req.body;
+  try {
+    let updateArtCate = {
+      name,
+    };
+    const ArtCateupdateCondition = {
+      _id: req.params.id,
+    };
+    upArtCate = await ArticleCategories.findOneAndUpdate(
+      ArtCateupdateCondition,
+      updateArtCate,
+      {
+        new: true,
+      }
+    );
+    if (!upArtCate)
+      return res.status(400).json({
+        success: false,
+        message: "Không có quyền cập nhật danh mục tin tức",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật danh mục tin tức thành công",
+      ProductCategory: upArtCate,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+//Delete Article Category
+router.delete("/deleteArticleCategory/:id", verifyToken, async (req, res) => {
+  try {
+    deArtCate = await ArticleCategories.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!deArtCate)
+      return res.status(400).json({
+        success: false,
+        message: "Không có quyền xóa danh mục tin tức",
+      });
+    res.json({
+      success: true,
+      message: "Xóa danh mục tin tức thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
 
 module.exports = router;
