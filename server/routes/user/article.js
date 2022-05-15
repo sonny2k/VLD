@@ -19,6 +19,21 @@ router.get("/viewListArticle", async (req, res) => {
   }
 });
 
+router.get("/viewListArticle/detail/:id", async (req, res) => {
+  try {
+    const artListdetail = await Article.findOne({ _id: req.params.id })
+      .populate("articlecategory")
+      .populate("author");
+    res.json(artListdetail);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.get("/searchArticle/:title", async (req, res) => {
   try {
     var keywordArt = new RegExp(req.params.title, "i");
