@@ -552,3 +552,13 @@ Content-Type: application/json
   "workhistory": "2011 - nay: Giảng viên Đại học Y Dược TP.HCM và công tác tại trường đại học Văn Lang.\n2008 - 2011: Bác sĩ Nội trú tại Bệnh viện Chợ Rẫy, Bệnh viện Nhân dân Gia Định.",
   "education": "2008 - 2011: Bác sĩ Nội trú, Bác sĩ Chuyên khoa I chuyên ngành Nội tổng quát, Đại Học Y Dược TP.HCM.\n2002 - 2008: Bác sĩ Đa khoa, Đại học Y Dược TP.HCM.\n2013 - 2016: Tiến sĩ Y Khoa, Đại học Yamanashi, Nhật Bản."
 }
+
+###
+POST http://localhost:1210/api/admin/article/deleteArticleCategory
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTI2MjI3NTB9.oTcdUOUfRFzruznZl9DVt94N1_2JIZMdwU_V05wxNIE
+
+{
+    "_id": "623677d3a8e2456e66a49257",
+    "_id": "623677efa8e2456e66a49258",
+    "_id": "62367808a8e2456e66a49259"
+}

@@ -278,16 +278,27 @@ router.put("/updateArticleCategory/:id", verifyToken, async (req, res) => {
 });
 
 //Delete Article Category
-router.delete("/deleteArticleCategory/:id", verifyToken, async (req, res) => {
+router.post("/deleteArticleCategory", verifyToken, async (req, res) => {
+  const { num, data } = req.body;
+
+  const { _id, name } = data;
   try {
-    deArtCate = await ArticleCategories.findOneAndDelete({
-      _id: req.params.id,
-    });
-    if (!deArtCate)
-      return res.status(400).json({
-        success: false,
-        message: "Không có quyền xóa danh mục tin tức",
-      });
+    ArticleCategories.deleteMany({
+      [`${num}._id`]: _id,
+      [`${num}.name`]: name,
+    }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    // if (!xoaluon)
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Không có quyền xóa danh mục tin tức",
+    //   });
     res.json({
       success: true,
       message: "Xóa danh mục tin tức thành công",
