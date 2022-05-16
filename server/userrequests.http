@@ -554,6 +554,7 @@ Content-Type: application/json
 }
 
 ###
+<<<<<<< HEAD
 POST http://localhost:1210/api/admin/article/deleteArticleCategory
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTI2MjI3NTB9.oTcdUOUfRFzruznZl9DVt94N1_2JIZMdwU_V05wxNIE
 
@@ -562,3 +563,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
     "_id": "623677efa8e2456e66a49258",
     "_id": "62367808a8e2456e66a49259"
 }
+=======
+GET http://localhost:1210/api/user/article/viewListArticle
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTI2MzY4NTB9.QLcS11XicuU4lTtf4ScnjnKJAdyrAiYdL32Jpz4zKCk
+>>>>>>> 8335fffe423bc277c0e1143b23ece05a86da57f7

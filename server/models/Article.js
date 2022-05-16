@@ -23,7 +23,7 @@ const ArticleSchema = new Schema({
     type: String,
   },
   status: {
-    type: String,
+    type: Number,
   },
   createdat: {
     type: Date,

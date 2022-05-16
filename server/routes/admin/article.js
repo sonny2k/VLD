@@ -5,7 +5,7 @@ const ArticleCategories = require("../../models/ArticleCategory");
 const Article = require("../../models/Article");
 const { cloudinary } = require("../../utils/cloudinary");
 
-router.get("/viewListArticle", async (req, res) => {
+router.get("/viewListArticle", verifyToken, async (req, res) => {
   try {
     const artList = await Article.find()
       .populate("articlecategory")
@@ -140,27 +140,12 @@ router.delete("/deleteArticle/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/searchArticle/:title", verifyToken, async (req, res) => {
-  try {
-    var keywordArt = new RegExp(req.params.title, "i");
-    console.log(`${keywordArt}`);
-    const findTitle = await Article.find({ title: keywordArt });
-    if (!keywordArt) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Không có tin tức cần tìm" });
-    }
-    res.send(findTitle);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
-  }
-});
-
 router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
   try {
-    const artListdetail = await Article.findOne({ _id: req.params.id });
-    res.json({ success: true, artListdetail });
+    const artListdetail = await Article.findOne({ _id: req.params.id })
+      .populate("articlecategory")
+      .populate("author");
+    res.json(artListdetail);
   } catch (error) {
     console.log(error);
     res.status(500).json({
