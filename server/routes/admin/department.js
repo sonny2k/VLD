@@ -91,6 +91,31 @@ router.delete("/deleteDepartment/:id", verifyToken, async (req, res) => {
   }
 });
 
+//Delete Any Department
+router.post("/deleteDepartment", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Department.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa chuyên khoa thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.get("/searchDepartment/:name", verifyToken, async (req, res) => {
   try {
     var keywordDep = new RegExp(req.params.name, "i");

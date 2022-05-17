@@ -7,11 +7,17 @@ const Doctor = require("../../models/Doctor");
 
 //Xem danh sách thông báo của người dùng
 router.get("/notice/user", verifyToken, async (req, res) => {
-  var populateQuery = { path: "creator", model: Doctor, populate: { path: "account"} };
+  var populateQuery = {
+    path: "creator",
+    model: Doctor,
+    populate: { path: "account" },
+  };
   const userne = await User.findOne({ account: req.accountId });
   const userId = userne._id;
   try {
-    const noticeUserList = await Notification.find({ recipient: userId }).populate(populateQuery);
+    const noticeUserList = await Notification.find({
+      recipient: userId,
+    }).populate(populateQuery);
     res.json(noticeUserList);
   } catch (error) {
     console.log(error);
@@ -41,11 +47,17 @@ router.get("/notice/user/detail", verifyToken, async (req, res) => {
 
 //Xem danh sách thông báo của bác sĩ
 router.get("/notice/doctor", verifyToken, async (req, res) => {
-  var populateQuery = { path: "creator", model: User, populate: { path: "account"} };
+  var populateQuery = {
+    path: "creator",
+    model: User,
+    populate: { path: "account" },
+  };
   const doctorne = await Doctor.findOne({ account: req.accountId });
   const doctorId = doctorne._id;
   try {
-    const noticeDoctorList = await Notification.find({ recipient: doctorId }).populate(populateQuery);
+    const noticeDoctorList = await Notification.find({
+      recipient: doctorId,
+    }).populate(populateQuery);
     res.json(noticeDoctorList);
   } catch (error) {
     console.log(error);
@@ -129,6 +141,30 @@ router.post("/notice/doctor/seen", verifyToken, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.post("/deleteNotification", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Notification.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa thông báo thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
       message: "Lỗi tải dữ liệu",
     });
   }

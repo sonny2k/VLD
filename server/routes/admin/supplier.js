@@ -90,6 +90,30 @@ router.delete("/deleteSupplier/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/deleteSupplier", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Supplier.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa nhà cung cấp thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 //SEACRH SUPPLIER
 router.get("/searchSupplier/:name", verifyToken, async (req, res) => {
   try {

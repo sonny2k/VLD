@@ -116,6 +116,30 @@ router.delete("/deleteProduct/:id", verifyToken, async (req, res) => {
     });
   }
 });
+
+router.post("/deleteProduct", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Product.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa sản phẩm thuốc thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
 // router.delete("/:id", verifyToken, async (req, res) => {
 //   try {
 //     await Product.findByIdAndDelete(req.params.id);
@@ -302,6 +326,30 @@ router.delete("/deleteProductCategory/:id", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Xóa danh mục sản phẩm thuốc thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.post("/deleteProductCategory", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    ProductCategory.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa danh mục sản phẩm thành công",
     });
   } catch (error) {
     console.log(error);

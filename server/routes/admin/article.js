@@ -4,8 +4,9 @@ const verifyToken = require("../../middleware/auth");
 const ArticleCategories = require("../../models/ArticleCategory");
 const Article = require("../../models/Article");
 const { cloudinary } = require("../../utils/cloudinary");
+const { isValidObjectId } = require("mongoose");
 
-router.get("/viewListArticle", verifyToken, async (req, res) => {
+router.get("/viewListArticle", async (req, res) => {
   try {
     const artList = await Article.find()
       .populate("articlecategory")
@@ -140,12 +141,27 @@ router.delete("/deleteArticle/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/searchArticle/:title", verifyToken, async (req, res) => {
+  try {
+    var keywordArt = new RegExp(req.params.title, "i");
+    console.log(`${keywordArt}`);
+    const findTitle = await Article.find({ title: keywordArt });
+    if (!keywordArt) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Không có tin tức cần tìm" });
+    }
+    res.send(findTitle);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+  }
+});
+
 router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
   try {
-    const artListdetail = await Article.findOne({ _id: req.params.id })
-      .populate("articlecategory")
-      .populate("author");
-    res.json(artListdetail);
+    const artListdetail = await Article.findOne({ _id: req.params.id });
+    res.json({ success: true, artListdetail });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -264,14 +280,9 @@ router.put("/updateArticleCategory/:id", verifyToken, async (req, res) => {
 
 //Delete Article Category
 router.post("/deleteArticleCategory", verifyToken, async (req, res) => {
-  const { num, data } = req.body;
-
-  const { _id, name } = data;
+  const { data } = req.body;
   try {
-    ArticleCategories.deleteMany({
-      [`${num}._id`]: _id,
-      [`${num}.name`]: name,
-    }).then(
+    ArticleCategories.deleteMany({ _id: { $in: data } }).then(
       (result) => {
         console.log(result);
       },
@@ -279,14 +290,34 @@ router.post("/deleteArticleCategory", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
-    // if (!xoaluon)
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Không có quyền xóa danh mục tin tức",
-    //   });
     res.json({
       success: true,
       message: "Xóa danh mục tin tức thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+//Delete Article
+router.post("/deleteArticle", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Article.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa tin tức thành công",
     });
   } catch (error) {
     console.log(error);

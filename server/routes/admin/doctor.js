@@ -127,6 +127,31 @@ router.delete("/deleteDoctor/:id", verifyToken, async (req, res) => {
   }
 });
 
+//Delete Any Doctor
+router.post("/deleteDoctor", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Doctor.deleteMany({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({
+      success: true,
+      message: "Xóa bác sĩ thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.get("/viewDoc/:id", verifyToken, async (req, res) => {
   try {
     const docListdetail = await Doctor.findOne({ _id: req.params.id });
