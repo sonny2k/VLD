@@ -128,7 +128,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   }
 });
 
-// Từ chối lịch hẹn của người dùng
+// Hủy lịch hẹn của người dùng
 router.post("/cancelconsult", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour, excuse } = req.body;
 
@@ -137,7 +137,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
 
   try {
     let updatedConsultation = {
-      status: "bị từ chối",
+      status: "đã hủy",
       excuse: excuse,
     };
 
@@ -170,11 +170,11 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "từ chối lịch hẹn",
+      title: "hủy lịch hẹn",
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} đã bị từ chối`,
+      )} lúc ${hour} đã hủy`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
@@ -296,6 +296,30 @@ router.post("/areSeen", verifyToken, async (req, res) => {
     res.json({
       success: true,
     });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.post("/deleteConsult", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Consultation.deleteMany({
+      status: ["bị từ chối", "đã hủy"],
+      _id: { $in: data },
+    }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({ success: true, message: "Xóa lịch tư vấn thành công" });
   } catch (error) {
     console.log(error);
     res.status(500).json({
