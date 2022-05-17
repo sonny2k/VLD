@@ -5,6 +5,11 @@ const jwt = require("jsonwebtoken");
 const AccessToken = require("twilio").jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 const verifyToken = require("../../middleware/auth");
+const Notification = require("../../models/Notification");
+const fns = require("date-fns");
+const Account = require("../../models/Account");
+const User = require("../../models/User");
+const Doctor = require("../../models/Doctor");
 const twilioClient = require("twilio")(
   process.env.TWILIO_API_KEY_SID,
   process.env.TWILIO_API_KEY_SECRET,
@@ -12,6 +17,11 @@ const twilioClient = require("twilio")(
 );
 
 const findOrCreateRoom = async (roomName) => {
+  const acc = await Account.findOne({ account: req.accountId });
+  const userr = await User.findOne({ acc });
+  const IdUser = userr._id;
+  const doctorr = await Doctor.findOne({ acc });
+  const IdDoctor = doctorr._id;
   try {
     // Nếu chưa có phòng này sẽ báo lỗi 20404
     await twilioClient.video.rooms(roomName).fetch();
@@ -26,6 +36,23 @@ const findOrCreateRoom = async (roomName) => {
       // Báo lỗi khác
       throw error;
     }
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "Tạo phòng tư vấn",
+      message: `phòng tư vấn vào ngày ${fns.format(
+        roomName.date,
+        "dd/MM/yyyy"
+      )} lúc${roomName.hour}`,
+      creator: IdDoctor,
+      recipient: IdUser,
+      notidate: dateTime,
+      seen: false,
+      type: "createroom",
+      path: _id,
+    });
+    await newNotice.save();
+    res.json({ success: true, message: "Bạn đã tạo phòng thành công" });
+    newNotice;
   }
 };
 
