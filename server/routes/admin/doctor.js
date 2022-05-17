@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const argon2 = require("argon2");
 const verifyToken = require("../../middleware/auth");
 const Account = require("../../models/Account");
 const Doctor = require("../../models/Doctor");
@@ -29,12 +30,14 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
         message: "Số điện thoại đã được đăng ký ở tài khoản khác",
       });
 
+    const hashedPassword = await argon2.hash("vld12345");
+
     const newAccount = new Account({
       fname,
       lname,
       phone,
       role: "Bác sĩ",
-      password: "vld12345",
+      password: hashedPassword,
       address: { city: "", district: "", ward: "", street: "" },
     });
     await newAccount.save();
