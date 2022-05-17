@@ -18,28 +18,45 @@ router.get("/viewDoctor", verifyToken, async (req, res) => {
 });
 
 router.post("/createDoctor", verifyToken, async (req, res) => {
-  const {
-    account,
-    department,
-    description,
-    educationplace,
-    workcertificate,
-    excellence,
-    level,
-    workhistory,
-    education,
-  } = req.body;
+  const { fname, lname, phone, department } = req.body;
   try {
+    //check for existing account
+    const exists = await Account.findOne({ phone });
+
+    if (exists)
+      return res.status(400).json({
+        success: false,
+        message: "Số điện thoại đã được đăng ký ở tài khoản khác",
+      });
+
+    const newAccount = new Account({
+      fname,
+      lname,
+      phone,
+      role: "Bác sĩ",
+      password: "vld12345",
+    });
+    await newAccount.save();
+
     const newDoctor = new Doctor({
-      account,
-      department,
-      description,
-      educationplace,
-      workcertificate,
-      excellence,
-      level,
-      workhistory,
-      education,
+      account: newAccount._id,
+      department: department,
+      description: "",
+      educationplace: "",
+      workcertificate: "",
+      excellence: "",
+      level: "",
+      workhistory: "",
+      education: "",
+      availables: [
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+        { date: "", hours: [] },
+      ],
     });
     await newDoctor.save();
     res.json({
