@@ -35,6 +35,7 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
       phone,
       role: "Bác sĩ",
       password: "vld12345",
+      address: { city: "", district: "", ward: "", street: "" },
     });
     await newAccount.save();
 
