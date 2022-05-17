@@ -305,4 +305,28 @@ router.post("/areSeen", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/deleteConsult", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    Consultation.deleteMany({
+      status: ["bị từ chối", "đã hủy"],
+      _id: { $in: data },
+    }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    res.json({ success: true, message: "Xóa lịch tư vấn thành công" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 module.exports = router;
