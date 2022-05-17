@@ -113,7 +113,7 @@ router.post("/confirmconsultation", verifyToken, async (req, res) => {
 });
 
 // Từ chối lịch hẹn của bác sĩ
-router.post("/cancelconsultation", verifyToken, async (req, res) => {
+router.post("/refuseConsultation", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour, excuse } = req.body;
 
   const doctorraw = await Doctor.findOne({ account: req.accountId });
@@ -174,6 +174,80 @@ router.post("/cancelconsultation", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Từ chối buổi hẹn thành công",
+      updatedConsult,
+      newNotice,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+// Hủy lịch hẹn của bác sĩ
+router.post("/cancelConsultation", verifyToken, async (req, res) => {
+  const { _id, doctor, date, hour, excuse } = req.body;
+
+  const doctorraw = await Doctor.findOne({ account: req.accountId });
+  const doctorId = doctorraw._id;
+
+  const consult = await Consultation.findOne({ _id: _id });
+  const userId = consult.user;
+
+  try {
+    let updatedConsultation = {
+      status: "đã hủy",
+      excuse: excuse,
+    };
+
+    const consultationupdatecondition = { doctor: doctorId, _id: _id };
+    updatedConsult = await Consultation.findOneAndUpdate(
+      consultationupdatecondition,
+      updatedConsultation,
+      { new: true }
+    );
+
+    // User not authorized to update consultation
+    if (!updatedConsultation)
+      return res.status(400).json({
+        success: false,
+        message: "Người dùng không có quyền cập nhật lịch hẹn này",
+      });
+
+    Doctor.updateOne(
+      { _id: doctor },
+      { $set: { "availables.$[a].hours.$[b].status": false } },
+      { arrayFilters: [{ "a.date": date }, { "b.time": hour }] }
+    ).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "hủy lịch hẹn",
+      message: `buổi hẹn ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} đã hủy`,
+      creator: doctorId,
+      recipient: userId,
+      notidate: dateTime,
+      seen: false,
+      type: "canceldoc",
+      path: _id,
+    });
+    await newNotice.save();
+
+    res.json({
+      success: true,
+      message: "Hủy buổi hẹn thành công",
       updatedConsult,
       newNotice,
     });

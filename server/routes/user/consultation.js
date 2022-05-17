@@ -128,7 +128,7 @@ router.post("/createconsult", verifyToken, async (req, res) => {
   }
 });
 
-// Từ chối lịch hẹn của người dùng
+// Hủy lịch hẹn của người dùng
 router.post("/cancelconsult", verifyToken, async (req, res) => {
   const { _id, doctor, date, hour, excuse } = req.body;
 
@@ -137,7 +137,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
 
   try {
     let updatedConsultation = {
-      status: "bị từ chối",
+      status: "đã hủy",
       excuse: excuse,
     };
 
@@ -170,11 +170,11 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
 
     var dateTime = Date.now();
     const newNotice = new Notification({
-      title: "từ chối lịch hẹn",
+      title: "hủy lịch hẹn",
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} đã bị từ chối`,
+      )} lúc ${hour} đã hủy`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
