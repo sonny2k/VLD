@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../../middleware/auth");
+const Consultation = require("../../models/Consultation");
 
 router.get("/viewlistconsult", verifyToken, async (req, res) => {
   try {
