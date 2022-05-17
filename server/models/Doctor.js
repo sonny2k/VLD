@@ -48,6 +48,7 @@ const DoctorSchema = new Schema({
   },
   ratings: new Schema({
     user: Schema.Types.ObjectId,
+    doctor: Schema.Types.ObjectId,
     content: String,
     star: Number,
     date: Date,
