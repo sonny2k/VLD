@@ -141,9 +141,29 @@ router.delete("/deleteArticle/:id", verifyToken, async (req, res) => {
   }
 });
 
+// TÌm kiếm tin tức bằng GET
 router.get("/searchArticle/:title", verifyToken, async (req, res) => {
   try {
     var keywordArt = new RegExp(req.params.title, "i");
+    console.log(`${keywordArt}`);
+    const findTitle = await Article.find({ title: keywordArt });
+    if (!keywordArt) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Không có tin tức cần tìm" });
+    }
+    res.send(findTitle);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+  }
+});
+
+//Tim kiếm tin tức bằng POST
+router.get("/searchArticle", verifyToken, async (req, res) => {
+  const { data } = req.body;
+  try {
+    var keywordArt = new RegExp(data.title, "i");
     console.log(`${keywordArt}`);
     const findTitle = await Article.find({ title: keywordArt });
     if (!keywordArt) {
