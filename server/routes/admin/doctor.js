@@ -25,7 +25,7 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
     const exists = await Account.findOne({ phone });
 
     if (exists)
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Số điện thoại đã được đăng ký ở tài khoản khác",
       });
