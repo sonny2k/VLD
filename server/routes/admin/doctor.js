@@ -79,11 +79,11 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
 
 router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
   const {
-    account,
     department,
     description,
     educationplace,
     workcertificate,
+    degree,
     excellence,
     level,
     workhistory,
@@ -92,11 +92,11 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
 
   try {
     let updateDoc = {
-      account,
       department,
       description,
       educationplace,
       workcertificate,
+      degree,
       excellence,
       level,
       workhistory,
@@ -109,18 +109,18 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
       new: true,
     });
     if (!upDoc)
-      return res.status.json({
+      return res.json({
         success: false,
         message: "không có quyền cập nhật bác sĩ",
       });
     res.json({
       success: true,
       message: "Bạn đã cập nhật bác sĩ thành công",
-      doctor: upDoc,
+      upDoc,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    res.json({
       success: false,
       message: "Lỗi tải dữ liệu",
     });
