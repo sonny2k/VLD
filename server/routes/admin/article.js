@@ -191,6 +191,7 @@ router.get("/viewListArticle/detail/:id", verifyToken, async (req, res) => {
   }
 });
 
+//Tải ảnh theo id trên api
 router.post("/banner/:id", verifyToken, async (req, res) => {
   try {
     const fileBanner = req.body.banner;
@@ -202,6 +203,46 @@ router.post("/banner/:id", verifyToken, async (req, res) => {
       };
 
       const bannerupdatecondition = { _id: req.params.id };
+
+      upAr = await Article.findOneAndUpdate(
+        bannerupdatecondition,
+        updatedArticle,
+        { new: true }
+      );
+      if (!upAr)
+        return res.status(400).json({
+          success: false,
+          message: "Người dùng không có quyền cập nhật tài khoản này",
+        });
+      res.json({
+        success: true,
+        message: "Cập nhật ảnh đại diện thành công",
+        article: upAr,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Lỗi nội bộ" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
+  }
+});
+
+//Tải ảnh không có id trên api
+router.post("/banner", verifyToken, async (req, res) => {
+  const { dulieu } = req.body;
+  const { _id } = dulieu;
+  try {
+    const fileBanner = dulieu.banner;
+    const uploadRes = await cloudinary.uploader.upload(fileBanner);
+    console.log(uploadRes.secure_url);
+    try {
+      let updatedArticle = {
+        banner: uploadRes.secure_url,
+      };
+
+      const bannerupdatecondition = { _id: _id };
 
       upAr = await Article.findOneAndUpdate(
         bannerupdatecondition,
