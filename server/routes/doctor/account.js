@@ -58,11 +58,11 @@ router.put("/detailinfo", verifyToken, async (req, res) => {
     educationplace,
     workcertificate,
     level,
-    degree,
     description,
     excellence,
     workhistory,
     education,
+    degree,
   } = req.body;
 
   try {
@@ -75,6 +75,7 @@ router.put("/detailinfo", verifyToken, async (req, res) => {
       excellence,
       workhistory,
       education,
+      degree,
     };
 
     const profileupdatecondition = { account: req.accountId };

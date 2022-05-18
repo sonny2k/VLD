@@ -34,6 +34,7 @@ router.get("/viewListArticle/detail/:id", async (req, res) => {
   }
 });
 
+//Tìm kiếm tin tức bằng GET
 router.get("/searchArticle/:title", async (req, res) => {
   try {
     var keywordArt = new RegExp(req.params.title, "i");
@@ -45,6 +46,26 @@ router.get("/searchArticle/:title", async (req, res) => {
         .json({ success: false, message: "Không có tin tức cần tìm" });
     }
     res.send(findTitle);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+  }
+});
+
+//Tìm kiếm tin tức bằng POST
+router.post("/searchArticle", async (req, res) => {
+  const { data } = req.body;
+  try {
+    var keywordArt = new RegExp(data.title, "i");
+    console.log(`${keywordArt}`);
+    const findTitle = await Article.find({ title: keywordArt, status: 1 });
+    if (!keywordArt) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Không có tin tức cần tìm" });
+    }
+    res.send(findTitle);
+    console.log(findTitle);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
