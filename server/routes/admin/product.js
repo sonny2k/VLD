@@ -240,9 +240,7 @@ router.post("/image", verifyToken, async (req, res) => {
     const fileImage = req.body.pic;
     const uploadResp = await cloudinary.uploader.upload(fileImage);
     const resp = uploadResp.secure_url;
-    res.json({
-      resp,
-    });
+    res.json(resp);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Có lỗi xảy ra, vui lòng thử lại" });
