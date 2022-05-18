@@ -89,7 +89,6 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
     level,
     workhistory,
     education,
-    degree,
   } = req.body;
 
   try {
