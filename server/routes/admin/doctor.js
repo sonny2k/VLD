@@ -70,7 +70,7 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    res.json({
       success: false,
       message: "Lỗi tải dữ liệu",
     });
