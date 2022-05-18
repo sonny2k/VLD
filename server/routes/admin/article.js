@@ -29,15 +29,9 @@ router.post("/createArticle", verifyToken, async (req, res) => {
     banner,
     title,
     status,
-    datecreate,
-    relevantarticles,
-    publish,
+    createdat,
     hourofpublish,
   } = req.body;
-
-  const createdat = new Date(datecreate);
-
-  const dayofpublish = new Date(publish);
 
   try {
     const newArticle = new Article({
@@ -49,8 +43,6 @@ router.post("/createArticle", verifyToken, async (req, res) => {
       title,
       status,
       createdat,
-      relevantarticles,
-      dayofpublish,
       hourofpublish,
     });
     await newArticle.save();
