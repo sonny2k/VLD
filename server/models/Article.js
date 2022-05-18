@@ -34,12 +34,6 @@ const ArticleSchema = new Schema({
       ref: "articles",
     },
   ],
-  dayofpublish: {
-    type: Date,
-  },
-  hourofpublish: {
-    type: String,
-  },
 });
 
 module.exports = mongoose.model("articles", ArticleSchema);

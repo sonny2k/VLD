@@ -30,7 +30,6 @@ router.post("/createArticle", verifyToken, async (req, res) => {
     title,
     status,
     createdat,
-    hourofpublish,
   } = req.body;
 
   try {
@@ -43,7 +42,6 @@ router.post("/createArticle", verifyToken, async (req, res) => {
       title,
       status,
       createdat,
-      hourofpublish,
     });
     await newArticle.save();
 
