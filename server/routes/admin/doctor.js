@@ -52,6 +52,7 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
       level: "",
       workhistory: "",
       education: "",
+      degree: "",
       availables: [
         { date: "", hours: [] },
         { date: "", hours: [] },
@@ -88,6 +89,7 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
     level,
     workhistory,
     education,
+    degree,
   } = req.body;
 
   try {
@@ -101,6 +103,7 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
       level,
       workhistory,
       education,
+      degree,
     };
     const DocupdateCondition = {
       _id: req.params.id,
