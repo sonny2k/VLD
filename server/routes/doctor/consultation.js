@@ -423,10 +423,10 @@ router.post("/joinRoomNoti", verifyToken, async (req, res) => {
     var dateTime = Date.now();
     const newNotice = new Notification({
       title: "đã tham gia buổi tư vấn",
-      message: `hãy tham gia phòng khám trực tuyến ngày ${fns.format(
+      message: `phòng khám trực tuyến ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} được tạo`,
+      )} lúc ${hour} đã được tạo`,
       creator: doctor,
       recipient: user,
       notidate: dateTime,
