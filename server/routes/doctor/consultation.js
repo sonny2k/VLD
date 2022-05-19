@@ -166,7 +166,7 @@ router.post("/refuseConsultation", verifyToken, async (req, res) => {
       recipient: userId,
       notidate: dateTime,
       seen: false,
-      type: "refusedoc",
+      type: "canceldoc",
       path: _id,
     });
     await newNotice.save();
