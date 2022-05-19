@@ -426,7 +426,7 @@ router.post("/joinRoomNoti", verifyToken, async (req, res) => {
       message: `hãy tham gia phòng khám trực tuyến ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} cùng với`,
+      )} lúc ${hour} được tạo`,
       creator: doctor,
       recipient: user,
       notidate: dateTime,
