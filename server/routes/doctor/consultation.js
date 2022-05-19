@@ -415,4 +415,38 @@ router.post("/createRoomName", verifyToken, async (req, res) => {
 //   }
 // });
 
+// Tạo thông báo khi bác sĩ tạo phòng
+router.post("/joinRoomNoti", verifyToken, async (req, res) => {
+  const { _id, doctor, user, date, hour } = req.body;
+
+  try {
+    var dateTime = Date.now();
+    const newNotice = new Notification({
+      title: "đã tham gia buổi tư vấn",
+      message: `hãy tham gia phòng khám trực tuyến ngày ${fns.format(
+        new Date(date),
+        "dd/MM/yyyy"
+      )} lúc ${hour} cùng với`,
+      creator: doctor,
+      recipient: user,
+      notidate: dateTime,
+      seen: false,
+      type: "joinroom",
+      path: _id,
+    });
+    await newNotice.save();
+
+    res.json({
+      success: true,
+      newNotice,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 module.exports = router;
