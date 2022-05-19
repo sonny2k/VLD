@@ -319,6 +319,17 @@ router.post("/deleteConsult", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
+
+    Notifications.deleteMany({
+      path: { $in: data },
+    }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
     res.json({ success: true, message: "Xóa lịch tư vấn thành công" });
   } catch (error) {
     console.log(error);
