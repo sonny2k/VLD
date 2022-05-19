@@ -166,7 +166,7 @@ router.post("/refuseConsultation", verifyToken, async (req, res) => {
       recipient: userId,
       notidate: dateTime,
       seen: false,
-      type: "canceldoc",
+      type: "refusedoc",
       path: _id,
     });
     await newNotice.save();
@@ -235,7 +235,7 @@ router.post("/cancelConsultation", verifyToken, async (req, res) => {
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} đã hủy`,
+      )} lúc ${hour} đã bị hủy`,
       creator: doctorId,
       recipient: userId,
       notidate: dateTime,

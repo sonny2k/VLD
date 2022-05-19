@@ -174,7 +174,7 @@ router.post("/cancelconsult", verifyToken, async (req, res) => {
       message: `buổi hẹn ngày ${fns.format(
         new Date(date),
         "dd/MM/yyyy"
-      )} lúc ${hour} đã hủy`,
+      )} lúc ${hour} đã bị hủy`,
       creator: userId,
       recipient: doctor,
       notidate: dateTime,
