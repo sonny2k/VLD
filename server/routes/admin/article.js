@@ -64,27 +64,21 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
     articlecategory,
     briefdescription,
     content,
+    banner,
     title,
     status,
-    datecreate,
-    relevantarticles,
-    publish,
-    hourofpublish,
+    createdat,
   } = req.body;
-  const createdat = new Date(datecreate);
 
-  const dayofpublish = new Date(publish);
   try {
     let updateArt = {
       articlecategory,
       briefdescription,
       content,
+      banner,
       title,
       status,
       createdat,
-      relevantarticles,
-      dayofpublish,
-      hourofpublish,
     };
     const ArtupdateCondition = {
       _id: req.params.id,
