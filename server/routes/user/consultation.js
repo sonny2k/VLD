@@ -309,7 +309,6 @@ router.post("/deleteConsult", verifyToken, async (req, res) => {
   const { data } = req.body;
   try {
     Consultation.deleteMany({
-      status: ["bị từ chối", "đã hủy"],
       _id: { $in: data },
     }).then(
       (result) => {
@@ -320,7 +319,7 @@ router.post("/deleteConsult", verifyToken, async (req, res) => {
       }
     );
 
-    Notifications.deleteMany({
+    Notification.deleteMany({
       path: { $in: data },
     }).then(
       (result) => {
