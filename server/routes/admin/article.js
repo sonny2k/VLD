@@ -105,6 +105,70 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/publicArticle", verifyToken, async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let updateArt = {
+      status: 1,
+    };
+    const ArtupdateCondition = {
+      _id: id,
+    };
+    upArt = await Article.findOneAndUpdate(ArtupdateCondition, updateArt, {
+      new: true,
+    });
+    if (!upArt)
+      return res.status.json({
+        success: false,
+        message: "Không có quyền cập nhật tin tức",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật tin tức thành công",
+      article: upArt,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.post("/hideArticle", verifyToken, async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let updateArt = {
+      status: 0,
+    };
+    const ArtupdateCondition = {
+      _id: id,
+    };
+    upArt = await Article.findOneAndUpdate(ArtupdateCondition, updateArt, {
+      new: true,
+    });
+    if (!upArt)
+      return res.status.json({
+        success: false,
+        message: "Không có quyền cập nhật tin tức",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật tin tức thành công",
+      article: upArt,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.delete("/deleteArticle/:id", verifyToken, async (req, res) => {
   try {
     deArt = await Article.findOneAndDelete({ _id: req.params.id });
