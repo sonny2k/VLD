@@ -152,9 +152,17 @@ router.delete("/deleteDoctor/:id", verifyToken, async (req, res) => {
 
 //Delete Any Doctor
 router.post("/deleteDoctor", verifyToken, async (req, res) => {
-  const { data } = req.body;
+  const { data, account } = req.body;
   try {
-    Doctor.deleteMany({ _id: { $in: data } }).then(
+    Doctor.find({ _id: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+    Account.find({ _id: { $in: account } }).then(
       (result) => {
         console.log(result);
       },
