@@ -194,7 +194,7 @@ router.get("/searchArticle/:title", verifyToken, async (req, res) => {
   try {
     var keywordArt = new RegExp(req.params.title, "i");
     console.log(`${keywordArt}`);
-    const findTitle = await Article.find({ title: keywordArt });
+    const findTitle = await Article.find({ title: keywordArt, status: 1 });
     if (!keywordArt) {
       return res
         .status(400)
