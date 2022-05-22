@@ -162,16 +162,7 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
         console.log(e);
       }
     );
-    Account.deleteMany({
-      _id: { $in: Doctor.find({ _id: { $in: data } }).account },
-    }).then(
-      (result) => {
-        console.log(result);
-      },
-      (e) => {
-        console.log(e);
-      }
-    );
+
     res.json({
       success: true,
       message: "Xóa bác sĩ thành công",
