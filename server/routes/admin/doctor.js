@@ -163,6 +163,15 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
       }
     );
 
+    Doctor.find({ _id: { $in: data } }).then(
+      (result) => {
+        Account.deleteMany({ _id: { $in: result.account } });
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+
     res.json({
       success: true,
       message: "Xóa bác sĩ thành công",
