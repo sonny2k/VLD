@@ -28,6 +28,25 @@ router.get("/viewlistconsult", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/viewAwaitConsultation", verifyToken, async (req, res) => {
+  try {
+    var populateQuery = { path: "user", populate: { path: "account" } };
+    const doctor = await Doctor.findOne({ account: req.accountId });
+    const doctorId = doctor._id;
+    const allconsultlist = await Consultation.find({
+      status: "chờ khám",
+      doctor: doctorId,
+    }).populate(populateQuery);
+    res.json(allconsultlist);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 // Xem chi tiết lịch hẹn của bác sĩ
 router.get("/viewconsult/:id", verifyToken, async (req, res) => {
   try {
