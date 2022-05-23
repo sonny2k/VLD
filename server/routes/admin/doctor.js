@@ -164,13 +164,42 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
       }
     );
 
-    Account.deleteMany({ _id: { $in: accData } }).then(
-      (result) => {
-        console.log(result);
+    Account.aggregate([
+      {
+        $lookup: {
+          from: "doctors",
+          pipeline: [
+            {
+              $match: {
+                _id: { $in: data },
+              },
+              $project: {
+                _id: 1,
+                profilepic: 0,
+                fname: 0,
+                lname: 0,
+                birthday: 0,
+                gender: 0,
+                phone: 0,
+                email: 0,
+                role: 0,
+                password: 0,
+                address: 0,
+              },
+            },
+          ],
+          as: "accdata",
+        },
       },
-      (e) => {
-        console.log(e);
-      }
+    ]).then(
+      Account.deleteMany({ _id: { $in: accdata } }).then(
+        (result) => {
+          console.log(result);
+        },
+        (e) => {
+          console.log(e);
+        }
+      )
     );
 
     res.json({
