@@ -192,7 +192,7 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
         },
       },
     ]).then(
-      Account.deleteMany({ _id: { $in: [accdata._id] } }).then(
+      Account.deleteMany({ _id: { $in: accdata } }).then(
         (result) => {
           console.log(result);
         },
