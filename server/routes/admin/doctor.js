@@ -4,6 +4,8 @@ const argon2 = require("argon2");
 const verifyToken = require("../../middleware/auth");
 const Account = require("../../models/Account");
 const Doctor = require("../../models/Doctor");
+const Notification = require("../../models/Notification");
+const Consultation = require("../../models/Consultation");
 
 router.get("/viewDoctor", verifyToken, async (req, res) => {
   try {
@@ -129,32 +131,11 @@ router.put("/updateDoctor/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.delete("/deleteDoctor/:id", verifyToken, async (req, res) => {
-  try {
-    deDoc = await Doctor.findOneAndDelete({ _id: req.params.id });
-    if (!deDoc)
-      return res.status(400).json({
-        success: false,
-        message: "Không có quyền xóa bác sĩ",
-      });
-    res.json({
-      success: true,
-      message: "Xóa bác sĩ thành công",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Lỗi tải dữ liệu",
-    });
-  }
-});
-
 //Delete Any Doctor
 router.post("/deleteDoctor", verifyToken, async (req, res) => {
-  const { data } = req.body;
+  const { data, accdata } = req.body;
   try {
-    Doctor.deleteMany({ account: { $in: data } }).then(
+    Doctor.deleteMany({ account: { $in: accdata } }).then(
       (result) => {
         console.log(result);
       },
@@ -163,7 +144,25 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
       }
     );
 
-    Account.deleteMany({ _id: { $in: data } }).then(
+    Account.deleteMany({ _id: { $in: accdata } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+
+    Notification.deleteMany({ creator: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+
+    Consultation.deleteMany({ doctor: { $in: data } }).then(
       (result) => {
         console.log(result);
       },
@@ -219,6 +218,70 @@ router.get("/searchDoctor/:lname", verifyToken, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi tìm kiếm" });
+  }
+});
+
+router.post("/publicDoctor", verifyToken, async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let updateDoc = {
+      status: 1,
+    };
+    const docupdateCondition = {
+      _id: id,
+    };
+    upDoc = await Doctor.findOneAndUpdate(docupdateCondition, updateDoc, {
+      new: true,
+    });
+    if (!upDoc)
+      return res.status.json({
+        success: false,
+        message: "Không có quyền cập nhật bác sĩ",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật bác sĩ thành công",
+      article: upDoc,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.post("/hideDoctor", verifyToken, async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let updateDoc = {
+      status: 0,
+    };
+    const docupdateCondition = {
+      _id: id,
+    };
+    upDoc = await Doctor.findOneAndUpdate(docupdateCondition, updateDoc, {
+      new: true,
+    });
+    if (!upDoc)
+      return res.status.json({
+        success: false,
+        message: "Không có quyền cập nhật bác sĩ",
+      });
+    res.json({
+      success: true,
+      message: "Bạn đã cập nhật bác sĩ thành công",
+      article: upDoc,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
   }
 });
 

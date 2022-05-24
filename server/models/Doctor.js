@@ -59,6 +59,9 @@ const DoctorSchema = new Schema({
   signature: {
     type: String,
   },
+  status: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("doctors", DoctorSchema);
