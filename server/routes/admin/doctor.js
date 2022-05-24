@@ -55,6 +55,7 @@ router.post("/createDoctor", verifyToken, async (req, res) => {
       workhistory: "",
       education: "",
       degree: "",
+      status: 0,
       availables: [
         { date: "", hours: [] },
         { date: "", hours: [] },
