@@ -17,9 +17,13 @@ router.get("/doctor", async (req, res) => {
 
 router.get("/doctor/:id", async (req, res) => {
   try {
-    const adoctor = await Doctor.findOne({ _id: req.params.id }).populate(
-      "account"
-    );
+    var populateQuery = {
+      path: "ratings",
+      populate: { path: "user" },
+    };
+    const adoctor = await Doctor.findOne({ _id: req.params.id })
+      .populate("account")
+      .populate(populateQuery);
     if (!adoctor)
       return res
         .status(400)
