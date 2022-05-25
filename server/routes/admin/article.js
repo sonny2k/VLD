@@ -66,7 +66,7 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
     banner,
     title,
     status,
-    updatedAt,
+    updatedat,
   } = req.body;
 
   try {
@@ -77,7 +77,7 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
       banner,
       title,
       status,
-      updatedAt,
+      updatedat,
     };
     const ArtupdateCondition = {
       _id: req.params.id,
