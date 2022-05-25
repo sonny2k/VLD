@@ -5,15 +5,25 @@ const Department = require("../../models/Department");
 const Doctor = require("../../models/Doctor");
 
 router.get("/doctor", async (req, res) => {
-  const alldoctors = await Doctor.find().populate('account');
+  var populateQuery = {
+    path: "ratings",
+    populate: { path: "user" },
+  };
+  const alldoctors = await Doctor.find()
+    .populate("account")
+    .populate(populateQuery);
   res.send(alldoctors);
 });
 
 router.get("/doctor/:id", async (req, res) => {
   try {
-    const adoctor = await Doctor.findOne({ _id: req.params.id }).populate('account');
+    const adoctor = await Doctor.findOne({ _id: req.params.id }).populate(
+      "account"
+    );
     if (!adoctor)
-      return res.status(400).json({ success: false, message: "Không tìm thấy bác sĩ này" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Không tìm thấy bác sĩ này" });
     res.send(adoctor);
   } catch (error) {
     console.log(error);

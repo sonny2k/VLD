@@ -14,6 +14,13 @@ const AvailableSchema = new Schema(
   { _id: false }
 );
 
+const RatingSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: "accounts" },
+  content: String,
+  star: Number,
+  date: Date,
+});
+
 const DoctorSchema = new Schema({
   account: {
     type: Schema.Types.ObjectId,
@@ -46,12 +53,7 @@ const DoctorSchema = new Schema({
   education: {
     type: String,
   },
-  ratings: new Schema({
-    user: Schema.Types.ObjectId,
-    content: String,
-    star: Number,
-    date: Date,
-  }),
+  ratings: [RatingSchema],
   availables: [AvailableSchema],
   excellence: {
     type: String,
