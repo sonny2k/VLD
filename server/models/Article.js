@@ -28,6 +28,9 @@ const ArticleSchema = new Schema({
   createdat: {
     type: Date,
   },
+  updatedat: {
+    type: Date,
+  },
   relevantarticles: [
     {
       type: Schema.Types.ObjectId,

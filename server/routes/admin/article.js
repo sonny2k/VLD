@@ -4,7 +4,6 @@ const verifyToken = require("../../middleware/auth");
 const ArticleCategories = require("../../models/ArticleCategory");
 const Article = require("../../models/Article");
 const { cloudinary } = require("../../utils/cloudinary");
-const { isValidObjectId } = require("mongoose");
 
 router.get("/viewListArticle", async (req, res) => {
   try {
@@ -67,7 +66,7 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
     banner,
     title,
     status,
-    createdat,
+    updatedAt,
   } = req.body;
 
   try {
@@ -78,7 +77,7 @@ router.put("/updateArticle/:id", verifyToken, async (req, res) => {
       banner,
       title,
       status,
-      createdat,
+      updatedAt,
     };
     const ArtupdateCondition = {
       _id: req.params.id,
@@ -111,6 +110,7 @@ router.post("/publicArticle", verifyToken, async (req, res) => {
   try {
     let updateArt = {
       status: 1,
+      updatedAt = 
     };
     const ArtupdateCondition = {
       _id: id,
