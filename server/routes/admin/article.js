@@ -110,7 +110,6 @@ router.post("/publicArticle", verifyToken, async (req, res) => {
   try {
     let updateArt = {
       status: 1,
-      updatedAt = 
     };
     const ArtupdateCondition = {
       _id: id,
