@@ -8,26 +8,27 @@ router.post("/rating", verifyToken, async (req, res) => {
   const { content, star, date, doctor } = req.body;
 
   try {
-    Doctor.UpdateOne(
+    Doctor.updateOne(
       { _id: doctor },
       {
         $push: {
-          [`ratings.$.user`]: req.accountId,
-          [`ratings.$.content`]: content,
-          [`ratings.$.star`]: star,
-          [`ratings.$.date`]: date,
+          ratings: {
+            user: req.accountId,
+            content: content,
+            star: star,
+            date: date,
+          },
         },
       }
     ).then(
       (result) => {
         console.log(result);
+        res.json({ success: true, message: "Thêm đánh giá thành công" });
       },
       (e) => {
         console.log(e);
       }
     );
-    console.log(data);
-    res.json({ success: true, message: "Thêm đánh giá thành công" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Lỗi tải dữ liệu" });

@@ -18,13 +18,24 @@ Content-Type: application/json
 }
 
 ###
-
 POST http://localhost:1210/api/user/auth/login
 Content-Type: application/json
 
 {
     "phone": "+84582199173",
     "password": "test1234"
+}
+
+###
+POST http://localhost:1210/api/user/doctor/rating
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWU1MWYyZGE2OTVjZmYyYmQ1YzAxMWYiLCJpYXQiOjE2NTM1MzcwODZ9.CaOD-IftkneOJFIhFzFQPR6jcayluedTICzrkw3Qxes
+
+{
+    "content": "hmm",
+    "star": "4",
+    "date": "2022-05-26T03:44:36.042Z",
+    "doctor": "61e0cece97629c08e6644865"
 }
 
 ###
