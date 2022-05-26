@@ -7,14 +7,12 @@ const Doctor = require("../../models/Doctor");
 router.post("/rating", verifyToken, async (req, res) => {
   const { content, star, date, doctor } = req.body;
 
-  const user = req.accountId;
-
   try {
-    Doctor.updateOne(
+    Doctor.UpdateOne(
       { _id: doctor },
       {
         $set: {
-          [`ratings.$.user`]: user,
+          [`ratings.$.user`]: req.accountId,
           [`ratings.$.content`]: content,
           [`ratings.$.star`]: star,
           [`ratings.$.date`]: date,
