@@ -11,7 +11,7 @@ router.post("/rating", verifyToken, async (req, res) => {
     Doctor.UpdateOne(
       { _id: doctor },
       {
-        $set: {
+        $push: {
           [`ratings.$.user`]: req.accountId,
           [`ratings.$.content`]: content,
           [`ratings.$.star`]: star,
