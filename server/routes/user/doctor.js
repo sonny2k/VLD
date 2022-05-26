@@ -5,21 +5,19 @@ const Account = require("../../models/Account");
 const Doctor = require("../../models/Doctor");
 
 router.post("/rating", verifyToken, async (req, res) => {
-  const { num, data } = req.body;
-  const { user, content, star, date } = data;
+  const { content, star, date, doctor } = req.body;
 
-  const acc = await Account.findOne({ account: req.accountId });
-  const doctorraw = await Doctor.findOne({ acc });
-  const doctorId = doctorraw._id;
+  const user = req.accountId;
+
   try {
     Doctor.updateOne(
-      { _id: doctorId },
+      { _id: doctor },
       {
         $set: {
-          [`ratings.${num}.user`]: user,
-          [`ratings.${num}.content`]: content,
-          [`ratings.${num}.star`]: star,
-          [`ratings.${num}.date`]: date,
+          [`ratings.$.user`]: user,
+          [`ratings.$.content`]: content,
+          [`ratings.$.star`]: star,
+          [`ratings.$.date`]: date,
         },
       }
     ).then(
