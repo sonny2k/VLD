@@ -19,6 +19,7 @@ const RatingSchema = new Schema({
   content: String,
   star: Number,
   date: Date,
+  status: Number,
 });
 
 const DoctorSchema = new Schema({

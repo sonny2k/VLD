@@ -17,6 +17,7 @@ router.post("/rating", verifyToken, async (req, res) => {
             content: content,
             star: star,
             date: date,
+            status: 0,
           },
         },
       }
