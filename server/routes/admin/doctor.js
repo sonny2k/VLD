@@ -172,6 +172,15 @@ router.post("/deleteDoctor", verifyToken, async (req, res) => {
       }
     );
 
+    Notification.deleteMany({ recipient: { $in: data } }).then(
+      (result) => {
+        console.log(result);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+
     res.json({
       success: true,
       message: "Xóa bác sĩ thành công",
