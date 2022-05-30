@@ -10,7 +10,7 @@ const verifyToken = (req, res, next) => {
       .json({ success: false, message: "Không có Access Token" });
 
   try {
-    const decoded = jwt.verify(token, "team16");
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     req.accountId = decoded.accountId;
     next();
