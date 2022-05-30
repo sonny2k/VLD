@@ -225,6 +225,74 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
   }
 });
 
+router.put("/approveRating", verifyToken, async (req, res) => {
+  const { docId, ratingId } = req.body;
+
+  try {
+    let updateRating = {
+      "ratings.status": 1,
+    };
+    const ratingUpdateCondition = {
+      _id: docId,
+      "ratings._id": ratingId,
+    };
+    upRate = await Doctor.findOneAndUpdate(
+      ratingUpdateCondition,
+      updateRating,
+      {
+        new: true,
+      }
+    );
+    if (!upRate)
+      return res.json({
+        success: false,
+        message: "không có quyền duyệt đánh giá này",
+      });
+    res.json({
+      success: true,
+      message: "Duyệt đánh giá thành công",
+      upRate,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
+router.put("/declineRating", verifyToken, async (req, res) => {
+  const { docId, ratingId } = req.body;
+
+  try {
+    Doctor.updateOne(
+      { _id: docId },
+      { $unset: { "ratings._id": ratingId } },
+      false,
+      true
+    ).then(
+      (result) => {
+        console.log(result);
+        res.json({
+          success: true,
+          message: "Từ chối đánh giá thành công",
+          upRate,
+        });
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Lỗi tải dữ liệu",
+    });
+  }
+});
+
 router.get("/searchDoctor/:lname", verifyToken, async (req, res) => {
   try {
     var keyword = new RegExp(req.params.lname, "i");
