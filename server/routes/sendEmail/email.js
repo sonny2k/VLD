@@ -20,13 +20,13 @@ router.post("/send", async (req, res) => {
     subject: data.subject,
     // text: `Emai: ${data.email}`,
     html: `
-    <h3>Thông tin</h3>
+    <h3>Thông tin:</h3>
         <ul>
         <li>Tên: ${data.name}</li>
         <li>Email: ${data.email}</li>
         </ul>
     
-    <h3>Lời nhắn</h3>
+    <h3>Lời nhắn:</h3>
     <p>${data.text}</p>    
     `,
   };
