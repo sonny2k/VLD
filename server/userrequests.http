@@ -579,3 +579,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2M
 {
     "data": ["61e0cece97629c08e6644865"]
 }
+
+###
+GET http://localhost:1210/api/admin/doctor/viewDocRatings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWVhMGI3YWNjMDNlNDIyZDU3NDRhOGMiLCJpYXQiOjE2NTI2MjI3NTB9.oTcdUOUfRFzruznZl9DVt94N1_2JIZMdwU_V05wxNIE

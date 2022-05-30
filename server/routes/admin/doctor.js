@@ -207,6 +207,22 @@ router.get("/viewDoc/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/viewDocRatings", verifyToken, async (req, res) => {
+  try {
+    var populateQuery = {
+      path: "ratings",
+      populate: { path: "user" },
+    };
+    const alldoctors = await Doctor.find(
+      { "ratings.status": 0 },
+      { ratings: 1 }
+    ).populate(populateQuery);
+    res.send(alldoctors);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/searchDoctor/:lname", verifyToken, async (req, res) => {
   try {
     var keyword = new RegExp(req.params.lname, "i");
