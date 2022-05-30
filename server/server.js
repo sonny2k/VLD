@@ -22,6 +22,7 @@ const useradminRouter = require("./routes/admin/user");
 const supplierRouter = require("./routes/admin/supplier");
 const consultationAdminRouter = require("./routes/admin/consultation");
 const ratingRouter = require("./routes/user/doctor");
+const emailRouter = require("./routes/sendEmail/email");
 
 const connectDB = async () => {
   try {
@@ -70,6 +71,7 @@ app.use("/api/doctor/consultation", consultationDoctorRouter);
 app.use("/api/doctor/prescription", prescriptionDocRouter);
 app.use("/api/admin/consultation", consultationAdminRouter);
 app.use("/api/user/doctor", ratingRouter);
+app.use("/api/sendEmail/email", emailRouter);
 
 app.get("/", (req, res) => res.send("VAN LANG DOCTOR SERVER OF TEAM 16"));
 
