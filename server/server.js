@@ -26,7 +26,7 @@ const ratingRouter = require("./routes/user/doctor");
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@vld.ubdyq.mongodb.net/VLD?retryWrites=true&w=majority`,
+      "mongodb+srv://vld:vld16@vld.ubdyq.mongodb.net/VLD?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
