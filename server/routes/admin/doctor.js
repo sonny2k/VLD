@@ -225,34 +225,26 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/approveRating", verifyToken, async (req, res) => {
+router.post("/approveRating", verifyToken, async (req, res) => {
   const { docId, ratingId } = req.body;
 
   try {
-    let updateRating = {
-      "ratings.status": 1,
-    };
-    const ratingUpdateCondition = {
-      _id: docId,
-      "ratings._id": ratingId,
-    };
-    upRate = await Doctor.findOneAndUpdate(
-      ratingUpdateCondition,
-      updateRating,
-      {
-        new: true,
+    Doctor.updateOne(
+      { _id: docId, "ratings._id": ratingId },
+      { $set: { "ratings.$.status": 1 } }
+    ).then(
+      (result) => {
+        console.log(result);
+        res.json({
+          success: true,
+          message: "Duyệt đánh giá thành công",
+          upRate,
+        });
+      },
+      (e) => {
+        console.log(e);
       }
     );
-    if (!upRate)
-      return res.json({
-        success: false,
-        message: "không có quyền duyệt đánh giá này",
-      });
-    res.json({
-      success: true,
-      message: "Duyệt đánh giá thành công",
-      upRate,
-    });
   } catch (error) {
     console.log(error);
     res.json({
@@ -262,12 +254,12 @@ router.put("/approveRating", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/declineRating", verifyToken, async (req, res) => {
+router.post("/declineRating", verifyToken, async (req, res) => {
   const { docId, ratingId } = req.body;
 
   try {
     Doctor.updateOne(
-      { _id: docId },
+      { _id: docId, "ratings._id": ratingId },
       { $unset: { "ratings._id": ratingId } },
       false,
       true
@@ -277,7 +269,6 @@ router.put("/declineRating", verifyToken, async (req, res) => {
         res.json({
           success: true,
           message: "Từ chối đánh giá thành công",
-          upRate,
         });
       },
       (e) => {
