@@ -235,7 +235,6 @@ router.post("/approveRating", verifyToken, async (req, res) => {
         res.json({
           success: true,
           message: "Duyệt đánh giá thành công",
-          upRate,
         });
       },
       (e) => {
