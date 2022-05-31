@@ -213,10 +213,7 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
       path: "ratings",
       populate: { path: "user" },
     };
-    const alldoctors = await Doctor.find(
-      { "ratings.status": 0 },
-      { ratings: 1 }
-    )
+    const alldoctors = await Doctor.find({ "ratings.status": 0 })
       .populate("account")
       .populate(populateQuery);
     res.send(alldoctors);
@@ -260,7 +257,7 @@ router.post("/declineRating", verifyToken, async (req, res) => {
   try {
     Doctor.updateOne(
       { _id: docId, "ratings._id": ratingId },
-      { $unset: { "ratings._id": ratingId } },
+      { $unset: { "ratings.$._id": ratingId } },
       false,
       true
     ).then(
