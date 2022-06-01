@@ -286,10 +286,8 @@ router.post("/declineRating", verifyToken, async (req, res) => {
 
   try {
     Doctor.updateOne(
-      { _id: docId, "ratings._id": ratingId },
-      { $unset: { "ratings.$._id": ratingId } },
-      false,
-      true
+      { _id: docId },
+      { $pull: { ratings: { _id: ratingId } } }
     ).then(
       (result) => {
         console.log(result);
