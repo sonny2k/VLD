@@ -244,7 +244,7 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
     //     },
     //   },
     // ]);
-    const alldoctors = await Doctor.find()
+    const alldoctors = await Doctor.find({ "ratings.status": 0 })
       .populate("account")
       .populate(populateQuery);
     res.send(alldoctors);
