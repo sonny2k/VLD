@@ -213,37 +213,40 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
       path: "ratings",
       populate: { path: "user" },
     };
-    const alldoctors = await Doctor.aggregate([
-      {
-        $project: {
-          ratings: {
-            $filter: {
-              input: "$ratings",
-              as: "rating",
-              cond: { $eq: ["$$rating.status", 0] },
-            },
-          },
-        },
-      },
-      {
-        $lookup: {
-          from: "accounts",
-          let: {
-            id: "$account",
-          },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $eq: ["$_id", "$$id"],
-                },
-              },
-            },
-          ],
-          as: "account",
-        },
-      },
-    ]);
+    // const alldoctors = await Doctor.aggregate([
+    //   {
+    //     $project: {
+    //       ratings: {
+    //         $filter: {
+    //           input: "$ratings",
+    //           as: "rating",
+    //           cond: { $eq: ["$$rating.status", 0] },
+    //         },
+    //       },
+    //     },
+    //   },
+    //   {
+    //     $lookup: {
+    //       from: "accounts",
+    //       let: {
+    //         id: "$account",
+    //       },
+    //       pipeline: [
+    //         {
+    //           $match: {
+    //             $expr: {
+    //               $eq: ["$_id", "$$id"],
+    //             },
+    //           },
+    //         },
+    //       ],
+    //       as: "account",
+    //     },
+    //   },
+    // ]);
+    const alldoctors = await Doctor.find()
+      .populate("account")
+      .populate(populateQuery);
     res.send(alldoctors);
   } catch (error) {
     console.log(error);
