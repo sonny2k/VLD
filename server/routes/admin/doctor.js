@@ -213,9 +213,37 @@ router.get("/viewDocRatings", verifyToken, async (req, res) => {
       path: "ratings",
       populate: { path: "user" },
     };
-    const alldoctors = await Doctor.find({ "ratings.status": 0 })
-      .populate("account")
-      .populate(populateQuery);
+    const alldoctors = await Doctor.aggregate([
+      {
+        $project: {
+          ratings: {
+            $filter: {
+              input: "$ratings",
+              as: "rating",
+              cond: { $eq: ["$$rating.status", 0] },
+            },
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "accounts",
+          let: {
+            id: "$account",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$id"],
+                },
+              },
+            },
+          ],
+          as: "account",
+        },
+      },
+    ]);
     res.send(alldoctors);
   } catch (error) {
     console.log(error);
@@ -256,7 +284,7 @@ router.post("/declineRating", verifyToken, async (req, res) => {
   try {
     Doctor.updateOne(
       { _id: docId, "ratings._id": ratingId },
-      { $pull: { ratings: { _id: ratingId } } },
+      { $unset: { "ratings.$._id": ratingId } },
       false,
       true
     ).then(
