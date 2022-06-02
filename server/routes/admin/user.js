@@ -23,7 +23,7 @@ router.get("/viewUser", verifyToken, async (req, res) => {
 router.post("/deleteUser", verifyToken, async (req, res) => {
   const { data, accdata } = req.body;
   try {
-    User.deleteMany({ account: { $in: accdata } }).then(
+    User.deleteMany({ _id: { $in: data } }).then(
       (result) => {
         console.log(result);
       },
